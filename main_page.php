@@ -12,10 +12,10 @@
     <?php include("header.html"); ?>
 	<div id="main">
 	
-	<p><a href="add_band.php">Add Band</a></p>
+	<p><a href="addBand.html">Add Band</a></p>
 
     
-    <p><a href="add_venue.php">Add Venue</a></p>
+    <p><a href="addvenue.html">Add Venue</a></p>
 
   </form>
 	
