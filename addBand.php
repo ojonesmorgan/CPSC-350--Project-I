@@ -29,8 +29,8 @@
   
   
   
-  $query = "INSERT INTO band (bandName, bandState, bandCity, bandDescription, bandPhoto) " . 
-  		   "VALUES ('$name', '$state', '$city', '$description', '$photo')";
+  $query = "INSERT INTO band (bandName, bandState, bandCity, bandGenre, bandDescription, bandPhoto) " . 
+  		   "VALUES ('$name', '$state', '$city', '$genre', '$description', '$photo')";
   
 echo "<p> You Description of the band: </p>";
 echo "<p> $description</p>";
