@@ -13,14 +13,14 @@
 	<div id="searchVenue">
 	<p align="left"><b>Results of Search</b></p>
 	
-<?php include("sidebar.php"); ?>	
+<?php include("projectSideBar.php"); ?>	
  <?php include("db_connect.php"); ?>
 
 	
 	<?php
 	$searched=$_POST['searchVenue'];
-	$query = "SELECT  venueName, venueState, venueCity, venueStreet, venueDescriptino, venuePicture where
-		venueName like \"%$searched%\";
+	$query = "SELECT  venueName, venueState, venueCity, venueStreet, venueDescriptino, venueMap, venuePicture where
+		venueName like \"%$searched%\" ";
 
 	$results = mysqli_query($db, $query);
 	 echo "<table id=\"hor-minimalist-b\">\n<tr><th>venueName</th><th>venueStreet</th><th>venueCity</th><th>City</th><th>venueState</th><tr>\n\n";
