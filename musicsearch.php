@@ -62,10 +62,10 @@
 	echo "<input type='text' name='searchbox' value='$search' /></p>";
 	echo "<p><input type='radio' name='desc' value=0";
 	if ($desc == 0 || $desc == "") echo " checked";
-	echo ">&nbsp;ascending&nbsp;&nbsp;";
+	echo " />&nbsp;ascending&nbsp;&nbsp;";
 	echo "<input type='radio' name='desc' value=1";
 	if ($desc == 1) echo " checked";
-	echo ">&nbsp;descending</p>";
+	echo " />&nbsp;descending</p>";
 	echo "<p><input type='submit' value=' Search Bands ' name='submit' />";
 	echo "</form></p><br />\n";
 
