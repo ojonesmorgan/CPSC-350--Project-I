@@ -13,7 +13,7 @@
 
 	
 <?php
-  include "db_connect.php"; 
+  include "db_connect.php";  
   
   $name = $_POST['name'];
   $state = $_POST['state'];
