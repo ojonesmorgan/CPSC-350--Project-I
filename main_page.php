@@ -27,7 +27,7 @@
 	
 	
 	
-    <?php include("sidebar.php"); ?>
+    <?php include("projectSideBar.php"); ?>
 	<div id="footer"><p>"Footer" </p></div>
 </div>
 </body>
