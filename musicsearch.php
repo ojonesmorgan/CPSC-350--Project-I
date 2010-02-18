@@ -15,9 +15,9 @@
 	include("db_connect.php");
 	$search = $_POST['searchbox'];
 	$sort = $_GET['sort'];
+	if ($sort == "") $sort = "bandName";
 	$desc = $_POST['desc'];
 	if ($desc == "") $desc = $_GET['desc'];
-	if ($sort == "") $sort = "bandName";
 	$find = "LIKE '%$search%'";
 	$query = "SELECT * FROM band WHERE bandName $find OR bandGenre $find OR bandState $find OR bandCity $find ORDER BY $sort";
 	if ($desc == 1) $query .= " DESC";
