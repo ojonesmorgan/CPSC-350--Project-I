@@ -34,9 +34,9 @@
 
 	echo "<table id=\"hor-minimalist-b\" >\n<tr>";
 	echo "<th><a href='".$sortlink."bandName".$desclink."'>Artist</a></th>";
-	echo "<th><a href='".$sortlink."bandGenre".$desclink."'>Genre</th>";
-	echo "<th><a href='".$sortlink."bandCity".$desclink."'>City</th>";
-	echo "<th><a href='".$sortlink."bandState".$desclink."'>State</th>";
+	echo "<th><a href='".$sortlink."bandGenre".$desclink."'>Genre</a></th>";
+	echo "<th><a href='".$sortlink."bandCity".$desclink."'>City</a></th>";
+	echo "<th><a href='".$sortlink."bandState".$desclink."'>State</a></th>";
 	echo "</tr>\n";
 	
 	$count = 0;
