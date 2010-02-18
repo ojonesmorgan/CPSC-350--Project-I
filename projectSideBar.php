@@ -1,6 +1,6 @@
 	<div id="sidebar">
 	<p><b>Search for a band:</b></p>
-	<form method="post" action="searchBand.php">
+	<form method="post" action="musicsearch.php">
 	<input type="text" id="searchBand" name="searchbox" />
 	<input type="submit" value="go" name="submit" />
 	</form>
