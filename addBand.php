@@ -20,7 +20,7 @@
   $city = $_POST['city'];  
   $genre = $_POST['genre'];
   $photo = $_POST['photo'];
-  $description= $_POST['description'];
+  $description = $_POST['description'];
 
   
   
