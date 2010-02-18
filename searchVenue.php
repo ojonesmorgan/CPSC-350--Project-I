@@ -4,6 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Band Venue - Search Results</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 	
 	
@@ -17,7 +18,7 @@
 
 	
 	<?php
-	$searched=$_POST['searchvenue'];
+	$searched=$_POST['searchVenue'];
 	$query = "SELECT  venueName, venueState, venueCity, venueStreet, venueDescriptino, venuePicture where
 		venueName like \"%$searched%\";
 
@@ -32,7 +33,7 @@
   	$description = $row['venueDescription'];
 	$picture = $row['venuePicture'];
 	$map = $row['venueMap'];
-  	echo "<tr><td  >$name</td><td  >$street $city</td><td >$state</td><td>$description</td></tr>\n";
+  	echo "<tr><td >$name</td><td>$street</td><td>$city</td><td >$state</td><td>$description</td></tr>\n";
   }
  echo "</table>\n"; 
 
