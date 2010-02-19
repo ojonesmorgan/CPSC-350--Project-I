@@ -3,43 +3,75 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Band Venue - Search Results</title>
+  <title>Search Music</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
-	
-	
-<div id="wrap">	
-<?php include("header.html"); ?>
-	<div id="searchVenue">
-	<p align="left"><b>Results of Search</b></p>
-	
-<?php include("projectSideBar.php"); ?>	
- <?php include("db_connect.php"); ?>
 
-	
+<body>
+<div id="wrap">
+    <?php include("header.html"); ?>
+	<center><div id="search">
 	<?php
-	$searched=$_POST['searchVenue'];
-	$query = "SELECT  venueName, venueState, venueCity, venueStreet, venueDescriptino, venueMap, venuePicture where
-		venueName like \"%$searched%\" ";
+	include("db_connect.php");
+	$search = $_POST['searchbox2'];
+	$sort = $_GET['sort'];
+	if ($sort == "") $sort = "venueName";
+	$desc = $_POST['desc'];
+	if ($desc == "") $desc = $_GET['desc'];
+	$find = "LIKE '%$search%'";
+	$query = "SELECT * FROM venue WHERE venueName $find OR venueState $find OR venueCity $find ORDER BY $sort";
+	if ($desc == 1) $query .= " DESC";
+	
+	echo "<br /><h1>";
+	
+	if ($search == "") echo "All results";
+	else echo "Results for \"".$search."\"";
+	echo "</h1>";
+	
+	$results = mysqli_query($db, $query) or die("Error Querying Database");
+	$sortlink = "venueSearch.php?sort=";
+	$desclink = "&desc=$desc";
 
-	$results = mysqli_query($db, $query);
-	 echo "<table id=\"hor-minimalist-b\">\n<tr><th>venueName</th><th>venueStreet</th><th>venueCity</th><th>City</th><th>venueState</th><tr>\n\n";
-  
-  while($row = mysqli_fetch_array($results)) {
-  	$name = $row['venueName'];
-  	$street = $row['venueState'];
-  	$city = $row['venueCity'];
-  	$state = $row['venueState'];
-  	$description = $row['venueDescription'];
-	$picture = $row['venuePicture'];
-	$map = $row['venueMap'];
-  	echo "<tr><td >$name</td><td>$street</td><td>$city</td><td >$state</td><td>$description</td></tr>\n";
-  }
- echo "</table>\n"; 
+	echo "<table id=\"hor-minimalist-b\" >\n<tr>";
+	echo "<th><a href='".$sortlink."venueName".$desclink."'>Place</a></th>";
+	echo "<th><a href='".$sortlink."venueCity".$desclink."'>City</a></th>";
+	echo "<th><a href='".$sortlink."venueState".$desclink."'>State</a></th>";
+	echo "</tr>\n";
+	
+	$count = 0;
 
-mysqli_close($db);
+	while ($row = mysqli_fetch_assoc($results))
+	{
+		echo "<tr>";
+		echo "<td>".$row['venueName']."</td>";
+		echo "<td>".$row['venueCity']."</td>";
+		echo "<td>".$row['venueState']."</td>";
+		echo "</tr>\n";
+		
+		++$count;
+	}
+	
+	if ($count == 0) echo "<tr><td style='text-align:center;' colspan=4><b>No results found.</th></tr>";
+	echo "</table>\n";
+	
+	echo "<p><a href='venueSearch.php'>Show All</a></p>\n";
+	
+	echo "<br /><p><form method='post' action='venueSearch.php?sort=$sort'>";
+	echo "<input type='text' name='searchbox2' value='$search' /></p>";
+	echo "<p><input type='radio' name='desc' value=0";
+	if ($desc == 0 || $desc == "") echo " checked";
+	echo " />&nbsp;ascending&nbsp;&nbsp;";
+	echo "<input type='radio' name='desc' value=1";
+	if ($desc == 1) echo " checked";
+	echo " />&nbsp;descending</p>";
+	echo "<p><input type='submit' value=' Search Venues ' name='submit' />";
+	echo "</form></p><br />\n";
 
-	?>	 
-
-	</div>
+	echo "<p style='text-align:center;'><a href='index.php'>Home</a></p><br />\n";
+	?>
+	</div></center>
+	
+	<div id="footer"><p></p></div>
 </div>
+</body>
+</html>
