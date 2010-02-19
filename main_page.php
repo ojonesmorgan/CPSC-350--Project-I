@@ -15,7 +15,7 @@
 	<p><a href="addBand.html">Add Band</a></p>
 
     
-    <p><a href="addvenue.html">Add Venue</a></p>
+    <p><a href="addVenue.html">Add Venue</a></p>
 
   </form>
 	
