@@ -69,7 +69,7 @@
 	echo "<p><input type='submit' value=' Search Bands ' name='submit' />";
 	echo "</form></p><br />\n";
 
-	echo "<p style='text-align:center;'><a href='index.php'>Home</a></p><br />\n";
+	echo "<p style='text-align:center;'><a href='main_page.php'>Home</a></p><br />\n";
 	?>
 	</div></center>
 	
