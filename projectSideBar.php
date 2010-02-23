@@ -10,5 +10,6 @@
 	<input type="text" id="searchVenue" name="searchbox2" />
 	<input type="submit" value="go" name="submit" />
 	</form>
+	</div>
 	
 
