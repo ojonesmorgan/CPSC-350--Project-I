@@ -7,16 +7,10 @@
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
-<body>
+<body link= blue vlink=darkblue>
 <div id="wrap">
     <?php include("header.html"); ?>
 	<div id="main">
-	
-	<p><a href="addBand.html">Add Band</a></p>
-
-    
-    <p><a href="addVenue.html">Add Venue</a></p>
-
   
 	<?php
 	  include "db_connect.php";
