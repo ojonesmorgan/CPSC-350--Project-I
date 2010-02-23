@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 16, 2010 at 01:46 PM
+-- Generation Time: Feb 22, 2010 at 09:18 PM
 -- Server version: 5.1.41
 -- PHP Version: 5.3.1
 
@@ -18,16 +18,15 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `musicdb`
 --
+CREATE DATABASE IF NOT EXISTS musicdb;
+GRANT ALL PRIVILEGES ON musicdb.* to 'music'@'localhost' identified by 'msuic';
+use musicdb;
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `band`
 --
-
-create database if not exists musicdb;
-use musicdb;
-
 
 CREATE TABLE IF NOT EXISTS `band` (
   `bandName` varchar(60) NOT NULL,
@@ -44,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `band` (
 --
 
 INSERT INTO `band` (`bandName`, `bandState`, `bandCity`, `bandGenre`, `bandDescription`, `bandPhoto`) VALUES
-('Test Band 1', 'Virginia', 'Fredericksburg', 'Rock', 0x5468697320697320612074657374206465736372697074696f6e20666f7220546573742042616e642031, 'Picture File Path Goes here'),
+('Test Band 1', 'Virginia', 'Fredericksburg', 'Rock', 0x5468697320697320612074657374206465736372697074696f6e20666f7220546573742042616e642031, 'karl.jpg'),
 ('Test Band 2', 'New York', 'New York', 'Pop', 0x5468697320697320612074657374206465736372697074696f6e20666f7220546573742042616e642032, 'This is the place to put the picture file path');
 
 -- --------------------------------------------------------
