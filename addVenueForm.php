@@ -7,29 +7,37 @@
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-
 <div id="wrap">
-  <h2>Add a Band</h2>
+<?php include("header.html"); ?>
+<div id="main">
+
+  <h2><u>Add Venue</u></h2>
 
   
-  <form method="post" action="addBand.php">
-    <label for="name">Band name:</label>
+  <form method="post" action="addVenueResults.php">
+    <label for="name">Venue name:</label>
     <input type="text" id="name" name="name" /><br />
-    <label for="genre">Genre:</label>
-    <input type="text" id="genre" name="genre" /><br />
+    <label for="street">Street:</label>
+    <input type="text" id="street" name="street" /><br />
     <label for="tity">City:</label>
     <input type="text" id="city" name="city" /><br />
     <label for="state">State:</label>
     <input type="text" id="state" name="state" /><br />
     <label for="description">Description:</label>
-    <input type="text" id="description" name="description"  /><br />
-    <label for="photo">Photo:</label>
-    <input type="text" id="photo" name="photo" size="32" /><br />
+    <input type="text" id="description" name="description" /><br />
+    <label for="picture">Picture:</label>
+    <input type="text" id="picture" name="picture" size="32" /><br />
+    <label for="map">Map:</label>
+    <input type="text" id="map" name="map" size="32" /><br />
+  
   
     <label for="other">Anything else you want to add?</label>
     <textarea id="other" name="other"></textarea><br />
-    <input type="submit" value="Submit Band" name="submit" />
+    <input type="submit" value="Submit Venue" name="submit" />
   </form>
+</div> <!-- end main div -->
+ <?php include("projectSideBar.php"); ?>
+ <?php include("footer.html");?>
 </body>
 
 

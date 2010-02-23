@@ -3,38 +3,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Add a Band</title>
+  <title>Add a Venue</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <script type="text/javascript" src="calendarDateInput.js" />
 
 <body>
 <div id="wrap">
+<?php include("header.html"); ?>
+	<div id="main">
 
 	
 <?php
-  include  "db_connect.php";  
+  include "db_connect.php";
   
   $name = $_POST['name'];
   $state = $_POST['state'];
   $city = $_POST['city'];  
-  $genre = $_POST['genre'];
-  $photo = $_POST['photo'];
+  $street = $_POST['street'];
+  $picture = $_POST['picture'];
   $description = $_POST['description'];
-  
-  
-  
-  echo "<p>Thanks for submitting this new band</p>";
+  $map = $_POST['map'];
 
+  
+  
+  echo "<p>Thanks for submitting this new venue</p>";
  
   
   
   
-  $query = "INSERT INTO band (bandName, bandState, bandCity, bandGenre, bandDescription, bandPhoto) " . 
-  		   "VALUES ('$name', '$state', '$city', '$genre', '$description', '$photo')";
+  $query = "INSERT INTO venue (venueName, venueState, venueCity, venueStreet, venueDescription, venuePicture, venueMap) " . 
+  		   "VALUES ('$name', '$state', '$city', '$street', '$description', '$picture', '$map')";
   
-echo "<p> You Description of the band: </p>";
-echo "<p>$description</p>";
+echo "<p> Your Description of the venue: </p>";
+echo "<p> $description</p>";
   $result = mysqli_query($db, $query)
    or die("Error Querying Database");
    
@@ -42,7 +44,7 @@ echo "<p>$description</p>";
   //echo "<h1>Abductions by date</h1>";
   
   
-  $query = "SELECT * FROM band ORDER BY bandName";
+  $query = "SELECT * FROM venue ORDER BY venueName";
   
   $result = mysqli_query($db, $query)
    or die("Error Querying Database");
@@ -57,7 +59,7 @@ echo "<p>$description</p>";
   	//$state = $row['state'];
   	//echo "<tr><td  >$date</td><td  >$name</td><td >$city</td><td>$state</td></tr>\n";
   //}
- echo "</table>\n"; 
+ //echo "</table>\n"; 
   
   mysqli_close($db);
   
@@ -66,12 +68,12 @@ echo "<p>$description</p>";
 	
 	
 	
-	</div>
+	</div> <!-- end main div -->
 	
 	
     <?php include("projectSideBar.php"); ?>
 
-	<div id="footer"><p>This is a footer</p></div>
-</div>
+	<?php include ("footer.html"); ?>
+</div> <!-- end wrap div -->
 </body>
 </html>

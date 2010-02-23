@@ -112,7 +112,7 @@
 	</div>	
 	
     <?php include("projectSideBar.php"); ?>
-	<div id="footer"><p>"Footer" </p></div>
+	<?php include("footer.html");?>
 </div>
 </div>
 </body>
