@@ -19,7 +19,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Database: `musicdb`
 --
 CREATE DATABASE IF NOT EXISTS musicdb;
-GRANT ALL PRIVILEGES ON musicdb.* to 'music'@'localhost' identified by 'msuic';
+GRANT ALL PRIVILEGES ON musicdb.* to 'music'@'localhost' identified by 'music';
 use musicdb;
 
 -- --------------------------------------------------------
