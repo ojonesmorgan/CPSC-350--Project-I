@@ -1,0 +1,5 @@
+featured band/venue, straighten up links (patrick)
+login options (matt)
+delete a band or venue (stephen)
+update edit band (owen)
+update edit venue(amy)
