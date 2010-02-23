@@ -29,7 +29,7 @@
 	echo "</h1>";
 	
 	$results = mysqli_query($db, $query) or die("Error Querying Database");
-	$sortlink = "venueSearch.php?sort=";
+	$sortlink = "searchVenue.php?sort=";
 	$desclink = "&desc=$desc";
 
 	echo "<table id=\"hor-minimalist-b\" >\n<tr>";
@@ -54,9 +54,9 @@
 	if ($count == 0) echo "<tr><td style='text-align:center;' colspan=4><b>No results found.</th></tr>";
 	echo "</table>\n";
 	
-	echo "<p><a href='venueSearch.php'>Show All</a></p>\n";
+	echo "<p><a href='searchVenue.php'>Show All</a></p>\n";
 	
-	echo "<br /><p><form method='post' action='venueSearch.php?sort=$sort'>";
+	echo "<br /><p><form method='post' action='searchVenue.php?sort=$sort'>";
 	echo "<input type='text' name='searchbox2' value='$search' /></p>";
 	echo "<p><input type='radio' name='desc' value=0";
 	if ($desc == 0 || $desc == "") echo " checked";
