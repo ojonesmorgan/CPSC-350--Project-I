@@ -21,10 +21,11 @@
   $genre = $_POST['genre'];
   $photo = $_POST['photo'];
   $description = $_POST['description'];
-
+  
   
   
   echo "<p>Thanks for submitting this new band</p>";
+
  
   
   
@@ -33,7 +34,7 @@
   		   "VALUES ('$name', '$state', '$city', '$genre', '$description', '$photo')";
   
 echo "<p> You Description of the band: </p>";
-echo "<p> $description</p>";
+echo "<p>$description</p>";
   $result = mysqli_query($db, $query)
    or die("Error Querying Database");
    
