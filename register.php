@@ -45,32 +45,7 @@
 
 
 	?>
-	<!-- same code as above only in a form 
-
-<form method="post" action="addBandResults.php">
-    <label for="name">Band name:</label>
-    <input type="text" id="name" name="name" /><br />
-    <label for="genre">Genre:</label>
-    <input type="text" id="genre" name="genre" /><br />
-    <label for="tity">City:</label>
-    <input type="text" id="city" name="city" /><br />
-    <label for="state">State:</label>
-    <input type="text" id="state" name="state" /><br />
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description"  /><br />
-    <label for="photo">Photo:</label>
-    <input type="text" id="photo" name="photo"/><br />
-  
-    <label for="other">Anything else you want to add?</label>
-    <textarea id="other" name="other"></textarea><br />
-    <input type="submit" value="Submit Band" name="submit" />
-  </form>
-
-
-
-
-
-	 end new same code -->
+	
 	
 	<!--</div></center>-->
 	
