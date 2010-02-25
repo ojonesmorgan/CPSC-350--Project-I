@@ -9,7 +9,7 @@
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
-<body link=blue vlink=darkblue>
+<body>
 <div id="wrap">
     <?php include("header.php"); ?>
 	<div id="main">
@@ -20,8 +20,8 @@
 
 	  //start
 	
-	echo "<p class =\"side\"><b>Featured Band:</B><br/>";
 
+	echo "<p><b>Featured Band:</B><br/>";
 	  $query = "SELECT * FROM band ORDER BY RAND() LIMIT 1";
   
 	 $results = mysqli_query($db, $query);
@@ -33,7 +33,7 @@
 	$bandPhoto= $row['bandPhoto'];
 	if (file_exists( $bandPhoto)== false){
 		//set $bandPhoto to default image
-		$bandPhoto="default.jpg";
+		$bandPhoto="Pictures/default.jpg";
 		$altPhoto="Band Image Could Not Be Found";
 	}
 	else{
@@ -43,10 +43,10 @@
 	}
 	
   	echo "
-	<table width=400 border=1 bordercolor=black bgcolor=lightblue>
+	<table width=400 bordercolor=darkred bgcolor=darkblue>
 	<tr>
 		<td align =center><h3>$bandName<h3> ($bandGenre) </td>
-		<td ><table align= center><tr><td><h4>From:</h4></td></tr><tr><td>$bandCity , $bandState</td></tr></table> </td>
+		<td ><table width=200 align= center><tr><td><h4>From:</h4></td></tr><tr><td><p>$bandCity , $bandState<p></td></tr></table> </td>
 	</tr>
 	<tr>
 		<td><img src=\"$bandPhoto\" alt=\"$altPhoto\" width=200 height=100></td>
@@ -55,7 +55,7 @@
 			makes a sizable image in the table with the path 'skull.jpg'
 			<td><img src=\"skull.jpg\" width = 150 height = 100></td>
 		-->
-		<td>$desc</td>
+		<td><p>$desc</p></td>
 	</tr>
 	</table>\n";
 
@@ -64,7 +64,7 @@
 
 	//start
 
-	echo "<p class =\"side\"><b>Featured Venue:</B><br/>";
+	echo "<p><b>Featured Venue:</B><br/>";
 
 	  $query = "select venueName, venueState, venueCity, venueStreet, venueDescription, venuePicture, venueMap
 				from venue ORDER BY RAND() LIMIT 1";
@@ -80,7 +80,7 @@
 	$venueMap=$row['venueMap'];
 	if (file_exists( $venuePicture)== false){
 		//set $venuePicture to default image
-		$venuePicture="default.jpg";
+		$venuePicture="Pictures/default.jpg";
 		$altvenPhoto="Band Image Could Not Be Found";
 	}
 	else{
@@ -89,10 +89,19 @@
 	}
 		
   	echo "
-	<table width =400 border=1 bordercolor=black bgcolor=lightblue>
+	<table width =400 bordercolor=darkred bgcolor=darkblue>
 	<tr>
 		<td ><h3 align=center>$venueName<h3> </td>
-		<td ><table align=center><tr align=left><td><h4>From:</h4></td></tr ><tr><td>$venueCity , $bandState</td></tr><tr><td>$venueStreet</td></tr></table> </td>
+		<td >
+			<table width=200 align=center>
+				<tr align=left>
+					<td><h4>From:</h4></td>
+				</tr>
+				<tr>
+					<td><p>$venueCity , $venueState</p><td></td>
+				</tr>
+			</table>
+		</td>
 	</tr>
 	<tr>
 		<td><img src=\"$venuePicture\" alt=\"$altvenPhoto\" width=200 height=100></td>
@@ -100,9 +109,9 @@
 			makes a sizable image in the table with the path 'skull.jpg'
 			<td><img src=\"skull.jpg\" width = 150 height = 100></td>
 		-->
-		<td>$venueDescription</td>
+		<td><p>$venueDescription</p></td>
 	</tr>
-	</table>\n";
+	</table><br>";
 	//finish
 
 	

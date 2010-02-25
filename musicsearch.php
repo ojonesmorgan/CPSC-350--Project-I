@@ -73,7 +73,7 @@
 	echo "<p style='text-align:center;'><a href='main_page.php'>Home</a></p><br />\n";
 	?>
 	</div></center>
-	<div id="footer"><p></p></div>
+	<?php include("footer.html"); ?>
 </div>
 </body>
 </html>
