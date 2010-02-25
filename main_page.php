@@ -1,15 +1,17 @@
+<?php include("session.php"); ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Group: Decide on site title.</title>
+  <title>BandLink</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
-<body link= blue vlink=darkblue>
+<body link=blue vlink=darkblue>
 <div id="wrap">
-    <?php include("header.html"); ?>
+    <?php include("header.php"); ?>
 	<div id="main">
   
 	<?php
@@ -20,7 +22,7 @@
 	
 	echo "<p class =\"side\"><b>Featured Band:</B><br/>";
 
-	  $query = "select bandName , bandState, bandCity, bandGenre, bandPhoto, bandDescription from band ORDER BY RAND() LIMIT 1";
+	  $query = "SELECT * FROM band ORDER BY RAND() LIMIT 1";
   
 	 $results = mysqli_query($db, $query);
 	while($row = mysqli_fetch_array($results)) {
