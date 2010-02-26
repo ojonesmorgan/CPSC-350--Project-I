@@ -19,9 +19,9 @@ else
 {
 	include("db_connect.php");
 	
-	$name = mysql_escape_string(stripslashes($name));
-	$email = mysql_escape_string(stripslashes($email));
-	$password = mysql_escape_string(stripslashes(md5($password)));
+	$name = mysql_escape_string(stripslashes(trim($name)));
+	$email = mysql_escape_string(stripslashes(trim($email)));
+	$password = mysql_escape_string(stripslashes(trim(md5($password))));
 	
 	mysqli_query($db, "INSERT INTO users VALUES ('$name', '$email', '$password', false)");
 }
@@ -42,7 +42,7 @@ else
 <center><div>
 
 <?php
-echo "<h2>Welcome, ".$name."!</h2>";
+echo "<br /><h1>Welcome, ".$name."!</h1>";
 echo "<p>Your account has been created.</p>";
 echo "<p><a href='login.php?email=$email>Click here to log in.</a></p><br />\n";
 ?>

@@ -21,7 +21,7 @@
 	  //start
 	
 
-	echo "<p><b>Featured Band:</B><br/>";
+	echo "<p><span style=\"color:darkred\"><b>Featured Band:</B></span><br/>";
 	  $query = "SELECT * FROM band ORDER BY RAND() LIMIT 1";
   
 	 $results = mysqli_query($db, $query);
@@ -64,7 +64,7 @@
 
 	//start
 
-	echo "<p><b>Featured Venue:</B><br/>";
+	echo "<p><span style=\"color:darkred\"><b>Featured Venue:</B></span><br/>";
 
 	  $query = "select venueName, venueState, venueCity, venueStreet, venueDescription, venuePicture, venueMap
 				from venue ORDER BY RAND() LIMIT 1";

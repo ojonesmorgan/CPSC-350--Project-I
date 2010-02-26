@@ -1,10 +1,14 @@
-<?php include("session.php"); ?>
+<?php
+include("session.php");
+if (!$logged_in) header("location:login.php?err=accessdenied");
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Add a Band</title>
+  <title>BandLink | Add a Band</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <script type="text/javascript" src="calendarDateInput.js" />

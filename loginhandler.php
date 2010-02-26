@@ -1,6 +1,6 @@
 <?php
 include("session.php");
-if ($logged_in) header("location:main_page.php");
+if ($logged_in) header("location:.");
 
 include("db_connect.php");
 $email = $_POST['email'];

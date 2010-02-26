@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Register</title>
+  <title>BandLink | Register</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
@@ -15,14 +15,14 @@
 	<div id="main">
 	<!--<center><div>-->
 
-	<h2><u>Register</u></h2>
+	<h1><u>Register</u></h1>
 	
 	<?php
 	$error = $_GET['err'];
 	$name = $_GET['name'];
 	$email = $_GET['email'];
 
-	echo "<br /><form method='post' action='createaccount.php'>";
+	echo "<form method='post' action='createaccount.php'>";
 	
 	if (isset($error))
 	{
@@ -34,13 +34,13 @@
 		echo "</p><br />";
 	}
 	
-	echo "<p><label for =\"name\">Name:</label> <input name='name' type='text' value='$name' /></p>";
-	echo "<p><label for =\"email\">Email Address:</label> <input name='email' type='text' value='$email' /></p>";
-	echo "<p><label for =\"password\">Password:</label> <input name='password' type='password' /></p>";
-	echo "<p><label for =\"confirmpass\">Confirm Password:</label> <input name='confirmpass' type='password' /></p>";
-	echo "<p><input type='submit' value='  Create Account  ' /></p>";
+	echo "<label for =\"name\">Name:</label> <input name='name' type='text' value='$name' />";
+	echo "<label for =\"email\">Email Address:</label> <input name='email' type='text' value='$email' />";
+	echo "<label for =\"password\">Password:</label> <input name='password' type='password' />";
+	echo "<label for =\"confirmpass\">Confirm Password:</label> <input name='confirmpass' type='password' />";
+	echo "<input  type='submit' value='  Create Account  ' />";
 	echo "</form>\n";
-	echo "<p>Already have an account? <a href='login.php'>Click here to log in.</a></p><br />\n";
+	echo "<p style='text-align:center;'>Already have an account? <a href='login.php'>Click here to log in.</a></p><br />\n";
 
 
 
