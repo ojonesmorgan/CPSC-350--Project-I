@@ -1,4 +1,4 @@
-<div id="header" style="margin:10px 20px 0px 20px;">
+ <div id="header" style="margin:10px 20px 0px 20px;">
 
 <?php
 echo "<span style='float:right;'>";
