@@ -6,7 +6,7 @@ if ($logged_in) echo "<span style='color:red;'>".$_SESSION['name']."</span>&nbsp
 else echo "<a href='login.php'>Log In</a>";
 echo "</span><br />\n";
 ?>
-<img src="Pictures/logo.png">
+<a href="main_page.php"><img src="Pictures/logo.png"></a>
 
 <!--<center><h1 style="font-size:150%">BandLink</h1></center></div>-->
 </div>
