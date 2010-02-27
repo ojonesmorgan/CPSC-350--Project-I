@@ -26,19 +26,21 @@
 	
 	if (isset($error))
 	{
-		echo "<p style='color:red;'>";
+		echo "<fieldset style='border:2px solid white; background-color:black;'>";
+		echo "<p style='color:white; font-weight:bold; text-align:center;'>";
 		if ($error == "missinginput") echo "Please fill in all required fields.";
 		if ($error == "passwords") echo "The passwords you entered do not match.";
 		if ($error == "shortpass") echo "Passwords must be at least 4 characters long.";
 		if ($error == "invalidemail") echo "Please enter a valid email address.";
-		echo "</p><br />";
+		if ($error == "emailtaken") echo "This email address has already been registered.";
+		echo "</p></fieldset><br />";
 	}
 	
 	echo "<label for =\"name\">Name:</label> <input name='name' type='text' value='$name' />";
 	echo "<label for =\"email\">Email Address:</label> <input name='email' type='text' value='$email' />";
 	echo "<label for =\"password\">Password:</label> <input name='password' type='password' />";
 	echo "<label for =\"confirmpass\">Confirm Password:</label> <input name='confirmpass' type='password' />";
-	echo "<input  type='submit' value='  Create Account  ' />";
+	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' value='  Create Account  ' /></p>";
 	echo "</form>\n";
 	echo "<p style='text-align:center;'>Already have an account? <a href='login.php'>Click here to log in.</a></p><br />\n";
 

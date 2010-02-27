@@ -1,9 +1,8 @@
 <div id="header" style="margin:10px 10px 0px 10px;">
 
-
 <?php
 echo "<span style='float:right;'>";
-if ($logged_in) echo $_SESSION['name']."&nbsp;&nbsp;<a href='logout.php'>Logout</a>";
+if ($logged_in) echo "<span style='color:red;'>".$_SESSION['name']."</span>&nbsp;&nbsp;<a href='logout.php'>Logout</a>";
 else echo "<a href='login.php'>Log In</a>";
 echo "</span><br />\n";
 ?>
@@ -13,10 +12,6 @@ echo "</span><br />\n";
 	<div id="Navigation">
 	<a href=".">Home</a>
 	|
-	<?php if (!$logged_in) { ?>
-	<a href="register.php">Register</a>
-	|
-	<?php } ?>
 	<a href="addBandForm.php">Add Band</a>
 	|
 	<a href="addVenueForm.php">Add Venue</a>
@@ -24,4 +19,10 @@ echo "</span><br />\n";
 	<a href="musicsearch.php">Search Music</a>
 	|
 	<a href="searchVenue.php">Search Venues</a>
+	|
+	<?php if (!$logged_in) { ?>
+	<a href="register.php">Register</a>
+	<?php } else { ?>
+	<a href="account.php">Account</a>
+	<?php } ?>
 	</div>

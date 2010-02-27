@@ -8,17 +8,25 @@ $confirm_password = $_POST['confirmpass'];
 $email_at = strpos($email, "@");
 $email_dot = strpos($email, ".");
 
+if ((strlen($password) > 0) && (strlen($password) < 4)) $error = "shortpass";
+if ($password != $confirm_password) $error = "passwords";
+//if (($email_at < 1) || ($email_dot < 1) || ($email_at > $email_dot)) $error = "invalidemail";
+
+include("db_connect.php");
+
+$result = mysqli_query($db, "SELECT * FROM users WHERE email='$email'");
+
+while ($row = mysqli_fetch_assoc($result))
+{
+	$error = "emailtaken";
+}
+
 if (empty($name) || empty($email) || empty($password) || empty($confirm_password)) $error = "missinginput";
-else if ($password != $confirm_password) $error = "passwords";
-else if (strlen($password) < 4) $error = "shortpass";
-//else if (($email_at < 1) || ($email_dot < 1) || ($email_at > $email_dot)) $error = "invalidemail";
 
 if (isset($error)) header("location:register.php?err=$error"."&name=$name"."&email=$email");
 
 else
-{
-	include("db_connect.php");
-	
+{	
 	$name = mysql_escape_string(stripslashes(trim($name)));
 	$email = mysql_escape_string(stripslashes(trim($email)));
 	$password = mysql_escape_string(stripslashes(trim(md5($password))));

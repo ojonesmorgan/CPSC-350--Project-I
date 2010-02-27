@@ -23,11 +23,12 @@ if ($logged_in) header("location:.");
 	$email = $_GET['email'];
 	$logged_out = $_GET['logout'] == 1;
 	
-	echo "<br /><form align = left method='post' action='loginhandler.php'>";
+	echo "<form align = left method='post' action='loginhandler.php'>";
 	
 	if (isset($error))
 	{
-		echo "<p style='color:red;'>";
+		echo "<fieldset style='border:2px solid white; background-color:black;'>";
+		echo "<p style='color:white; font-weight:bold; text-align:center;'>";
 		if ($error == "accessdenied") echo "You must be logged in to access that page.";
 		if ($error == "noinput") echo "Please enter an email address and password.";
 		if ($error == "noemail") echo "Please enter an email address.";
@@ -35,16 +36,22 @@ if ($logged_in) header("location:.");
 		if ($error == "wrongemail") echo "The email address you entered has not been registered.";
 		if ($error == "wrongpass") echo "The password you entered is incorrect.";
 		if ($error == "invalid") echo "Some information is missing or incorrect. Please try again.";
-		echo "</p><br />\n";
+		echo "</p></fieldset><br />";
 	}
 	
-	else if ($logged_out) echo "<p>You have been logged out.</p><br />\n";
+	else if ($logged_out)
+	{
+		echo "<fieldset style='border:2px solid white; background-color:black;'>";
+		echo "<p style='color:white; font-weight:bold; text-align:center;'>";
+		echo "You have been logged out.\n";
+		echo "</p></fieldset><br />";
+	}
 	
-	echo "<label for=\"email\">Email:</label><input name='email' type='text' value='$email' /><br/>";
+	echo "<label for=\"email\">Email Address:</label><input name='email' type='text' value='$email' /><br/>";
 	echo "<label for=\"password\">Password: </label><input name='password' type='password' /><br/>";
-	echo "<input type='submit' value='  Login  ' />";
+	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' value='  Login  ' /></p>";
 	echo "</form>\n";
-	echo "<p>Don't have an account? <a href='register.php'>Click here to register.</a></p><br />\n";
+	echo "<p style='text-align:center;'>Don't have an account? <a href='register.php'>Click here to register.</a></p><br />\n";
 	?>
 	
 

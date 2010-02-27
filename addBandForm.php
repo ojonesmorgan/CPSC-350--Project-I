@@ -35,7 +35,7 @@ if (!$logged_in) header("location:login.php?err=accessdenied");
   
     <label for="other">Anything else you want to add?</label>
     <textarea id="other" name="other"></textarea><br />
-    <input type="submit" value="Submit Band" name="submit" />
+    <p><input style="display:block; margin-left:auto; margin-right:auto;" type="submit" value="Submit" name="submit" /></p>
   </form>
 </div> <!-- end main div -->
  <?php include("projectSideBar.php"); ?>
