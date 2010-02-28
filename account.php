@@ -1,6 +1,23 @@
 <?php
 include("session.php");
 if (!$logged_in) header("location:login.php?err=accessdenied");
+if ($is_admin) $user = $_GET['u'];
+if (empty($user)) $user = $_SESSION['email'];
+$is_owner = $user == $_SESSION['email'];
+
+include ("db_connect.php");
+$result = mysqli_query($db, "SELECT * FROM users WHERE email = '$user'");
+	
+while ($row = mysqli_fetch_assoc($result))
+{
+	if (empty($_GET['name'])) $_GET['name'] = $row['name'];
+	
+	if (($row['admin'] == 1) && !$is_owner)
+	{
+		header("location:account.php?saved=1");
+		exit;
+	}
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -18,18 +35,18 @@ if (!$logged_in) header("location:login.php?err=accessdenied");
 	<div id="main">
 	<!--<center><div>-->
 
-	<h1><u><?php echo $_SESSION['name']; ?>'s Account</u></h1>
+	<h1><u><?php echo $_GET['name']; ?>'s Account</u></h1>
 	
-	<?php
+	<?php	
 	$error = $_GET['err'];
 	$name = $_GET['name'];
 	$email = $_GET['email'];
 	$saved = $_GET['saved'] == 1;
 	
-	if (empty($name)) $name = $_SESSION['name'];
-	if (empty($email)) $email = $_SESSION['email'];
+	if (empty($name) && $is_owner) $name = $_SESSION['name'];
+	if (empty($email)) $email = $user;
 
-	echo "<form method='post' action='updateaccount.php'>";
+	echo "<form method='post' action='updateaccount.php?u=$user'>";
 	
 	if (isset($error))
 	{
@@ -54,14 +71,51 @@ if (!$logged_in) header("location:login.php?err=accessdenied");
 	
 	echo "<label for='name'>Name:</label> <input name='name' type='text' value='$name' />";
 	echo "<label for='email'>Email Address:</label> <input name='email' type='text' value='$email' />";
-	echo "<label for='currentpass'>Current Password:</label> <input name='currentpass' type='password' />";
+	if ($is_owner) echo "<label for='currentpass'>Current Password:</label> <input name='currentpass' type='password' />";
 	echo "<label for='password'>New Password:</label> <input name='password' type='password' />";
 	echo "<label for='confirmpass'>Confirm Password:</label> <input name='confirmpass' type='password' />";
-	echo "<p style='text-align:center;'><input name='delete' type='checkbox' value='1' /> Delete my account.</p>";
-	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' value='  Save Changes  ' /></p>";
-	echo "</form>\n";
-?>
 	
+	if ($is_admin && !$is_owner)
+	{
+		echo "<label for='admin'>Administrator:</label> <input name='admin' type='radio' value='1' /> ";
+		echo "<span style='color:red; background-color:transparent;	";
+		echo "font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'Sans-Serif'";
+		echo "font-size: 0.8em;'>yes&nbsp;&nbsp;&nbsp;&nbsp;";
+		echo "<input style='margin-top:7px;' name='admin' type='radio' value='0' checked /> no</span>";
+	}
+	
+	echo "<p style='text-align:center;'><input name='delete' type='checkbox' value='1' /> Delete ";
+	if ($is_owner) echo "my";
+	else echo $name."'s";
+	echo " account.</p>";
+	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' ";
+	echo "type='submit' value='  Save Changes  ' /></p>";
+	echo "</form>\n";
+	
+	if ($is_admin)
+	{
+		$user_accounts = "<br /><h1><u>User Accounts</u></h1><form type='get' action='account.php'>";
+		$user_accounts .= "<p><select style='width:350px;' name='u'>\n";
+		
+		$result = mysqli_query($db, "SELECT * FROM users WHERE admin = '0'");
+		$count = 0;
+		
+		while ($row = mysqli_fetch_assoc($result))
+		{
+			$user_email = $row['email'];
+			$description = $row['name']." ($user_email)";
+		
+			$user_accounts .= "<option value='$user_email'>$description</option>\n";
+			
+			++$count;
+		}
+		
+		$user_accounts .= "\n</select>&nbsp;&nbsp;<input style='width:75px;' type='submit' value=' Go ' />";
+		$user_accounts .= "</p></form><br />\n";
+		
+		if ($count > 0) echo $user_accounts;
+	}
+	?>
 	
 	<!--</div></center>-->
 	

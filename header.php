@@ -6,11 +6,12 @@ if ($logged_in) echo "<span style='color:red;'>".$_SESSION['name']."</span>&nbsp
 else echo "<a href='login.php'>Log In</a>";
 echo "</span><br />\n";
 ?>
-<a href="main_page.php"><img src="Pictures/logo.png"></a>
+
+<a href="."><img border=0 src="Pictures/logo.png" /></a>
 
 <!--<center><h1 style="font-size:150%">BandLink</h1></center></div>-->
 </div>
-<div id="nav"><center><p><i>Your Link for the latest band and venue information.</i></p></center></div>
+<div id="nav"><center><p><i>Your link to the latest band and venue information.</i></p></center></div>
 	<div id="Navigation">
 	<a href=".">Home</a>
 	|
