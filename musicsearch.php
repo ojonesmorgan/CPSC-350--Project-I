@@ -25,7 +25,7 @@
 	echo "<br />";
 	
 	$results = mysqli_query($db, $query) or die("Error Querying Database");
-	$sortlink = "musicsearch.php?sort=";
+	$sortlink = "musicsearch?sort=";
 	$desclink = "&desc=$desc";
 
 	echo "<table id=\"hor-minimalist-b\" >\n<tr>";
@@ -39,11 +39,17 @@
 
 	while ($row = mysqli_fetch_assoc($results))
 	{
+		$name = $row['bandName'];
+		$genre = $row['bandGenre'];
+		$city = $row['bandCity'];
+		$state = $row['bandState'];
+		$linked_name = "<a style='color:darkblue;' href='bandprofile.php?name=$name&genre=$genre&city=$city&state=$state'>$name</a>";
+		
 		echo "<tr>";
-		echo "<td>".$row['bandName']."</td>";
-		echo "<td>".$row['bandGenre']."</td>";
-		echo "<td>".$row['bandCity']."</td>";
-		echo "<td>".$row['bandState']."</td>";
+		echo "<td>$linked_name</td>";
+		echo "<td>$genre</td>";
+		echo "<td>$city</td>";
+		echo "<td>$state</td>";
 		echo "</tr>\n";
 		
 		++$count;
@@ -54,12 +60,12 @@
 		echo "<tr><td style='text-align:center;' colspan=4><p style='font-weight:bold; font-size:125%'>";
 		echo "No results found for \"".$search.".\"</p>";
 		echo "<p style='font-size:125%'>";
-		echo "<a style='color:darkblue;' href='musicsearch.php?sort=$sort&desc=$desc'>Show All</a></p></th></tr>";
+		echo "<a style='color:darkblue;' href='musicsearch?sort=$sort&desc=$desc'>Show All</a></p></th></tr>";
 	}
 	
 	echo "</table>\n";
 	
-	echo "<p><form method='get' action='musicsearch.php'>";
+	echo "<p><form method='get' action='musicsearch'>";
 	echo "<input type='hidden' name='sort' value='$sort' />";
 	echo "<input type='text' name='q' value='$search' />";
 	echo "&nbsp;&nbsp;<input type='submit' value=' Search ' name='submit' /></p>";
