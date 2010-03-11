@@ -1,11 +1,11 @@
 <?php
 include("session.php");
 
-if (!$logged_in)
-{
-	header("location:login.php?err=accessdenied");
-	exit;
-}
+//if (!$logged_in)
+//{
+//	header("location:login.php?err=accessdenied");
+//	exit;
+//}
 
 $saved = $_GET['saved'] == 1;
 $name = $_GET['name'];
@@ -46,7 +46,7 @@ if (empty($name))
 		echo "</p></fieldset>";
 	}
 	
-	echo "<form type='post' action='updateband.php'><p>";
+	echo "<form type='post' action='updateband.php?id=$name'><p>";
 	echo "<label for='name'>Band Name:</label> <input name='name' type='text' value='$name' />";
 	echo "<label for='name'>Genre(s):</label> <input name='genre' type='text' value='$genre' />";
 	echo "<label for='name'>City:</label> <input name='city' type='text' value='$city' />";
