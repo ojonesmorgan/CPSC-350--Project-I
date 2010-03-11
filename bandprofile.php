@@ -12,6 +12,12 @@ $name = $_GET['name'];
 $genre = $_GET['genre'];
 $city = $_GET['city'];
 $state = $_GET['state'];
+
+if (empty($name))
+{
+	header("location:musicsearch.php");
+	exit;
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
