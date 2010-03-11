@@ -1,6 +1,7 @@
 <?php
 include("session.php");
 
+$old_name= $_GET['id'];
 $name = $_POST['name'];
 $genre = $_POST['genre'];
 $city = $_POST['city'];
@@ -24,7 +25,7 @@ include("db_connect.php");
 
 	
 	
-	$band = "WHERE bandName='$name'";
+	$band = "WHERE bandName='$old_name'";
 	
 	if (!empty($name)) mysqli_query($db, "UPDATE band SET bandName='$name' $band");
 	if (!empty($genre)) mysqli_query($db, "UPDATE band SET bandgenre='$genre' $band");
