@@ -1,11 +1,11 @@
 <?php
 include("session.php");
 
-//if (!$logged_in)
-//{
-//	header("location:login.php?err=accessdenied");
-//	exit;
-//}
+if (!$logged_in)
+{
+	header("location:login.php?err=accessdenied");
+	exit;
+}
 
 $saved = $_GET['saved'] == 1;
 $name = $_GET['name'];
@@ -13,11 +13,11 @@ $genre = $_GET['genre'];
 $city = $_GET['city'];
 $state = $_GET['state'];
 
-if (empty($name))
-{
-	header("location:musicsearch.php");
-	exit;
-}
+//if (empty($name))
+//{
+//	header("location:musicsearch.php");
+//	exit;
+//}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -46,11 +46,11 @@ if (empty($name))
 		echo "</p></fieldset>";
 	}
 	
-	echo "<form type='post' action='updateband.php?id=$name'><p>";
+	echo "<form method='post' action='updateband.php?id=$name'><p>";
 	echo "<label for='name'>Band Name:</label> <input name='name' type='text' value='$name' />";
-	echo "<label for='name'>Genre(s):</label> <input name='genre' type='text' value='$genre' />";
-	echo "<label for='name'>City:</label> <input name='city' type='text' value='$city' />";
-	echo "<label for='name'>State:</label> <input name='state' type='text' value='$state' /><p>";
+	echo "<label for='genre'>Genre(s):</label> <input name='genre' type='text' value='$genre' />";
+	echo "<label for='city'>City:</label> <input name='city' type='text' value='$city' />";
+	echo "<label for='state'>State:</label> <input name='state' type='text' value='$state' /><p>";
 	echo "<input style='display:block; margin-left:auto; margin-right:auto;' type='submit' value=' Save Changes ' />";
 	echo "</p></p></form>";
 	?>
