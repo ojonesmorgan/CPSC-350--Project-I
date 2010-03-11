@@ -65,7 +65,7 @@
 	
 	echo "</table>\n";
 	
-	echo "<p><form method='get' action='musicsearch'>";
+	echo "<p><form method='get' action='musicsearch.php'>";
 	echo "<input type='hidden' name='sort' value='$sort' />";
 	echo "<input type='text' name='q' value='$search' />";
 	echo "&nbsp;&nbsp;<input type='submit' value=' Search ' name='submit' /></p>";
