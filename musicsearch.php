@@ -60,7 +60,7 @@
 		echo "<tr><td style='text-align:center;' colspan=4><p style='font-weight:bold; font-size:125%'>";
 		echo "No results found for \"".$search.".\"</p>";
 		echo "<p style='font-size:125%'>";
-		echo "<a style='color:darkblue;' href='musicsearch?sort=$sort&desc=$desc'>Show All</a></p></th></tr>";
+		echo "<a style='color:darkblue;' href='musicsearch.php?sort=$sort&desc=$desc'>Show All</a></p></th></tr>";
 	}
 	
 	echo "</table>\n";
