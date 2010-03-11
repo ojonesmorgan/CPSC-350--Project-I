@@ -24,7 +24,7 @@ while ($row = mysqli_fetch_assoc($result))
 	++$count;
 }
 
-if (empty($_SESSION['uid']))
+if (empty($_SESSION['email']))
 {
 	if (empty($email) && empty($password)) $error = "noinput";
 	else if (empty($email)) $error = "noemail";
@@ -36,5 +36,5 @@ if (empty($_SESSION['uid']))
 	header("location:login.php?err=$error");
 }
 
-else header("location:main_page.php");
+else header("location:.");
 ?>
