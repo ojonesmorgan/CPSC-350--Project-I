@@ -5,7 +5,7 @@ $old_name= $_GET['id'];
 $name = $_POST['name'];
 $genre = $_POST['genre'];
 $city = $_POST['city'];
-$street = $_POST['state'];
+$state = $_POST['state'];
 //$description = $_POST['venuedescription'];
 //$photo = $_POST['venuephoto'];
 //$map = $_POST['venuemap'];
@@ -36,5 +36,5 @@ include("db_connect.php");
 	//if (!empty($description)) mysqli_query($db, "UPDATE venue SET venueDescription='$description' $band");
 	
 	
-	//header("location:bandprofile.php?saved=1&name=$name&genre=$genre&city=$city&state=$state");
+	header("location:bandprofile.php?saved=1&name=$name&genre=$genre&city=$city&state=$state");
 ?>

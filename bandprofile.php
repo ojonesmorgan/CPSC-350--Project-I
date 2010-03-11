@@ -61,6 +61,6 @@ $state = $_GET['state'];
 	
 	<?php include("projectSideBar.php"); ?>
 	<?php include("footer.html");?>
-</div>
 </body>
+</div>
 </html>
