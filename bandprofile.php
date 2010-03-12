@@ -13,11 +13,11 @@ $genre = $_GET['genre'];
 $city = $_GET['city'];
 $state = $_GET['state'];
 
-//if (empty($name))
-//{
-//	header("location:musicsearch.php");
-//	exit;
-//}
+if (empty($name))
+{
+	header("location:musicsearch.php");
+	exit;
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -35,9 +35,20 @@ $state = $_GET['state'];
 	<div id="main">
 	<!--<center><div>-->
 
-	<h1><u><?php echo $_GET['name']; ?>'s Profile</u></h1>
+	<h1><u><?php echo $name; ?>'s Profile</u></h1>
 	
 	<?php
+	include("db_connect.php");
+	$result = mysqli_query($db, "SELECT * FROM band WHERE bandName = '$name'");
+	
+	while ($row = mysqli_fetch_assoc($result))
+	{
+		$description = $row['bandDescription'];
+		$photo = $row['bandPhoto'];
+	}
+	
+	if (empty($photo)) $photo = "Pictures/default.jpg";
+	
 	if ($saved)
 	{
 		echo "<fieldset style='border:2px solid white; background-color:black;'>";
@@ -50,8 +61,11 @@ $state = $_GET['state'];
 	echo "<label for='name'>Band Name:</label> <input name='name' type='text' value='$name' />";
 	echo "<label for='genre'>Genre(s):</label> <input name='genre' type='text' value='$genre' />";
 	echo "<label for='city'>City:</label> <input name='city' type='text' value='$city' />";
-	echo "<label for='state'>State:</label> <input name='state' type='text' value='$state' /><p>";
-	echo "<input style='display:block; margin-left:auto; margin-right:auto;' type='submit' value=' Save Changes ' />";
+	echo "<label for='state'>State:</label> <input name='state' type='text' value='$state' />";
+	//echo "<label style='vertical-align:top;' for='description'>Description:</label> ";
+	//echo "<textarea name='description' rows=5>$description</textarea>";
+	echo "<p style='text-align:center;'><img style='border:1px solid red;' src='$photo' /></center></p>";
+	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' value=' Save Changes ' />";
 	echo "</p></p></form>";
 	?>
 	
