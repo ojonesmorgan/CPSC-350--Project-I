@@ -46,8 +46,19 @@ if (empty($name))
 		$description = $row['bandDescription'];
 		$photo = $row['bandPhoto'];
 	}
-	
+	/* The way below will not work if there is a file path specified but the file does
+		not exist.
 	if (empty($photo)) $photo = "Pictures/default.jpg";
+	*/
+
+
+	 //the code below will only try to display the image from the path pulled
+	//from the database if the image exists... other wise it will set to default.
+	if (file_exists( $photo)== false){
+		//set $Photo to default image
+		$photo="Pictures/default.jpg";
+	}
+	
 	
 	if ($saved)
 	{
@@ -64,7 +75,7 @@ if (empty($name))
 	echo "<label for='state'>State:</label> <input name='state' type='text' value='$state' />";
 	//echo "<label style='vertical-align:top;' for='description'>Description:</label> ";
 	//echo "<textarea name='description' rows=5>$description</textarea>";
-	echo "<p style='text-align:center;'><img style='border:1px solid red;' src='$photo' /></center></p>";
+	echo "<p style='text-align:center;'><img width = 150 height = 100 style='border:1px solid red;' src='$photo' /></center></p>";
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' value=' Save Changes ' />";
 	echo "</p></p></form>";
 	?>
