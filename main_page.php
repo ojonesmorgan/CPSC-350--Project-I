@@ -43,7 +43,7 @@
 	}
 	
   	echo "
-	<table width=400 bordercolor=darkred bgcolor=darkblue>
+	<table width=400 border=4 bordercolor=darkred bgcolor=darkblue>
 	<tr>
 		<td align =center><h3>$bandName<h3> ($bandGenre) </td>
 		<td ><table width=200 align= center><tr><td><h4>From:</h4></td></tr><tr><td><p>$bandCity , $bandState<p></td></tr></table> </td>
@@ -89,7 +89,7 @@
 	}
 		
   	echo "
-	<table width =400 bordercolor=darkred bgcolor=darkblue>
+	<table width =400 border=4 bordercolor=darkred bgcolor=darkblue>
 	<tr>
 		<td ><h3 align=center>$venueName<h3> </td>
 		<td >
