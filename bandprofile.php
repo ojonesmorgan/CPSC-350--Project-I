@@ -9,9 +9,6 @@ if (!$logged_in)
 
 $saved = $_GET['saved'] == 1;
 $name = $_GET['name'];
-$genre = $_GET['genre'];
-$city = $_GET['city'];
-$state = $_GET['state'];
 
 if (empty($name))
 {
@@ -43,22 +40,18 @@ if (empty($name))
 	
 	while ($row = mysqli_fetch_assoc($result))
 	{
+		$genre = $row['bandGenre'];
+		$city = $row['bandCity'];
+		$state = $row['bandState'];
 		$description = $row['bandDescription'];
 		$photo = $row['bandPhoto'];
 	}
-	/* The way below will not work if there is a file path specified but the file does
-		not exist.
-	if (empty($photo)) $photo = "Pictures/default.jpg";
-	*/
-
-
-	 //the code below will only try to display the image from the path pulled
-	//from the database if the image exists... other wise it will set to default.
-	if (file_exists( $photo)== false){
-		//set $Photo to default image
-		$photo="Pictures/default.jpg";
-	}
 	
+	$default_photo = "Pictures/default.jpg";
+	
+	//the code below will only try to display the image from the path pulled
+	//from the database if the image exists... other wise it will set to default.
+	if (empty($photo) || !is_array(getimagesize($photo))) $photo = $default_photo; //set $photo to default image
 	
 	if ($saved)
 	{
@@ -73,9 +66,14 @@ if (empty($name))
 	echo "<label for='genre'>Genre(s):</label> <input name='genre' type='text' value='$genre' />";
 	echo "<label for='city'>City:</label> <input name='city' type='text' value='$city' />";
 	echo "<label for='state'>State:</label> <input name='state' type='text' value='$state' />";
-	//echo "<label style='vertical-align:top;' for='description'>Description:</label> ";
-	//echo "<textarea name='description' rows=5>$description</textarea>";
-	echo "<p style='text-align:center;'><img width = 150 height = 100 style='border:1px solid red;' src='$photo' /></center></p>";
+	echo "<label style='vertical-align:top;' for='description'>Description:</label> ";
+	echo "<textarea name='description' rows=5>$description</textarea>";
+	echo "<label for='photo'>Photo:</label> <input name='photo' type='text' value='";
+	if ($photo != $default_photo) echo $photo;
+	echo "' />";
+	echo "<p style='text-align:center;'><img style='border:1px solid red;";
+	if ($photo == $default_photo) echo " height:100px; width:150px;";
+	echo "' src='$photo' /></center></p>";
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' value=' Save Changes ' />";
 	echo "</p></p></form>";
 	?>

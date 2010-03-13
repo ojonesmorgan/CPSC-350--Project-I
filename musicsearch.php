@@ -43,10 +43,13 @@
 		$genre = $row['bandGenre'];
 		$city = $row['bandCity'];
 		$state = $row['bandState'];
-		$linked_name = "<a style='color:darkblue;' href='bandprofile.php?name=$name&genre=$genre&city=$city&state=$state'>$name</a>";
+		$linked_name = "<a style='color:darkblue;' href='bandprofile.php?name=$name'>$name</a>";
 		
 		echo "<tr>";
-		echo "<td>$linked_name</td>";
+		echo "<td>";
+		if ($logged_in) echo $linked_name;
+		else echo $name;
+		echo "</td>";
 		echo "<td>$genre</td>";
 		echo "<td>$city</td>";
 		echo "<td>$state</td>";

@@ -12,9 +12,8 @@ $name = $_POST['name'];
 $genre = $_POST['genre'];
 $city = $_POST['city'];
 $state = $_POST['state'];
-//$description = $_POST['description'];
-//$photo = $_POST['photo'];
-//$map = $_POST['map'];
+$description = $_POST['description'];
+$photo = $_POST['photo'];
 
 include("db_connect.php");
 	
@@ -22,17 +21,17 @@ $name = mysql_escape_string(stripslashes(htmlspecialchars(trim($name))));
 $genre = mysql_escape_string(stripslashes(htmlspecialchars(trim($genre))));
 $city = mysql_escape_string(stripslashes(htmlspecialchars(trim($city))));
 $state = mysql_escape_string(stripslashes(htmlspecialchars(trim($state))));
-//$description = mysql_escape_string(stripslashes(htmlspecialchars(trim($description))));
-//$photo = mysql_escape_string(stripslashes(htmlspecialchars(trim($photo))));
+$description = mysql_escape_string(stripslashes(htmlspecialchars(trim($description))));
+$photo = mysql_escape_string(stripslashes(htmlspecialchars(trim($photo))));
 
 $band = "WHERE bandName='$old_name'";
 
-if (!empty($genre)) mysqli_query($db, "UPDATE band SET bandGenre='$genre' $band");
-if (!empty($city)) mysqli_query($db, "UPDATE band SET bandCity='$city' $band");
-if (!empty($state)) mysqli_query($db, "UPDATE band SET bandState='$state' $band");
-//if (!empty($photo)) mysqli_query($db, "UPDATE  SET bandPhoto='$photo' $band");
-//if (!empty($description)) mysqli_query($db, "UPDATE  SET bandDescription='$description' $band");
-if (!empty($name)) mysqli_query($db, "UPDATE band SET bandName='$name' $band"); //This must be the LAST update statement.
+mysqli_query($db, "UPDATE band SET bandGenre='$genre' $band");
+mysqli_query($db, "UPDATE band SET bandCity='$city' $band");
+mysqli_query($db, "UPDATE band SET bandState='$state' $band");
+mysqli_query($db, "UPDATE band SET bandPhoto='$photo' $band");
+mysqli_query($db, "UPDATE band SET bandDescription='$description' $band");
+if (!empty($name)) mysqli_query($db, "UPDATE band SET bandName='$name' $band"); //This must be the LAST update query.
 
-header("location:bandprofile.php?saved=1&name=$name&genre=$genre&city=$city&state=$state");
+header("location:bandprofile.php?name=$name&saved=1");
 ?>
