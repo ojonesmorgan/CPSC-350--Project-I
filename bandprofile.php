@@ -37,7 +37,8 @@ if (empty($name))
 	<?php
 	include("db_connect.php");
 	$result = mysqli_query($db, "SELECT * FROM band WHERE bandName = '$name'");
-	
+	$count = 0;
+
 	while ($row = mysqli_fetch_assoc($result))
 	{
 		$genre = $row['bandGenre'];
@@ -45,13 +46,21 @@ if (empty($name))
 		$state = $row['bandState'];
 		$description = $row['bandDescription'];
 		$photo = $row['bandPhoto'];
+
+		++$count;
+	}
+
+	if ($count < 1)
+	{
+		header("location:musicsearch.php");
+	        exit;
 	}
 	
 	$default_photo = "Pictures/default.jpg";
 	
 	//the code below will only try to display the image from the path pulled
 	//from the database if the image exists... other wise it will set to default.
-	if (empty($photo) || !is_array(getimagesize($photo))) $photo = $default_photo; //set $photo to default image
+	if (empty($photo) || !file_exists($photo) || !is_array(getimagesize($photo))) $photo = $default_photo; //set $photo to default image
 	
 	if ($saved)
 	{
