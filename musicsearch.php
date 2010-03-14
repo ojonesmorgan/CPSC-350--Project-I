@@ -46,10 +46,7 @@
 		$linked_name = "<a style='color:darkblue;' href='bandprofile.php?name=$name'>$name</a>";
 		
 		echo "<tr>";
-		echo "<td>";
-		if ($logged_in) echo $linked_name;
-		else echo $name;
-		echo "</td>";
+		echo "<td>$linked_name</td>";
 		echo "<td>$genre</td>";
 		echo "<td>$city</td>";
 		echo "<td>$state</td>";
