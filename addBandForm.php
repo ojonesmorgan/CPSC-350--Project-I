@@ -1,6 +1,6 @@
 <?php
 include("session.php");
-if (!$logged_in) header("location:login.php?err=accessdenied");
+if (!$logged_in) include("notloggedin.php");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -17,26 +17,42 @@ if (!$logged_in) header("location:login.php?err=accessdenied");
 <div id="main">
 
   <h1><u>Add a Band</u></h1>
-
   
-  <form method="post" action="addBandResults.php">
-    <label for="name">Band name:</label>
-    <input type="text" id="name" name="name" /><br />
-    <label for="genre">Genre:</label>
-    <input type="text" id="genre" name="genre" /><br />
-    <label for="tity">City:</label>
-    <input type="text" id="city" name="city" /><br />
-    <label for="state">State:</label>
-    <input type="text" id="state" name="state" /><br />
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description"  /><br />
-    <label for="photo">Photo:</label>
-    <input type="text" id="photo" name="photo"/><br />
-  
-    <label for="other">Anything else you want to add?</label>
-    <textarea id="other" name="other"></textarea><br />
-    <p><input style="display:block; margin-left:auto; margin-right:auto;" type="submit" value="Submit" name="submit" /></p>
-  </form>
+	<?php
+	$error = $_GET['err'];
+	$name = $_GET['name'];
+	$genre = $_GET['genre'];
+	$city = $_GET['city'];
+	$state = $_GET['state'];
+	$description = $_GET['description'];
+	$photo = $_GET['photo'];
+	
+	if (isset($error))
+	{
+		echo "<fieldset style='border:2px solid white; background-color:black;'>";
+		echo "<p style='color:white; font-weight:bold; text-align:center;'>";
+		if ($error == "noname") echo "Please enter a name for this artist.";
+		echo "</p></fieldset>";
+	}
+	
+	if ($logged_in) echo "<form method='post' action='addBandResults.php'>";
+	echo "<p>";
+	echo "<label for='name'>Band Name:</label> ";
+	echo "<input name='name' type='text' value='$name' />";
+	echo "<br /><label for='genre'>Genre(s):</label> ";
+	echo "<input name='genre' type='text' value='$genre' />";
+	echo "<br /><label for='city'>City:</label> ";
+	echo "<input name='city' type='text' value='$city' />";
+	echo "<br /><label for='state'>State:</label> ";
+	echo "<input name='state' type='text' value='$state' />";
+	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
+	echo "<textarea name='description' rows=5>$description</textarea>";
+	echo "<br /><label for='photo'>Photo URL:</label> <input name='photo' type='text' value='$photo' />";
+	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' ";
+	echo "value=' Submit ' /></p></form>";
+	echo "</p>\n";
+	?>
+	
 </div> <!-- end main div -->
  <?php include("projectSideBar.php"); ?>
  <?php include("footer.html");?>

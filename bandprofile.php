@@ -84,7 +84,7 @@ if ($count < 1)
 	
 	if ($logged_in)
 	{
-		echo "<br /><label for='photo'>Photo:</label> <input name='photo' type='text' value='";
+		echo "<br /><label for='photo'>Photo URL:</label> <input name='photo' type='text' value='";
 		if ($photo != $default_photo) echo $photo;
 		echo "' />";
 	}
@@ -99,7 +99,7 @@ if ($count < 1)
 		echo "value=' Save Changes ' /></p></form>";
 	}
 	
-	echo "</p>";
+	echo "</p>\n";
 	?>
 	
 	<!--</div></center>-->

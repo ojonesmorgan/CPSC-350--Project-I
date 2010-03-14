@@ -1,10 +1,16 @@
 <?php
 include("session.php");
-if ($logged_in) header("location:.");
+if ($logged_in)
+{
+	header("location:.");
+	exit;
+}
 
 include("db_connect.php");
 $email = $_POST['email'];
 $password = md5($_POST['password']);
+$ref = $_POST['ref'];
+if (empty($ref)) $ref = ".";
 
 $result = mysqli_query($db, "SELECT * FROM users WHERE email = '$email'");
 
@@ -36,5 +42,5 @@ if (empty($_SESSION['email']))
 	header("location:login.php?err=$error");
 }
 
-else header("location:.");
+else header("location:$ref");
 ?>

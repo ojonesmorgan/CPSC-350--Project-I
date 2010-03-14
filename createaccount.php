@@ -54,3 +54,7 @@ echo "<br /><h1>Welcome, ".$name."!</h1>";
 echo "<p>Your account has been created.</p>";
 echo "<p><a href='login.php?email=$email>Click here to log in.</a></p><br />\n";
 ?>
+
+</div></center></div>
+</body>
+</html>

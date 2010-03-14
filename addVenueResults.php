@@ -11,8 +11,6 @@ if (!$logged_in) header("location:login.php?err=accessdenied");
   <title>BandLink | Add Venue</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
-<script type="text/javascript" src="calendarDateInput.js" />
-
 <body>
 <div id="wrap">
 <?php include("header.php"); ?>

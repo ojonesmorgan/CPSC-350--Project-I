@@ -1,5 +1,6 @@
 <?php
 include("session.php");
+if (!$logged_in) include("notloggedin.php");
 if ($is_admin) $user = $_GET['u'];
 if (empty($user)) $user = $_SESSION['email'];
 $is_owner = $user == $_SESSION['email'];

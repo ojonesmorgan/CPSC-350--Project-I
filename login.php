@@ -23,7 +23,7 @@ if ($logged_in) header("location:.");
 	$email = $_GET['email'];
 	$logged_out = $_GET['logout'] == 1;
 	
-	echo "<form align = left method='post' action='loginhandler.php'>";
+	echo "<form align='left' method='post' action='loginhandler.php'>";
 	
 	if (isset($error))
 	{
@@ -47,6 +47,7 @@ if ($logged_in) header("location:.");
 		echo "</p></fieldset><br />";
 	}
 	
+	echo "<input name='ref' type='hidden' value='".$_GET['ref']."' />";
 	echo "<label for=\"email\">Email Address:</label><input name='email' type='text' value='$email' /><br/>";
 	echo "<label for=\"password\">Password: </label><input name='password' type='password' /><br/>";
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' value='  Login  ' /></p>";
@@ -54,7 +55,6 @@ if ($logged_in) header("location:.");
 	echo "<p style='text-align:center;'>Don't have an account? <a href='register.php'>Click here to register.</a></p><br />\n";
 	?>
 	
-
 	</div><!--end main div -->
 	
 	<?php include("projectSideBar.php"); ?>

@@ -1,11 +1,7 @@
 <?php
 include("session.php");
 
-if (!$logged_in)
-{
-	header("location:login.php?err=accessdenied");
-	exit;
-}
+if (!$logged_in) include("notloggedin.php");
 
 $old_name = $_GET['id'];
 $name = $_POST['name'];

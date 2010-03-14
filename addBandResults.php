@@ -1,6 +1,18 @@
 <?php
 include("session.php");
 if (!$logged_in) header("location:login.php?err=accessdenied");
+
+include("db_connect.php");
+  
+$name = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['name']))));
+$state = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['state']))));
+$city = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['city'])))); 
+$genre = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['genre']))));
+$photo = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['photo']))));
+$description = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['description']))));
+
+if (!empty($name)) mysqli_query($db, $query = "INSERT INTO band (bandName, bandState, bandCity, bandGenre, bandDescription, bandPhoto) VALUES ('$name', '$state', '$city', '$genre', '$description', '$photo')");
+else header("location:addBandForm.php?err=noname&name=$name&genre=$genre&city=$city&state=$state&description=$description&photo=$photo");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -8,77 +20,20 @@ if (!$logged_in) header("location:login.php?err=accessdenied");
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>BandLink | Add Band</title>
+  <title>Account Created</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
-<script type="text/javascript" src="calendarDateInput.js" />
 
 <body>
 <div id="wrap">
 <?php include("header.php"); ?>
-	<div id="main">
-
+<center><div>
 	
-<?php
-  include  "db_connect.php";  
-  
-  $name = $_POST['name'];
-  $state = $_POST['state'];
-  $city = $_POST['city'];  
-  $genre = $_POST['genre'];
-  $photo = $_POST['photo'];
-  $description = $_POST['description'];
-  
-  
-  
-  echo "<p>Thanks for submitting this new band</p>";
-
- 
-  
-  
-  
-  $query = "INSERT INTO band (bandName, bandState, bandCity, bandGenre, bandDescription, bandPhoto) " . 
-  		   "VALUES ('$name', '$state', '$city', '$genre', '$description', '$photo')";
-  
-echo "<p> You Description of the band: </p>";
-echo "<p>$description</p>";
-  $result = mysqli_query($db, $query)
-   or die("Error Querying Database");
-   
-   
-  //echo "<h1>Abductions by date</h1>";
-  
-  
-  $query = "SELECT * FROM band ORDER BY bandName";
-  
-  $result = mysqli_query($db, $query)
-   or die("Error Querying Database");
-  
-  //echo "<table id=\"hor-minimalist-b\">\n<tr><th>Date</th><th>Band</th><th>City</th><th>State</th><tr>\n\n";
-  
-  //while($row = mysqli_fetch_array($result)) {
-  	//$name = $row['name'];
-  	//$description = $row['description'];
-  	//$genre = $row['genre'];
-  	//$city = $row['city'];
-  	//$state = $row['state'];
-  	//echo "<tr><td  >$date</td><td  >$name</td><td >$city</td><td>$state</td></tr>\n";
-  //}
- echo "</table>\n"; 
-  
-  mysqli_close($db);
-  
-  
-?>
+	<?php
+	echo "<br /><h1>Thanks for adding the band $name.</h1>";
+	echo "<p><a href='bandprofile.php?name=$name'>Click here to go to ".$name."'s profile.</a></p><br />\n";
+	?>
 	
-	
-	
-	</div><!-- end main div -->
-	
-	
-    <?php include("projectSideBar.php"); ?>
-
-	<?php include ("footer.html"); ?>
-</div> <!-- end wrap div -->
+</div></center></div>
 </body>
 </html>

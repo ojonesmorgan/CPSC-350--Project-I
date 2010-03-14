@@ -1,6 +1,6 @@
 <?php
 include("session.php");
-if (!$logged_in) header("location:login.php?err=accessdenied");
+if (!$logged_in) include("notloggedin.php");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"

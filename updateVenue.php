@@ -1,5 +1,6 @@
 <?php
 include("session.php");
+if (!$logged_in) include("notloggedin.php");
 
 $name = $_POST['venuename'];
 $state = $_POST['venuestate'];
@@ -8,8 +9,6 @@ $street = $_POST['venuestreet'];
 $description = $_POST['venuedescription'];
 $photo = $_POST['venuephoto'];
 $map = $_POST['venuemap'];
-
-
 
 include("db_connect.php");
 	
