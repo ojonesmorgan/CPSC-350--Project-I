@@ -29,7 +29,8 @@
 	$desclink = "&desc=$desc";
 
 	echo "<table id=\"hor-minimalist-b\" >\n<tr>";
-	echo "<th><a style='color:darkblue;' href='".$sortlink."venueName".$desclink."'>Place</a></th>";
+	echo "<th><a style='color:darkblue;' href='".$sortlink."venueName".$desclink."'>Name</a></th>";
+	echo "<th><a style='color:darkblue;' href='".$sortlink."venueStreet".$desclink."'>Street</a></th>";
 	echo "<th><a style='color:darkblue;' href='".$sortlink."venueCity".$desclink."'>City</a></th>";
 	echo "<th><a style='color:darkblue;' href='".$sortlink."venueState".$desclink."'>State</a></th>";
 	echo "</tr>\n";
@@ -38,16 +39,23 @@
 
 	while ($row = mysqli_fetch_assoc($results))
 	{
+		$name = $row['venueName'];
+		$street = $row['venueStreet'];
+		$city = $row['venueCity'];
+		$state = $row['venueState'];
+		$linked_name = "<a style='color:darkblue;' href='venueprofile.php?name=$name'>$name</a>";
+		
 		echo "<tr>";
-		echo "<td>".$row['venueName']."</td>";
-		echo "<td>".$row['venueCity']."</td>";
-		echo "<td>".$row['venueState']."</td>";
+		echo "<td>$linked_name</td>";
+		echo "<td>$street</td>";
+		echo "<td>$city</td>";
+		echo "<td>$state</td>";
 		echo "</tr>\n";
 		
 		++$count;
 	}
 	
-	if ($count == 0)
+	if ($count < 1)
 	{
 		echo "<tr><td style='text-align:center;' colspan=4><p style='font-weight:bold; font-size:125%'>";
 		echo "No results found for \"".$search.".\"</p>";

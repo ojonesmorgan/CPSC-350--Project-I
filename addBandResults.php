@@ -1,6 +1,6 @@
 <?php
 include("session.php");
-if (!$logged_in) header("location:login.php?err=accessdenied");
+if (!$logged_in) include("notloggedin.php");
 
 include("db_connect.php");
   
@@ -20,7 +20,7 @@ else header("location:addBandForm.php?err=noname&name=$name&genre=$genre&city=$c
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Account Created</title>
+  <title>BandLink | Band Added</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
@@ -29,10 +29,10 @@ else header("location:addBandForm.php?err=noname&name=$name&genre=$genre&city=$c
 <?php include("header.php"); ?>
 <center><div>
 	
-	<?php
-	echo "<br /><h1>Thanks for adding the band $name.</h1>";
-	echo "<p><a href='bandprofile.php?name=$name'>Click here to go to ".$name."'s profile.</a></p><br />\n";
-	?>
+<?php
+echo "<br /><h1>Thanks for adding the band $name.</h1>";
+echo "<p><a href='bandprofile.php?name=$name'>Click here to go to ".$name."'s profile.</a></p><br />\n";
+?>
 	
 </div></center></div>
 </body>

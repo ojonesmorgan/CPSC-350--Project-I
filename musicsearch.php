@@ -55,7 +55,7 @@
 		++$count;
 	}
 	
-	if ($count == 0)
+	if ($count < 1)
 	{
 		echo "<tr><td style='text-align:center;' colspan=4><p style='font-weight:bold; font-size:125%'>";
 		echo "No results found for \"".$search.".\"</p>";

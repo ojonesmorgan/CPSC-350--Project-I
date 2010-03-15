@@ -15,7 +15,6 @@ if (!$logged_in) include("notloggedin.php");
 <div id="wrap">
 <?php include("header.php"); ?>
 <div id="main">
-
   <h1><u>Add a Band</u></h1>
   
 	<?php
