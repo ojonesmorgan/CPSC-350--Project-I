@@ -8,45 +8,47 @@ if (!$logged_in) include("notloggedin.php");
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>BandLink | Add Band</title>
+  <title>BandLink | Add Venue</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
 <div id="wrap">
 <?php include("header.php"); ?>
 <div id="main">
-  <h1><u>Add a Band</u></h1>
+  <h1><u>Add a Venue</u></h1>
   
-	<?php
+  	<?php
 	$error = $_GET['err'];
 	$name = $_GET['name'];
-	$genre = $_GET['genre'];
+	$street = $_GET['street'];
 	$city = $_GET['city'];
 	$state = $_GET['state'];
 	$description = $_GET['description'];
-	$photo = $_GET['photo'];
+	$picture = $_GET['picture'];
+	$map = $_GET['map'];
 	
 	if (isset($error))
 	{
 		echo "<fieldset style='border:2px solid white; background-color:black;'>";
 		echo "<p style='color:white; font-weight:bold; text-align:center;'>";
-		if ($error == "noname") echo "Please enter a name for this artist.";
+		if ($error == "noname") echo "Please enter a name for this venue.";
 		echo "</p></fieldset>";
 	}
 	
-	if ($logged_in) echo "<form method='post' action='addBandResults.php'>";
+	if ($logged_in) echo "<form method='post' action='newvenue.php'>";
 	echo "<p>";
-	echo "<label for='name'>Band Name:</label> ";
+	echo "<label for='name'>Venue Name:</label> ";
 	echo "<input name='name' type='text' value='$name' />";
-	echo "<br /><label for='genre'>Genre(s):</label> ";
-	echo "<input name='genre' type='text' value='$genre' />";
+	echo "<br /><label for='street'>Street:</label> ";
+	echo "<input name='street' type='text' value='$street' />";
 	echo "<br /><label for='city'>City:</label> ";
 	echo "<input name='city' type='text' value='$city' />";
 	echo "<br /><label for='state'>State:</label> ";
 	echo "<input name='state' type='text' value='$state' />";
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
 	echo "<textarea name='description' rows=5>$description</textarea>";
-	echo "<br /><label for='photo'>Photo URL:</label> <input name='photo' type='text' value='$photo' />";
+	echo "<br /><label for='picture'>Picture URL:</label> <input name='picture' type='text' value='$picture' />";
+	echo "<br /><label for='picture'>Map Image:</label> <input name='map' type='text' value='$map' />";
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' ";
 	echo "value=' Submit ' /></p></form>";
 	echo "</p>\n";

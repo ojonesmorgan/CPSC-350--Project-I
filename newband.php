@@ -12,7 +12,7 @@ $photo = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['photo'])
 $description = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['description']))));
 
 if (!empty($name)) mysqli_query($db, $query = "INSERT INTO band (bandName, bandState, bandCity, bandGenre, bandDescription, bandPhoto) VALUES ('$name', '$state', '$city', '$genre', '$description', '$photo')");
-else header("location:addBandForm.php?err=noname&name=$name&genre=$genre&city=$city&state=$state&description=$description&photo=$photo");
+else header("location:addband.php?err=noname&name=$name&genre=$genre&city=$city&state=$state&description=$description&photo=$photo");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"

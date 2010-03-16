@@ -15,13 +15,13 @@ echo "</span><br />\n";
 	<div id="Navigation">
 	<a href=".">Home</a>
 	|
-	<a href="addBandForm.php">Add Band</a>
+	<a href="addband.php">Add Band</a>
 	|
-	<a href="addVenueForm.php">Add Venue</a>
+	<a href="addvenue.php">Add Venue</a>
 	|
 	<a href="musicsearch.php">Search Music</a>
 	|
-	<a href="searchVenue.php">Search Venues</a>
+	<a href="venuesearch.php">Search Venues</a>
 	|
 	<a href="delete.php">Delete</a>
 	|

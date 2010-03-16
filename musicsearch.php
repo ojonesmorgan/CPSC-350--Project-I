@@ -58,7 +58,9 @@
 	if ($count < 1)
 	{
 		echo "<tr><td style='text-align:center;' colspan=4><p style='font-weight:bold; font-size:125%'>";
-		echo "No results found for \"".$search.".\"</p>";
+		echo "No results found";
+		if (!empty($search)) echo " for \"".$search.".\"</p>";
+		else echo ".";
 		echo "<p style='font-size:125%'>";
 		echo "<a style='color:darkblue;' href='musicsearch.php?sort=$sort&desc=$desc'>Show All</a></p></th></tr>";
 	}
@@ -68,7 +70,7 @@
 	echo "<p><form method='get' action='musicsearch.php'>";
 	echo "<input type='hidden' name='sort' value='$sort' />";
 	echo "<input type='text' name='q' value='$search' />";
-	echo "&nbsp;&nbsp;<input type='submit' value=' Search ' name='submit' /></p>";
+	echo "&nbsp;&nbsp;<input type='submit' value=' Search ' /></p>";
 	echo "<p><input type='radio' name='desc' value=0";
 	if ($desc == 0 || $desc == "") echo " checked";
 	echo " />&nbsp;ascending&nbsp;&nbsp;";

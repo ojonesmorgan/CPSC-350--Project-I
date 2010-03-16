@@ -6,7 +6,7 @@ $name = $_GET['name'];
 
 if (empty($name))
 {
-	header("location:searchVenue.php");
+	header("location:venuesearch.php");
 	exit;
 }
 
@@ -28,7 +28,7 @@ while ($row = mysqli_fetch_assoc($result))
 
 if ($count < 1)
 {
-	header("location:searchVenue.php");
+	header("location:venuesearch.php");
     exit;
 }
 ?>
@@ -48,16 +48,16 @@ if ($count < 1)
 	<div id="main">
 	<!--<center><div>-->
 
-	<h1><u><?php echo $name; ?>'s Profile</u></h1>
+	<h1><u><?php echo $name; ?> Profile</u></h1>
 	
 	<?php
 	$default_picture = "Pictures/default.jpg";
-	$default_map = "Map/default.jpg";
+	//$default_map = "Map/default.jpg";
 	
 	//the code below will only try to display the image from the path pulled
 	//from the database if the image exists... other wise it will set to default.
 	if (empty($picture)) $picture = $default_picture; //set $picture to default image
-	if (empty($map)) $map = $default_map; // set $map to default map
+	if (empty($map)) $map = $default_picture; // set $map to default map
 	
 	if ($saved)
 	{
@@ -83,24 +83,24 @@ if ($count < 1)
 	else echo "<a style='text-decoration:none;' name='state'>$state</a><br />";
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
 	if ($logged_in) echo "<textarea name='description' rows=5>$description</textarea>";
-	else echo "<br /><a style='text-decoration:none;' name='description'>$description</a><br />";
+	else echo "<br /><a style='text-decoration:none;' name='description'>".nl2br($description)."</a><br />";
 	
 	if ($logged_in)
 	{
 		echo "<br /><label for='picture'>Picture URL:</label> <input name='picture' type='text' value='";
 		if ($picture != $default_picture) echo $picture;
 		echo "' />";
-		echo "<br /><label for='picture'>Map URL:</label> <input name='map' type='text' value='";
-		if ($map != $default_map) echo $map;
+		echo "<br /><label for='picture'>Map Image:</label> <input name='map' type='text' value='";
+		if ($map != $default_picture) echo $map;
 		echo "' />";
 	}
 	
 	echo "\n<p style='text-align:center;'><img style='border:1px solid red;";
 	if ($picture == $default_picture) echo " height:100px; width:150px;";
-	echo "' src='$picture' /></p>";
+	echo "' src='$picture' alt='$name' /></p>";
 	echo "\n<p style='text-align:center;'><img style='border:1px solid red;";
-	if ($map == $default_map) echo " height:100px; width:150px;";
-	echo "' src='$map' /></p>";
+	if ($map == $default_picture) echo " height:100px; width:150px;";
+	echo "' src='$map' alt='$name map' /></p>";
 	
 	if ($logged_in)
 	{

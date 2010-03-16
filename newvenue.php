@@ -13,7 +13,7 @@ $description = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['de
 $map = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['map']))));
   
 if (!empty($name)) mysqli_query($db, "INSERT INTO venue (venueName, venueState, venueCity, venueStreet, venueDescription, venuePicture, venueMap) VALUES ('$name', '$state', '$city', '$street', '$description', '$picture', '$map')");
-else header("location:addVenueForm.php?err=noname&name=$name&street=$street&city=$city&state=$state&description=$description&picture=$picture&map=$map");
+else header("location:addvenue.php?err=noname&name=$name&street=$street&city=$city&state=$state&description=$description&picture=$picture&map=$map");
 ?>
  
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
