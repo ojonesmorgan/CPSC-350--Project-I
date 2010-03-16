@@ -80,7 +80,7 @@ if ($count < 1)
 	else echo "<a style='text-decoration:none;' name='state'>$state</a><br />";
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
 	if ($logged_in) echo "<textarea name='description' rows=5>$description</textarea>";
-	else echo "<br /><a style='text-decoration:none;' name='description'>$description</a><br />";
+	else echo "<br /><a style='text-decoration:none;' name='description'>".nl2br($description)."</a><br />";
 	
 	if ($logged_in)
 	{
@@ -91,7 +91,7 @@ if ($count < 1)
 	
 	echo "\n<p style='text-align:center;'><img style='border:1px solid red;";
 	if ($photo == $default_photo) echo " height:100px; width:150px;";
-	echo "' src='$photo' /></p>";
+	echo "' src='$photo' alt='$name' /></p>";
 	
 	if ($logged_in)
 	{

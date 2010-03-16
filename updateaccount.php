@@ -62,7 +62,7 @@ else
 	if (!empty($name)) mysqli_query($db, "UPDATE users SET name='$name' $account");
 	if (!empty($email)) mysqli_query($db, "UPDATE users SET email='$email' $account");
 	if (!empty($password)) mysqli_query($db, "UPDATE users SET password='$password' $account");
-	if ($is_admin && !$is_owner) mysqli_query($db, "UPDATE users SET admin='$administrator'");
+	if ($is_admin && !$is_owner) mysqli_query($db, "UPDATE users SET admin='$administrator' $account");
 	
 	if ($is_owner)
 	{
@@ -74,6 +74,8 @@ else
 			$_SESSION['email'] = $row['email'];
 		}
 	}
+	
+	if (!empty($email)) $user = $email;
 	
 	if ($is_owner) header("location:account.php?saved=1");
 	else header("location:account.php?u=$user&n=$name&saved=1");

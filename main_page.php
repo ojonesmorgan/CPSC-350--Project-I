@@ -15,11 +15,11 @@
 	<div id="main">
   
 	<?php
-	  include "db_connect.php";
+	  include("db_connect.php");
 
 
 	  //start
-	
+	$default_photo = "Pictures/default.jpg";
 
 	echo "<p><span style=\"color:darkred\"><b>Featured Band:</B></span><br/>";
 	  $query = "SELECT * FROM band ORDER BY RAND() LIMIT 1";
@@ -31,29 +31,34 @@
   	$bandCity = $row['bandCity'];
 	$bandGenre = $row['bandGenre'];
 	$bandPhoto= $row['bandPhoto'];
-	if (file_exists( $bandPhoto)== false){
+	//if (file_exists( $bandPhoto)== false){
+	if (empty($bandPhoto)) {
 		//set $bandPhoto to default image
-		$bandPhoto="Pictures/default.jpg";
+		$bandPhoto=$default_photo;
 		$altPhoto="Band Image Could Not Be Found";
 	}
 	else{
 		$altPhoto="$bandName's Photo";
 	}
-	$desc=$row['bandDescription'];
+	$desc = $row['bandDescription'];
 	}
+	
+	$band_link = "bandprofile.php?name=$bandName";
 	
   	echo "
 	<table width=400 border=4 bordercolor=darkred bgcolor=darkblue>
 	<tr>
-		<td align =center><h3>$bandName<h3> ($bandGenre) </td>
-		<td ><table width=200 align= center><tr><td><h4>From:</h4></td></tr><tr><td><p>$bandCity , $bandState<p></td></tr></table> </td>
+		<td align =center><h3><a style='color:red;' href='$band_link'>$bandName</a><h3> ($bandGenre) </td>
+		<td ><table width=200 align= center><tr><td><h4>From:</h4></td></tr><tr><td><p>$bandCity, $bandState<p></td></tr></table> </td>
 	</tr>
 	<tr>
-		<td><img src=\"$bandPhoto\" alt=\"$altPhoto\" width=200 height=100></td>
+		<td><a href='$band_link'><img src=\"$bandPhoto\" alt=\"$altPhoto\" width=200 height=100 /></a></td>
 		<!--<td>Photo Path: bandPhoto </td>-->
 		<!-- Comments
 			makes a sizable image in the table with the path 'skull.jpg'
-			<td><img src=\"skull.jpg\" width = 150 height = 100></td>
+			<td><img src=\"skull.jpg\" ";
+			if ($bandPhoto == $default_photo) echo "width = 150 height = 100";
+			echo "></td>
 		-->
 		<td><p>$desc</p></td>
 	</tr>
@@ -61,6 +66,8 @@
 
 
 	//finish
+	
+	echo "<br />\n";
 
 	//start
 
@@ -78,24 +85,27 @@
 	$venueDescription=$row['venueDescription'];
 	$venuePicture=$row['venuePicture'];
 	$venueMap=$row['venueMap'];
-	if (file_exists( $venuePicture)== false){
+	//if (file_exists( $venuePicture)== false){
+	if (empty($venuePicture)) {
 		//set $venuePicture to default image
-		$venuePicture="Pictures/default.jpg";
+		$venuePicture=$default_photo;
 		$altvenPhoto="Band Image Could Not Be Found";
 	}
 	else{
 		$altvenPhoto="$venueName's Photo";
 	}
 	}
+	
+	$venue_link = "venueprofile.php?name=$venueName";
 		
   	echo "
 	<table width =400 border=4 bordercolor=darkred bgcolor=darkblue>
 	<tr>
-		<td ><h3 align=center>$venueName<h3> </td>
+		<td ><h3 align=center><a style='color:red;' href='$venue_link'>$venueName</a><h3> </td>
 		<td >
 			<table width=200 align=center>
 				<tr align=left>
-					<td><h4>From:</h4></td>
+					<td><h4>Location:</h4></td>
 				</tr>
 				<tr>
 					<td><p>$venueCity , $venueState</p><td></td>
@@ -104,10 +114,12 @@
 		</td>
 	</tr>
 	<tr>
-		<td><img src=\"$venuePicture\" alt=\"$altvenPhoto\" width=200 height=100></td>
+		<td><a href='$venue_link'><img src=\"$venuePicture\" alt=\"$altvenPhoto\" width=200 height=100 /></a></td>
 		<!-- Comments
 			makes a sizable image in the table with the path 'skull.jpg'
-			<td><img src=\"skull.jpg\" width = 150 height = 100></td>
+			<td><img src=\"skull.jpg\" ";
+			if ($venuePicture == $default_photo) echo "width = 150 height = 100";
+			echo "></td>
 		-->
 		<td><p>$venueDescription</p></td>
 	</tr>

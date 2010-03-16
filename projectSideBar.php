@@ -22,6 +22,6 @@ function search_panel($title, $id, $action, $msg)
 
 echo "<div id=\"sidebar\">\n";
 echo search_panel("Search Music", "searchBand", "musicsearch.php", "Enter an artist, genre, or location...");
-echo search_panel("Search Venues", "searchVenue", "searchVenue.php", "Enter a venue name or location...");
+echo search_panel("Search Venues", "searchVenue", "venuesearch.php", "Enter a venue name or location...");
 echo "<br /></div>\n";
 ?>
