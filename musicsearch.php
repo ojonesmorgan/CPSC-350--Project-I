@@ -23,19 +23,24 @@
 	if ($desc == 1) $query .= " DESC";
 	
 	echo "<br />";
+	$num_col = 0;
 	
-	$results = mysqli_query($db, $query) or die("Error Querying Database");
-	$sortlink = "musicsearch?sort=";
-	$desclink = "&desc=$desc";
+	function header_cell($title, $attribute)
+	{
+		++$num_col;
+		
+		return "<th><a style='color:darkblue;' href='musicsearch?sort=$attribute&desc=$desc'>$title</a></th>";
+	}
 
 	echo "<table id=\"hor-minimalist-b\" >\n<tr>";
-	echo "<th><a style='color:darkblue;' href='".$sortlink."bandName".$desclink."'>Artist</a></th>";
-	echo "<th><a style='color:darkblue;' href='".$sortlink."bandGenre".$desclink."'>Genre</a></th>";
-	echo "<th><a style='color:darkblue;' href='".$sortlink."bandCity".$desclink."'>City</a></th>";
-	echo "<th><a style='color:darkblue;' href='".$sortlink."bandState".$desclink."'>State</a></th>";
+	echo header_cell("Artist", "bandName");
+	echo header_cell("Genre", "bandGenre");
+	echo header_cell("City", "bandCity");
+	echo header_cell("State", "bandState");
 	echo "</tr>\n";
 	
 	$count = 0;
+	$results = mysqli_query($db, $query) or die("Error Querying Database");
 
 	while ($row = mysqli_fetch_assoc($results))
 	{
@@ -57,7 +62,7 @@
 	
 	if ($count < 1)
 	{
-		echo "<tr><td style='text-align:center;' colspan=4><p style='font-weight:bold; font-size:125%'>";
+		echo "<tr><td style='text-align:center;' colspan='$num_col'><p style='font-weight:bold; font-size:125%'>";
 		echo "No results found";
 		if (!empty($search)) echo " for \"".$search.".\"</p>";
 		else echo ".";

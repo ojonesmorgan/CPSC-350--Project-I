@@ -23,19 +23,24 @@
 	if ($desc == 1) $query .= " DESC";
 	
 	echo "<br />";
+	$num_col = 0;
 	
-	$results = mysqli_query($db, $query) or die("Error Querying Database");
-	$sortlink = "venuesearch.php?sort=";
-	$desclink = "&desc=$desc";
+	function header_cell($title, $attribute)
+	{
+		++$num_col;
+		
+		return "<th><a style='color:darkblue;' href='venuesearch?sort=$attribute&desc=$desc'>$title</a></th>";
+	}
 
 	echo "<table id=\"hor-minimalist-b\" >\n<tr>";
-	echo "<th><a style='color:darkblue;' href='".$sortlink."venueName".$desclink."'>Name</a></th>";
-	echo "<th><a style='color:darkblue;' href='".$sortlink."venueStreet".$desclink."'>Street</a></th>";
-	echo "<th><a style='color:darkblue;' href='".$sortlink."venueCity".$desclink."'>City</a></th>";
-	echo "<th><a style='color:darkblue;' href='".$sortlink."venueState".$desclink."'>State</a></th>";
+	echo header_cell("Name", "venueName");
+	echo header_cell("Street", "venueStreet");
+	echo header_cell("City", "venueCity");
+	echo header_cell("State", "venueState");
 	echo "</tr>\n";
 	
 	$count = 0;
+	$results = mysqli_query($db, $query) or die("Error Querying Database");
 
 	while ($row = mysqli_fetch_assoc($results))
 	{
@@ -57,7 +62,7 @@
 	
 	if ($count < 1)
 	{
-		echo "<tr><td style='text-align:center;' colspan=4><p style='font-weight:bold; font-size:125%'>";
+		echo "<tr><td style='text-align:center;' colspan='$num_col'><p style='font-weight:bold; font-size:125%'>";
 		echo "No results found";
 		if (!empty($search)) echo " for \"".$search.".\"</p>";
 		else echo ".";
