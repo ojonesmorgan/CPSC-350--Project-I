@@ -1,0 +1,6 @@
+- Edit/search events table.(owen)
+- Add/Delete Event (stephen)
+-3nf (amy)
+-commenting on bands/venues (Matt)
+-upload pictures (patrick)
+-changed delete to show up at end of search rows. (patrick)
