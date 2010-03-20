@@ -48,7 +48,7 @@ if ($count < 1)
 	<div id="main">
 	<!--<center><div>-->
 
-	<h1><u><?php echo $name; ?> Profile</u></h1>
+	<h1><u><?php echo $name; ?></u></h1>
 	
 	<?php
 	$default_picture = "Pictures/default.jpg";
@@ -69,10 +69,10 @@ if ($count < 1)
 	
 	if ($logged_in) echo "<form method='post' action='updatevenue.php?id=$name'>";
 	echo "<p>";
-	echo "<label for='name'>Venue:</label> ";
-	if ($logged_in) echo "<input name='name' type='text' value='$name' />";
-	else echo "<a style='text-decoration:none;' name='name'>$name</a><br />";
-	echo "<br /><label for='street'>Street:</label> ";
+	//echo "<label for='name'>Venue Name:</label> ";
+	//if ($logged_in) echo "<input name='name' type='text' value='$name' />";
+	//else echo "<a style='text-decoration:none;' name='name'>$name</a><br /><br />";
+	echo "<label for='street'>Street:</label> ";
 	if ($logged_in) echo "<input name='street' type='text' value='$street' />";
 	else echo "<a style='text-decoration:none;' name='street'>$street</a><br />";
 	echo "<br /><label for='city'>City:</label> ";

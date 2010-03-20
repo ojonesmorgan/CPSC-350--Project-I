@@ -47,7 +47,7 @@ if ($count < 1)
 	<div id="main">
 	<!--<center><div>-->
 
-	<h1><u><?php echo $name; ?>'s Profile</u></h1>
+	<h1><u><?php echo $name; ?></u></h1>
 	
 	<?php
 	$default_photo = "Pictures/default.jpg";
@@ -66,10 +66,10 @@ if ($count < 1)
 	
 	if ($logged_in) echo "<form method='post' action='updateband.php?id=$name'>";
 	echo "<p>";
-	echo "<label for='name'>Band Name:</label> ";
-	if ($logged_in) echo "<input name='name' type='text' value='$name' />";
-	else echo "<a style='text-decoration:none;' name='name'>$name</a><br />";
-	echo "<br /><label for='genre'>Genre(s):</label> ";
+	//echo "<label for='name'>Band Name:</label> ";
+	//if ($logged_in) echo "<input name='name' type='text' value='$name' />";
+	//else echo "<a style='text-decoration:none;' name='name'>$name</a><br /><br />";
+	echo "<label for='genre'>Genre(s):</label> ";
 	if ($logged_in) echo "<input name='genre' type='text' value='$genre' />";
 	else echo "<a style='text-decoration:none;' name='genre'>$genre</a><br />";
 	echo "<br /><label for='city'>City:</label> ";
