@@ -1,4 +1,5 @@
 <?php
+$disable_auto_log_in = true;
 include("session.php");
 if ($logged_in)
 {
@@ -7,13 +8,14 @@ if ($logged_in)
 }
 
 include("db_connect.php");
-$email = $_POST['email'];
-$password = md5($_POST['password']);
+$email = htmlspecialchars($_POST['email']);
+$password = md5(htmlspecialchars($_POST['password']));
+$remember_email = $_POST['rememberme'] == 1;
+$remember_pass = $_POST['rememberpass'] == 1;
 $ref = $_POST['ref'];
 if (empty($ref)) $ref = ".";
 
 $result = mysqli_query($db, "SELECT * FROM users WHERE email = '$email'");
-
 $count = 0;
 
 while ($row = mysqli_fetch_assoc($result))
@@ -22,6 +24,9 @@ while ($row = mysqli_fetch_assoc($result))
 	
 	if ($correct_password)
 	{
+		unset($_SESSION['loggedout']);
+		session_destroy();
+		session_start();
 		$_SESSION['name'] = $row['name'];
 		$_SESSION['email'] = $row['email'];
 		$_SESSION['admin'] = $row['admin'];
@@ -42,5 +47,15 @@ if (empty($_SESSION['email']))
 	header("location:login.php?err=$error");
 }
 
-else header("location:$ref");
+else
+{
+	if ($remember_email) setcookie("blemail", "$email", time() + 60 * 60 * 24 * 30);
+	else if ($email == $_COOKIE['blemail']) setcookie("blemail");
+	
+	$password = htmlspecialchars($_POST['password']);
+	if ($remember_pass) setcookie("blpw", "$password", time() + 60 * 60 * 24 * 30);
+	else if ($email == $_COOKIE['blemail']) setcookie("blpw");
+	
+	header("location:$ref");
+}
 ?>

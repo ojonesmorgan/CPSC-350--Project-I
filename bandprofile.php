@@ -100,6 +100,8 @@ if ($count < 1)
 	}
 	
 	echo "</p>\n";
+	
+	include("listcomments.php");
 	?>
 	
 	<!--</div></center>-->

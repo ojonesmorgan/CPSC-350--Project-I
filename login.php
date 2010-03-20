@@ -1,4 +1,5 @@
 <?php
+$disable_auto_log_in = true;
 include("session.php");
 if ($logged_in) header("location:.");
 ?>
@@ -23,7 +24,7 @@ if ($logged_in) header("location:.");
 	$email = $_GET['email'];
 	$logged_out = $_GET['logout'] == 1;
 	
-	echo "<form align='left' method='post' action='loginhandler.php'>";
+	echo "<form name='loginform' align='left' method='post' action='loginhandler.php'>";
 	
 	if (isset($error))
 	{
@@ -47,9 +48,21 @@ if ($logged_in) header("location:.");
 		echo "</p></fieldset><br />";
 	}
 	
+	if (empty($email)) $email = $_COOKIE['blemail'];
+	$password = $_COOKIE['blpw'];
+	
 	echo "<input name='ref' type='hidden' value='".$_GET['ref']."' />";
 	echo "<label for=\"email\">Email Address:</label><input name='email' type='text' value='$email' /><br/>";
-	echo "<label for=\"password\">Password: </label><input name='password' type='password' /><br/>";
+	echo "<label for=\"password\">Password: </label><input name='password' type='password' value='$password' /><br/>";
+	echo "<p style='text-align:center;'>";
+	echo "<input onClick='if (!this.checked) {loginform.rememberpass.checked=0; loginform.rememberpass.disabled=1;}";
+	echo " else loginform.rememberpass.disabled=false;' ";
+	echo "name='rememberme' type='checkbox' ";
+	if (!empty($_COOKIE['blemail'])) echo "checked ";
+	echo "value='1' /> Remember me.<br />";
+	echo "<input name='rememberpass' type='checkbox' ";
+	if (!empty($_COOKIE['blpw']) && !empty($_COOKIE['blemail'])) echo "checked ";
+	echo "value='1' /> Remember my password.</p>";
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' value='  Login  ' /></p>";
 	echo "</form>\n";
 	echo "<p style='text-align:center;'>Don't have an account? <a href='register.php'>Click here to register.</a></p><br />\n";
