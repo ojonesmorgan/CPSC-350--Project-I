@@ -27,7 +27,7 @@ function recent_comments($num_comments)
 	$recent_comments = "<br />\n<fieldset style=\"border:2px solid red;\">\n";;	
 	$recent_comments .= "<legend style=\"color:red; font-weight:bold;\">Recent Comments</legend>\n";
 	
-	$query = "SELECT a.*, b.name FROM comments AS a NATURAL JOIN users AS b ORDER BY a.id LIMIT $num_comments";
+	$query = "SELECT a.*, b.name FROM comments AS a NATURAL JOIN users AS b ORDER BY a.id DESC LIMIT $num_comments";
 	$result = mysqli_query($db, $query);
 	
 	while ($row = mysqli_fetch_assoc($result))
