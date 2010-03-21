@@ -23,10 +23,6 @@ echo "</span><br />\n";
 	|
 	<a href="venuesearch.php">Search Venues</a>
 	|
-        <?php if ($logged_in) { ?>
-	<a href="delete.php">Delete</a>
-	|
-        <?php } ?>
 	<?php if (!$logged_in) { ?>
 	<a href="register.php">Register</a>
 	<?php } else { ?>

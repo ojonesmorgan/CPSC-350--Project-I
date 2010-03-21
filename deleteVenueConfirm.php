@@ -12,7 +12,28 @@
 <div id="wrap">
     <?php include("header.php"); ?>
 	<div id="delete">
-	<?php include("deleteSideBar.php"); ?>
+<!-- *** -->	
+<?php
+	$deleted=$_GET['deletebox'];
+	echo "<H3>";
+	echo "Are you sure you want to delete ";
+	echo $deleted;
+	echo "?";
+	echo "</H3>";
+	echo "<hr width = 415>";
+	//yes
+	echo "<a href='deleteVenue.php?deletebox=$deleted'>Yes, permanently delete ";
+	echo "<B>" .$deleted. "</B>";
+	echo " from BandLink.";
+	echo "<BR>";
+	//no
+	echo "<a href='musicsearch.php'>No, do NOT delete ";
+	echo $deleted;
+	echo ".";
+
+
+?>
+<!-- *** -->
 	<?php include("footer.html");?>
 </div>
 </div>

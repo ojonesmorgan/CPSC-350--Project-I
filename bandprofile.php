@@ -12,6 +12,7 @@ if (empty($name))
 
 include("db_connect.php");
 $result = mysqli_query($db, "SELECT * FROM band WHERE bandName = '$name'");
+echo "band name: " .$name;
 $count = 0;
 
 while ($row = mysqli_fetch_assoc($result))

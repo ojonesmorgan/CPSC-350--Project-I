@@ -14,6 +14,12 @@
 	<center><div id="search">
 	<?php
 	include("db_connect.php");
+	
+	//--Deleted variables
+	$del_Name=$_GET['delname'];
+	$deleted=$_GET['deleted']==1;
+	//--Deleted Variables
+
 	$search = $_GET['q'];
 	$sort = $_GET['sort'];
 	if (empty($sort)) $sort = "bandName";
@@ -24,6 +30,18 @@
 	
 	echo "<br />";
 	$num_col = 0;
+
+	//<band was deleted>
+	if ($deleted)
+	{
+		echo "<fieldset style='border:2px solid white; background-color:black; width:415px;'>";
+		echo "<p style='color:white; font-weight:bold; text-align:center;'>";
+		echo $del_Name;
+		echo " was deleted from BandLink.";
+		echo "</p></fieldset>";
+	}
+
+	//</band was deleted>
 	
 	function header_cell($title, $attribute)
 	{
@@ -37,6 +55,7 @@
 	echo header_cell("Genre", "bandGenre");
 	echo header_cell("City", "bandCity");
 	echo header_cell("State", "bandState");
+	if ($logged_in){echo header_cell(" ", "delete");}
 	echo "</tr>\n";
 	
 	$count = 0;
@@ -55,6 +74,7 @@
 		echo "<td>$genre</td>";
 		echo "<td>$city</td>";
 		echo "<td>$state</td>";
+		if ($logged_in){echo "<td><a style='color:darkblue;' href='deleteBandConfirm.php?deletebox=$name'> delete</a></td>";}
 		echo "</tr>\n";
 		
 		++$count;
