@@ -48,7 +48,7 @@ if ($count < 1)
 	<div id="main">
 	<!--<center><div>-->
 
-	<h1><u><?php echo $name; ?></u></h1>
+	<h1><u><?php echo $name; ?></u><?php include("ratings.php"); ?></h1>
 	
 	<?php
 	$default_picture = "Pictures/default.jpg";
