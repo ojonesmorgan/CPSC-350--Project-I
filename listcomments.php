@@ -21,10 +21,20 @@ else if ($page == "venueprofile.php" || !empty($venue))
 
 if ($page == "comments.php")
 {
-	echo "<br />\n<h1 style='text-align:center;'>";
-	if ($subject == BAND) echo "<a href='bandprofile.php?name=$band'>Go to $band's profile.</a>";
-	if ($subject == VENUE) echo "<a href='venueprofile.php?name=$venue'>Go to $venue's profile.</a>";
-	echo "</h1><br />\n";
+	echo "<br />\n<br />\n";
+	echo "<input type='submit' style='display:block; margin-left:auto; margin-right:auto; width:400px; height:75px;' ";
+	
+	if ($subject == BAND)
+	{
+		echo "onClick=\"parent.location = 'bandprofile.php?name=$band'\" value=\"  Go to $band's Profile  \" />";
+	}
+	
+	if ($subject == VENUE)
+	{
+		echo "onClick=\"parent.location = 'venueprofile.php?name=$venue'\" value=\"  Go to $venue Profile  \" />";
+	}
+	
+	echo "<br />\n";
 }
 
 else echo "<br />\n<a name='comments'></a>\n<h1>Comments</h1>\n";
@@ -129,9 +139,12 @@ while ($row = mysqli_fetch_assoc($result))
 		echo "<span style='font-weight:bold;'>$poster:</span>\n";
 		display_rank($id);
 		echo "<blockquote>$comment</blockquote>\n";
-		echo "<span style='float:left; font-size:x-small;'><a style='color:darkred;' href='#$id' ";		
-		echo "onClick=\"document.reply$id.style.display = 'inline'\">Reply</a>";
 		
+		if ($logged_in)
+		{
+			echo "<span style='float:left; font-size:x-small;'><a style='color:darkred;' href='#$id' ";		
+			echo "onClick=\"document.reply$id.style.display = 'inline';\">Reply</a>";
+		}
 		
 		if ((!empty($poster_email) && ($poster_email == $_SESSION['email'])) || $is_admin)
 		{
@@ -193,7 +206,7 @@ if (($page != "comments.php") && ($comment_count > 10))
 	echo "<p style='text-align:center;'><a href='comments.php?";
 	if ($subject == BAND) echo "band=$name";
 	else if ($subject == VENUE) echo "venue=$name";
-	echo "'>See all $comment_count comments...</a></p>";
+	echo "'>See all $comment_count comments...</a></p><br />\n";
 }
 
 else echo "<br />\n";
