@@ -12,7 +12,7 @@ CREATE TABLE `comments`
   PRIMARY KEY (`id`),
   FOREIGN KEY (`email`) REFERENCES users (`email`),
   FOREIGN KEY (`bandName`) REFERENCES band (`bandName`),
-  FOREIGN KEY (`venueName`) REFERENCES venue (`venueName`),
+  FOREIGN KEY (`venueName`) REFERENCES venue (`venueName`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `votes`;
