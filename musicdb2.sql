@@ -30,8 +30,9 @@ CREATE TABLE IF NOT EXISTS `band` (
   `bandDescription` blob NOT NULL,
   `bandPhoto` varchar(100) NOT NULL,
   PRIMARY KEY (`band_id`),
-  KEY `bandZipCode` (`bandZipCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  FOREIGN KEY (`bandZipCode`) REFERENCES band_zip_code (`zip_code`)
+ 
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 --
 -- Dumping data for table `band`
@@ -48,8 +49,9 @@ CREATE TABLE IF NOT EXISTS `band_genre` (
   `band_id` int(11) NOT NULL,
   `genre_id` int(11) NOT NULL,
   PRIMARY KEY (`band_id`,`genre_id`),
-  KEY `genre_id` (`genre_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  FOREIGN KEY (`band_id`) REFERENCES band (`band_id`),
+  FOREIGN KEY (`genre_id`) REFERENCES genre (`genre_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `band_genre`
@@ -125,10 +127,9 @@ CREATE TABLE IF NOT EXISTS `venue` (
   `venuePicture` varchar(100) NOT NULL,
   `venueMap` varchar(150) NOT NULL,
   PRIMARY KEY (`venue_id`),
-  KEY `venueAddress_id` (`venueAddress_id`,`venueZipCode`),
-  KEY `venueAddress_id_2` (`venueAddress_id`),
-  KEY `venueZipCode` (`venueZipCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+ FOREIGN KEY (`venueAddress_id`) REFERENCES venue_address (`address_id`),
+  FOREIGN KEY (`venueZipCode`) REFERENCES venue_zip_code (`zip_code`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `venue`
@@ -169,28 +170,77 @@ CREATE TABLE IF NOT EXISTS `venue_zip_code` (
 --
 -- Dumping data for table `venue_zip_code`
 --
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE `comments`
+(
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comment` blob NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `reply` int(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `band_id` varchar(60) NOT NULL,
+  `venue_id` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`email`) REFERENCES users (`email`),
+  FOREIGN KEY (`band_id`) REFERENCES band (`band_id`),
+  FOREIGN KEY (`venue_id`) REFERENCES venue (`venue_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `comments`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `votes`
+--
+
+DROP TABLE IF EXISTS `votes`;
+CREATE TABLE `votes`
+(
+  `id` int(11) NOT NULL,
+  `vote` int(11) NOT NULL DEFAULT '0',
+  `email` varchar(50) NOT NULL,
+  FOREIGN KEY (`id`) REFERENCES comments (`id`),
+  FOREIGN KEY (`email`) REFERENCES users (`email`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+
+--
+-- Dumping data for table `votes`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ratings`
+--
+
+
+DROP TABLE IF EXISTS `ratings`;
+CREATE TABLE `ratings`
+(
+  `rating` int(11) NOT NULL DEFAULT '0',
+  `band_id` varchar(60) NOT NULL,
+  `venue_id` varchar(60) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  FOREIGN KEY (`band_id`) REFERENCES band (`band_id`),
+  FOREIGN KEY (`venue_id`) REFERENCES venue (`venue_id`),
+  FOREIGN KEY (`email`) REFERENCES users (`email`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 
 
 --
--- Constraints for dumped tables
+-- Dumping data for table `ratings`
 --
 
---
--- Constraints for table `band`
---
-ALTER TABLE `band`
-  ADD CONSTRAINT `band_ibfk_2` FOREIGN KEY (`band_id`) REFERENCES `band_genre` (`band_id`),
-  ADD CONSTRAINT `band_ibfk_1` FOREIGN KEY (`bandZipCode`) REFERENCES `band_zip_code` (`zip_code`);
-
---
--- Constraints for table `genre`
---
-ALTER TABLE `genre`
-  ADD CONSTRAINT `genre_ibfk_1` FOREIGN KEY (`genre_id`) REFERENCES `band_genre` (`genre_id`);
-
---
--- Constraints for table `venue`
---
-ALTER TABLE `venue`
-  ADD CONSTRAINT `venue_ibfk_2` FOREIGN KEY (`venueZipCode`) REFERENCES `venue_zip_code` (`zip_code`),
-  ADD CONSTRAINT `venue_ibfk_1` FOREIGN KEY (`venueAddress_id`) REFERENCES `venue_address` (`address_id`);
