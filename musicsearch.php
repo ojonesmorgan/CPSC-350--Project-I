@@ -43,19 +43,19 @@
 
 	//</band was deleted>
 	
-	function header_cell($title, $attribute)
+	function header_cell($title, $attribute, $num_col)
 	{
 		++$num_col;
 		
 		return "<th><a style='color:darkblue;' href='musicsearch?sort=$attribute&desc=$desc'>$title</a></th>";
 	}
 
-	echo "<table id=\"hor-minimalist-b\" >\n<tr>";
-	echo header_cell("Artist", "bandName");
-	echo header_cell("Genre", "bandGenre");
-	echo header_cell("City", "bandCity");
-	echo header_cell("State", "bandState");
-	if ($logged_in){echo header_cell(" ", "delete");}
+	echo "<table style='width:640px;' id=\"hor-minimalist-b\" >\n<tr>";
+	echo header_cell("Artist", "bandName", $num_col);
+	echo header_cell("Genre", "bandGenre", $num_col);
+	echo header_cell("City", "bandCity", $num_col);
+	echo header_cell("State", "bandState", $num_col);
+	if ($logged_in) echo header_cell("", "", $num_col);
 	echo "</tr>\n";
 	
 	$count = 0;
@@ -74,7 +74,14 @@
 		echo "<td>$genre</td>";
 		echo "<td>$city</td>";
 		echo "<td>$state</td>";
-		if ($logged_in){echo "<td><a style='color:darkblue;' href='deleteBandConfirm.php?deletebox=$name'> delete</a></td>";}
+		
+		if ($logged_in)
+		{
+			echo "<td>";
+			echo "<input type='submit' onClick=\"parent.location = 'deleteBandConfirm.php?deletebox=$name'\" ";
+			echo "value='Delete' /></td>";
+		}
+		
 		echo "</tr>\n";
 		
 		++$count;
