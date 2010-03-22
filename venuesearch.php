@@ -13,13 +13,13 @@
     <?php include("header.php"); ?>
 	<center><div id="search">
 	<?php
+	include("db_connect.php");
 
 	//--Deleted variables
 	$del_Name=$_GET['delname'];
 	$deleted=$_GET['deleted']==1;
 	//--Deleted Variables
 
-	include("db_connect.php");
 	$search = $_GET['q'];
 	$sort = $_GET['sort'];
 	if (empty($sort)) $sort = "venueName";
@@ -43,19 +43,19 @@
 
 	//</venue was deleted>
 	
-	function header_cell($title, $attribute)
+	function header_cell($title, $attribute, $num_col)
 	{
 		++$num_col;
 		
 		return "<th><a style='color:darkblue;' href='venuesearch?sort=$attribute&desc=$desc'>$title</a></th>";
 	}
 
-	echo "<table id=\"hor-minimalist-b\" >\n<tr>";
-	echo header_cell("Name", "venueName");
-	echo header_cell("Street", "venueStreet");
-	echo header_cell("City", "venueCity");
-	echo header_cell("State", "venueState");
-	if ($logged_in){echo header_cell(" ", "delete");}
+	echo "<table style='width:640px;' id=\"hor-minimalist-b\" >\n<tr>";
+	echo header_cell("Name", "venueName", $num_col);
+	echo header_cell("Street", "venueStreet", $num_col);
+	echo header_cell("City", "venueCity", $num_col);
+	echo header_cell("State", "venueState", $num_col);
+	if ($logged_in) echo header_cell("", "", $num_col);
 	echo "</tr>\n";
 	
 	$count = 0;
@@ -74,7 +74,14 @@
 		echo "<td>$street</td>";
 		echo "<td>$city</td>";
 		echo "<td>$state</td>";
-		if ($logged_in){echo "<td><a style='color:darkblue;' href='deleteVenueConfirm.php?deletebox=$name'> delete</a></td>";}
+		
+		if ($logged_in)
+		{
+			echo "<td>";
+			echo "<input type='submit' onClick=\"parent.location = 'deleteVenueConfirm.php?deletebox=$name'\" ";
+			echo "value='Delete' /></td>";
+		}
+		
 		echo "</tr>\n";
 		
 		++$count;
