@@ -22,34 +22,46 @@
 	$default_photo = "Pictures/default.jpg";
 
 	echo "<p><span style=\"color:darkred\"><b>Featured Band:</B></span><br/>";
-	  $query = "SELECT * FROM band ORDER BY RAND() LIMIT 1";
-  
-	 $results = mysqli_query($db, $query);
-	while($row = mysqli_fetch_array($results)) {
-  	$bandName = $row['bandName'];
-  	$bandState = $row['bandState'];
-  	$bandCity = $row['bandCity'];
-	$bandGenre = $row['bandGenre'];
-	$bandPhoto= $row['bandPhoto'];
-	//if (file_exists( $bandPhoto)== false){
-	if (empty($bandPhoto)) {
-		//set $bandPhoto to default image
-		$bandPhoto=$default_photo;
-		$altPhoto="Band Image Could Not Be Found";
-	}
-	else{
-		$altPhoto="$bandName's Photo";
-	}
-	$desc = $row['bandDescription'];
-	}
 	
-	$band_link = "bandprofile.php?name=$bandName";
+	$query1="Select * from band order by rand() limit 1";
+	$results1=mysqli_query($db,$query1);
+	while ($row1 = mysqli_fetch_array($results1)){
+		$bandID=$row1['band_id'];
+		$bandName=$row1['bandName'];
+		$bandState=$row1['bandState'];
+		$bandPhoto=$row1['bandPhoto'];
+		$desc=$row1['bandDescription'];
+		//if (file_exists( $bandPhoto)== false){
+		if (empty($bandPhoto)) {
+			//set $bandPhoto to default image
+			$bandPhoto=$default_photo;
+			$altPhoto="Band Image Could Not Be Found";
+		}
+		else{
+			$altPhoto="$bandName's Photo";
+		}
+			
+	}	
+	
+	$query="Select Genre from band b join genre g join band_genre bg where b.band_id=bg.band_id
+		and g.genre_id=bg.genre_id and b.band_id=" .$bandID;
+	//$query = "Select * from band b join genre g join band_genre bg where b.band_id=bg.band_id
+	//and g.genre_id=bg.genre_id ORDER BY RAND() LIMIT 1";
+	
+	$bandGenres="<table><tr><td>";
+	 $results = mysqli_query($db, $query);	 
+	while($row = mysqli_fetch_array($results)) {
+		$bandGenres=$bandGenres.$row['Genre']. "</td></tr><tr><td>";
+	}
+	$bandGenres=$bandGenres."</td></tr></table>";
+	
+	$band_link = "bandprofile.php?id=$bandID";
 	
   	echo "
 	<table width=400 border=4 bordercolor=darkred bgcolor=darkblue>
 	<tr>
-		<td align =center><h3><a style='color:red;' href='$band_link'>$bandName</a><h3> ($bandGenre) </td>
-		<td ><table width=200 align= center><tr><td><h4>From:</h4></td></tr><tr><td><p>$bandCity, $bandState<p></td></tr></table> </td>
+		<td align =center><h3><a style='color:red;' href='$band_link'>$bandName</a><h3> $bandGenres </td>
+		<td ><table width=200 align= center><tr><td><h4>From:</h4></td></tr><tr><td><p>$bandState<p></td></tr></table> </td>
 	</tr>
 	<tr>
 		<td><a href='$band_link'><img src=\"$bandPhoto\" alt=\"$altPhoto\" width=200 height=100 /></a></td>
@@ -73,15 +85,20 @@
 
 	echo "<p><span style=\"color:darkred\"><b>Featured Venue:</B></span><br/>";
 
-	  $query = "select venueName, venueState, venueCity, venueStreet, venueDescription, venuePicture, venueMap
-				from venue ORDER BY RAND() LIMIT 1";
-  
+	//  $query = "select venueName, venueState, venueCity, venueStreet, venueDescription, venuePicture, venueMap
+	//			from venue ORDER BY RAND() LIMIT 1";
+		$query= "select * from venue join venue_address join venue_zip_code
+					where 
+					venue.venueZipCode=venue_zip_code.zip_code
+					and
+					venue.venueAddress_id=venue_address.address_id order by rand() limit 1";
 	 $results2 = mysqli_query($db, $query);
 	while($row = mysqli_fetch_array($results2)) {
+	$venueID=$row['venue_id'];
   	$venueName = $row['venueName'];
-  	$venueState = $row['venueState'];
-  	$venueCity = $row['venueCity'];
-	$venueStreet=$row['venueStreet'];
+  	$venueState = $row['state'];
+  	$venueCity = $row['city'];
+	$venueStreet=$row['street'];
 	$venueDescription=$row['venueDescription'];
 	$venuePicture=$row['venuePicture'];
 	$venueMap=$row['venueMap'];
@@ -96,7 +113,7 @@
 	}
 	}
 	
-	$venue_link = "venueprofile.php?name=$venueName";
+	$venue_link = "venueprofile.php?id=$venueID";
 		
   	echo "
 	<table width =400 border=4 bordercolor=darkred bgcolor=darkblue>
