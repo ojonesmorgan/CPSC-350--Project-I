@@ -1,0 +1,24 @@
+Changes to band:
+-band_id added, now primary key
+-bandZipCode added, foreign key
+-bandGenre removed
+
+New junction table band_genre:
+-foreign keys band_id from band and genre_id from genre
+
+New table genre:
+-primary key genre_id referenced by band_genre
+-genre (name)
+
+Changes to venue:
+-new primary key venue_id
+-venueAddress_id added, foreign key
+-venueZipCode added, foreign key
+
+New table venue_address:
+-primary key address_id
+-number and street (street address)
+
+New table venue_zip_code:
+-primary key zip_code
+-city and state (address for given zip)
