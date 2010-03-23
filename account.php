@@ -70,7 +70,9 @@ while ($row = mysqli_fetch_assoc($result))
 	}
 	
 	echo "<label for='name'>Name:</label> <input name='name' type='text' value='$name' />";
-	echo "<label for='email'>Email Address:</label> <input name='email' type='text' value='$email' />";
+	echo "<label for='email'>Email Address:</label> ";
+	//echo "<input name='email' type='text' value='$email' />";
+	echo "<a href='mailto:$email'>$email</a>";
 	if ($is_owner) echo "<label for='currentpass'>Current Password:</label> <input name='currentpass' type='password' />";
 	echo "<label for='password'>New Password:</label> <input name='password' type='password' />";
 	echo "<label for='confirmpass'>Confirm Password:</label> <input name='confirmpass' type='password' />";
