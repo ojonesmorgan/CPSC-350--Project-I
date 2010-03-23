@@ -26,13 +26,13 @@ use musicdb2;
 CREATE TABLE IF NOT EXISTS `band` (
   `band_id` int(11) NOT NULL AUTO_INCREMENT,
   `bandName` varchar(30) NOT NULL,
-  `bandZipCode` char(5) NOT NULL,
+  `bandState` varchar(25) NOT NULL,
   `bandDescription` blob NOT NULL,
   `bandPhoto` varchar(100) NOT NULL,
-  PRIMARY KEY (`band_id`),
-  FOREIGN KEY (`bandZipCode`) REFERENCES band_zip_code (`zip_code`)
+  PRIMARY KEY (`band_id`)
  
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+ 
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 --
 -- Dumping data for table `band`
@@ -58,25 +58,7 @@ CREATE TABLE IF NOT EXISTS `band_genre` (
 --
 
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `band_zip_code`
---
-
-CREATE TABLE IF NOT EXISTS `band_zip_code` (
-  `zip_code` char(5) NOT NULL,
-  `city` varchar(30) NOT NULL,
-  `state` varchar(25) NOT NULL,
-  PRIMARY KEY (`zip_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `band_zip_code`
---
-
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `genre`
