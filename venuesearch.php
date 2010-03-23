@@ -20,7 +20,7 @@
 	$deleted=$_GET['deleted']==1;
 	//--Deleted Variables
 
-	$search = $_GET['q'];
+	$search = trim($_GET['q']);
 	$sort = $_GET['sort'];
 	if (empty($sort)) $sort = "venueName";
 	$desc = $_GET['desc'];
@@ -58,6 +58,33 @@
 	if ($logged_in) echo header_cell("", "", $num_col);
 	echo "</tr>\n";
 	
+	function highlight_matches($term, $str, $underline)
+	{
+		if (empty($term)) return $str;
+		
+		$start = 0;
+		$end = 0;
+		$highlight_start = "<span style='background-color:yellow;";
+		if ($underline) $highlight_start .= " text-decoration:underline;";
+		$highlight_start .= "'>";
+		$highlight_end = "</span>";
+		$num_instances = substr_count(strtolower($str), strtolower($term));
+		
+		for ($i = 0; $i < $num_instances; $i++)
+		{
+			$start = stripos($str, $term, $end);
+			$end = $start + strlen($term);
+			$str = substr_replace($str, $highlight_start, $start, 0);
+			$start += strlen($highlight_start);
+			$end += strlen($highlight_start);
+			$str = substr_replace($str, $highlight_end, $end, 0);
+			$start += strlen($highlight_end);
+			$end += strlen($highlight_end);
+		}
+		
+		return $str;
+	}
+	
 	$count = 0;
 	$results = mysqli_query($db, $query) or die("Error Querying Database");
 
@@ -67,13 +94,13 @@
 		$street = $row['venueStreet'];
 		$city = $row['venueCity'];
 		$state = $row['venueState'];
-		$linked_name = "<a style='color:darkblue;' href='venueprofile.php?name=$name'>$name</a>";
 		
 		echo "<tr>";
-		echo "<td>$linked_name</td>";
-		echo "<td>$street</td>";
-		echo "<td>$city</td>";
-		echo "<td>$state</td>";
+		echo "<td><a style='color:darkblue;' href='venueprofile.php?name=$name'>";
+		echo highlight_matches($search, $name, true)."</a></td>";
+		echo "<td>".highlight_matches($search, $street, false)."</td>";
+		echo "<td>".highlight_matches($search, $city, false)."</td>";
+		echo "<td>".highlight_matches($search, $state, false)."</td>";
 		
 		if ($logged_in)
 		{
