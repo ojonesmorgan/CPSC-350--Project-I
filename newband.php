@@ -190,7 +190,7 @@ if ($genre4 != null and $genre4 !=""){
 	
 <?php
 echo "<br /><h1>Thanks for adding the band $name.</h1>";
-echo "<p><a href='bandprofile.php?name=$name'>Click here to go to ".$name."'s profile.</a></p><br />\n";
+echo "<p><a href='bandprofile.php?id=$bandID'>Click here to go to ".$name."'s profile.</a></p><br />\n";
 ?>
 	
 </div></center></div>
