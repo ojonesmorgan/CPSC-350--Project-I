@@ -2,23 +2,26 @@
 include("session.php");
 
 $saved = $_GET['saved'] == 1;
-$name = $_GET['name'];
+$venueID = $_GET['id'];
 
-if (empty($name))
+if (empty($venueID))
 {
 	header("location:venuesearch.php");
 	exit;
 }
 
 include("db_connect.php");
-$result = mysqli_query($db, "SELECT * FROM venue WHERE venueName = '$name'");
+$result = mysqli_query($db, "SELECT * FROM venue WHERE venue_id =".$venueID);
 $count = 0;
 
 while ($row = mysqli_fetch_assoc($result))
 {
-	$street = $row['venueStreet'];
-	$city = $row['venueCity'];
-	$state = $row['venueState'];
+	//$street = $row['venueStreet'];
+	//$city = $row['venueCity'];
+	//$state = $row['venueState'];
+	$name=$row['venueName'];
+	$addressID=$row['venueAddress_id'];
+	$zipcode=$row['venueZipCode'];
 	$description = $row['venueDescription'];
 	$picture = $row['venuePicture'];
 	$map = $row['venueMap'];
@@ -31,6 +34,27 @@ if ($count < 1)
 	header("location:venuesearch.php");
     exit;
 }
+//*****************************************
+//<Get ZipCode Information>
+$query="select * from venue v join venue_zip_code vz 
+		where v.venueZipCode=vz.zip_code and vz.zip_code=".$zipcode;
+$results=mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($results)){
+	$city=$row['city'];
+	$state=$row['state'];
+}
+//</Get ZipCode Information>
+//*****************************************
+//<Get Address Information>
+$query="select * from venue v join venue_address va 
+		where v.venueAddress_id = va.address_id and va.address_id=".$addressID;
+$results=mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($results)){
+	$streetnum=$row['number'];
+	$street=$row['street'];
+}
+//</Get Address Information>
+//*****************************************
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -67,14 +91,17 @@ if ($count < 1)
 		echo "</p></fieldset>";
 	}
 	
-	if ($logged_in) echo "<form method='post' action='updatevenue.php?id=$name'>";
+	if ($logged_in) echo "<form method='post' action='updatevenue.php?id=$venueID'>";
 	echo "<p>";
-	//echo "<label for='name'>Venue Name:</label> ";
-	//if ($logged_in) echo "<input name='name' type='text' value='$name' />";
-	//else echo "<a style='text-decoration:none;' name='name'>$name</a><br /><br />";
-	echo "<label for='street'>Street:</label> ";
+	echo "<br><label for='name'>Venue Name:</label> ";
+	if ($logged_in) echo "<input name='name' type='text' value='$name' />";
+	else echo "<a style='text-decoration:none;' name='name'>$name</a><br /><br />";
+	echo "<br><label for='street'>Street:</label> ";
 	if ($logged_in) echo "<input name='street' type='text' value='$street' />";
 	else echo "<a style='text-decoration:none;' name='street'>$street</a><br />";
+	echo"<br><label for='streetnum'>Street Number:</label>";
+	if ($logged_in) echo "<input name='streetnum' type ='text' value='$streetnum' />";
+	else echo "<a style='text-decoration:none;' name='streetnum'>$streetnum</a><br />";
 	echo "<br /><label for='city'>City:</label> ";
 	if ($logged_in) echo "<input name='city' type='text' value='$city' />";
 	else echo "<a style='text-decoration:none;' name='city'>$city</a><br />";

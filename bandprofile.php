@@ -95,9 +95,9 @@ if ($count < 1)
 	
 	if ($logged_in) echo "<form method='post' action='updateband.php?id=$bandID'>";
 	echo "<p>";
-	//echo "<label for='name'>Band Name:</label> ";
-	//if ($logged_in) echo "<input name='name' type='text' value='$name' />";
-	//else echo "<a style='text-decoration:none;' name='name'>$name</a><br /><br />";
+	echo "<br><label for='name'>Band Name:</label> ";
+	if ($logged_in) echo "<input name='name' type='text' value='$name' />";
+	else echo "<a style='text-decoration:none;' name='name'>$name</a><br /><br />";
 	//*********************************************
 	//<Genre(s)>
 	echo "<br><label for='geners'>Genre(s)</label>";
