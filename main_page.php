@@ -24,7 +24,11 @@
 	
 	$query1="Select * from band order by rand() limit 1";
 	$results1=mysqli_query($db,$query1);
+	$bandCount=0;
+	//if($results1!=false){
+	//$bandCount=1;
 	while ($row1 = mysqli_fetch_array($results1)){
+		$bandCount+=$bandCount;
 		$bandID=$row1['band_id'];
 		$bandName=$row1['bandName'];
 		$bandState=$row1['bandState'];
@@ -40,7 +44,8 @@
 			$altPhoto="$bandName's Photo";
 		}
 			
-	}	
+	}
+	//}	
 	
 	$query="Select Genre from band b join genre g join band_genre bg where b.band_id=bg.band_id
 		and g.genre_id=bg.genre_id and b.band_id=" .$bandID;
@@ -48,14 +53,16 @@
 	//and g.genre_id=bg.genre_id ORDER BY RAND() LIMIT 1";
 	
 	$bandGenres="<table><tr><td>";
-	 $results = mysqli_query($db, $query);	 
+	 $results = mysqli_query($db, $query);
+	 if($results!=false){
 	while($row = mysqli_fetch_array($results)) {
 		$bandGenres=$bandGenres.$row['Genre']. "</td></tr><tr><td>";
 	}
 	$bandGenres=$bandGenres."</td></tr></table>";
+	}else{$bandGenres=$bandGenres."</td></tr></table>";}
 	
 	$band_link = "bandprofile.php?id=$bandID";
-	
+	if ($bandCount>0){
   	echo "
 	<table width=400 border=4 bordercolor=darkred bgcolor=darkblue>
 	<tr>
@@ -77,8 +84,13 @@
 
 
 	//finish
-	
+	echo "<br/>\n";
+	}else{//no bands in DB
+	echo "<h4>There are no bands currently in Bandlink's database.</h4>";
+	if($logged_in) echo "<br><h4>Click <a href='addband.php'>here</a> to add a band</h4>"; 
 	echo "<br />\n";
+	}
+	
 
 	//start
 
@@ -92,7 +104,9 @@
 					and
 					venue.venueAddress_id=venue_address.address_id order by rand() limit 1";
 	 $results2 = mysqli_query($db, $query);
+	 $venCount=0;
 	while($row = mysqli_fetch_array($results2)) {
+	$venCount++;
 	$venueID=$row['venue_id'];
   	$venueName = $row['venueName'];
   	$venueState = $row['state'];
@@ -113,7 +127,7 @@
 	}
 	
 	$venue_link = "venueprofile.php?id=$venueID";
-		
+	if ($venCount>0){	
   	echo "
 	<table width =400 border=4 bordercolor=darkred bgcolor=darkblue>
 	<tr>
@@ -140,6 +154,11 @@
 		<td><p>$venueDescription</p></td>
 	</tr>
 	</table><br>";
+	}else{//no venues in DB
+	echo "<h4>There are no venues currently in Bandlink's database.</h4>";
+	if($logged_in) echo "<br><h4>Click <a href='addvenue.php'>here</a> to add a venue</h4>"; 
+	echo "<br />\n";
+	}
 	//finish
 
 	
