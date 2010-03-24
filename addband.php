@@ -47,7 +47,7 @@ if (!$logged_in) include("notloggedin.php");
 	echo "<br><label for ='genre3'>Genre 3:</label>";
 	echo "<input name='genre3' type='text' />";
 	echo "<br><label for ='genre4'>Genre 4:</label>";
-	echo "<input name='genre4' type='text' disabled />";	
+	echo "<input name='genre4' type='text' />";	
 	//</4 genre Inputs>
 	//echo "<br /><label for='city'>City:</label> ";
 	//echo "<input name='city' type='text' value='$city' />";
