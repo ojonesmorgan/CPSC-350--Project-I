@@ -21,5 +21,8 @@ CREATE TABLE IF NOT EXISTS `comments` (`id` int(11) NOT NULL AUTO_INCREMENT, `co
 
 CREATE TABLE IF NOT EXISTS `votes` (`id` int(11) NOT NULL, `vote` int(11) NOT NULL DEFAULT '0', `email` varchar(50) NOT NULL, FOREIGN KEY (`id`) REFERENCES comments (`id`), FOREIGN KEY (`email`) REFERENCES users (`email`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 
+CREATE TABLE IF NOT EXISTS `event` (`event_id` INT(11) NOT NULL AUTO_INCREMENT,`eventName` VARCHAR(50),`band_id` INT(11) NOT NULL,`venue_id` INT(11) NOT NULL,`eventDate` DATE NOT NULL,`eventTime` TIME NOT NULL,`eventDescription` BLOB NOT NULL,PRIMARY KEY (`event_id`),FOREIGN KEY (`band_id) REFERENCES band (`band_id`),FOREIGN KEY (`venue_id) REFERENCES venue (`venue_id)) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
 CREATE TABLE IF NOT EXISTS `ratings` (`rating` int(11) NOT NULL DEFAULT '0', `band_id` varchar(60) NOT NULL, `venue_id` varchar(60) NOT NULL, `email` varchar(50) NOT NULL, FOREIGN KEY (`band_id`) REFERENCES band (`band_id`), FOREIGN KEY (`venue_id`) REFERENCES venue (`venue_id`), FOREIGN KEY (`email`) REFERENCES users (`email`)) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
+
 
