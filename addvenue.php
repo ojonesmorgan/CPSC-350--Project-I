@@ -23,9 +23,12 @@ if (!$logged_in) include("notloggedin.php");
 	$street = $_GET['street'];
 	$city = $_GET['city'];
 	$state = $_GET['state'];
+	$zipcode=$_GET['zipcode'];
 	$description = $_GET['description'];
-	$picture = $_GET['picture'];
-	$map = $_GET['map'];
+	$picture = $_GET['picPath'];
+	$map = $_GET['mapPath'];
+	$streetnum=$_GET['streetnum'];
+	
 	
 	if (isset($error))
 	{
@@ -41,10 +44,14 @@ if (!$logged_in) include("notloggedin.php");
 	echo "<input name='name' type='text' value='$name' />";
 	echo "<br /><label for='street'>Street:</label> ";
 	echo "<input name='street' type='text' value='$street' />";
+	echo "<br><label for='streetnum'>Street Number:</label>";
+	echo "<input name='streetnum' type='text' value='$streetnum' />";
 	echo "<br /><label for='city'>City:</label> ";
 	echo "<input name='city' type='text' value='$city' />";
 	echo "<br /><label for='state'>State:</label> ";
 	echo "<input name='state' type='text' value='$state' />";
+	echo "<br /><label for 'zipcode'>Zip Code:</label>";
+	echo "<input name='zipcode' type='text' value='$zipcode' />";
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
 	echo "<textarea name='description' rows=5>$description</textarea>";
 	echo "<br /><label for='picture'>Picture URL:</label> <input name='picture' type='text' value='$picture' />";
@@ -63,3 +70,4 @@ if (!$logged_in) include("notloggedin.php");
 
 </div> <!-- end wrap div -->
 </html>
+
