@@ -24,7 +24,7 @@ if (!$logged_in) include("notloggedin.php");
 	$city = $_GET['city'];
 	$state = $_GET['state'];
 	$description = $_GET['description'];
-	$photo = $_GET['photo'];
+	$photo = $_GET['picPath'];
 	
 	if (isset($error))
 	{
@@ -47,7 +47,7 @@ if (!$logged_in) include("notloggedin.php");
 	echo "<br><label for ='genre3'>Genre 3:</label>";
 	echo "<input name='genre3' type='text' />";
 	echo "<br><label for ='genre4'>Genre 4:</label>";
-	echo "<input name='genre4' type='text' />";	
+	echo "<input name='genre4' type='text' disabled />";	
 	//</4 genre Inputs>
 	//echo "<br /><label for='city'>City:</label> ";
 	//echo "<input name='city' type='text' value='$city' />";
@@ -55,7 +55,10 @@ if (!$logged_in) include("notloggedin.php");
 	echo "<input name='state' type='text' value='$state' />";
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
 	echo "<textarea name='description' rows=5>$description</textarea>";
-	echo "<br /><label for='photo'>Photo URL:</label> <input name='photo' type='text' value='$photo' />";
+	//echo "<br /><label for='photo'>Photo URL:</label> <input name='photo' type='text' value='$photo' />";
+	echo "<BR><label for='photo'> Photo:</label>";
+	echo "<input name='photo' type ='text' value='$photo'>";
+	echo "<br><a href='uploadImage.php'>Upload Image</a>";
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' ";
 	echo "value=' Submit ' /></p></form>";
 	echo "</p>\n";
