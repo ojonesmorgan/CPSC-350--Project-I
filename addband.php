@@ -38,10 +38,19 @@ if (!$logged_in) include("notloggedin.php");
 	echo "<p>";
 	echo "<label for='name'>Band Name:</label> ";
 	echo "<input name='name' type='text' value='$name' />";
-	echo "<br /><label for='genre'>Genre(s):</label> ";
-	echo "<input name='genre' type='text' value='$genre' />";
-	echo "<br /><label for='city'>City:</label> ";
-	echo "<input name='city' type='text' value='$city' />";
+	echo "<br /><label>Genre(s) Max 4:</label> ";
+	//<4 genre inputs>
+	echo "<br><label for ='genre1'>Genre 1:</label>";
+	echo "<input name='genre1' type='text'  value='$genre' />";
+	echo "<br><label for ='genre2'>Genre 2:</label>";
+	echo "<input name='genre2' type='text' />";
+	echo "<br><label for ='genre3'>Genre 3:</label>";
+	echo "<input name='genre3' type='text' />";
+	echo "<br><label for ='genre4'>Genre 4:</label>";
+	echo "<input name='genre4' type='text' />";	
+	//</4 genre Inputs>
+	//echo "<br /><label for='city'>City:</label> ";
+	//echo "<input name='city' type='text' value='$city' />";
 	echo "<br /><label for='state'>State:</label> ";
 	echo "<input name='state' type='text' value='$state' />";
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";

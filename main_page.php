@@ -20,7 +20,6 @@
 
 	  //start
 	$default_photo = "Pictures/default.jpg";
-
 	echo "<p><span style=\"color:darkred\"><b>Featured Band:</B></span><br/>";
 	
 	$query1="Select * from band order by rand() limit 1";
