@@ -20,12 +20,12 @@
 	$deleted=$_GET['deleted']==1;
 	//--Deleted Variables
 
-	$search = trim($_GET['q']);
+	$search = trim($_GET['searched']);
 	$sort = $_GET['sort'];
 	if (empty($sort)) $sort = "bandName";
 	$desc = $_GET['desc'];
 	$find = "LIKE '%$search%'";
-	$query = "SELECT * FROM band WHERE bandName $find OR bandGenre $find OR bandState $find OR bandCity $find ORDER BY $sort";
+	$query = "SELECT * FROM band WHERE bandName $find OR bandState $find ORDER BY $sort";
 	if ($desc == 1) $query .= " DESC";
 	
 	echo "<br />";
@@ -42,6 +42,24 @@
 	}
 
 	//</band was deleted>
+	//*********************************
+	//<Get Genre(s) function>
+	function Genres($bandid){
+		$tempGen="";
+		$genQuery="select  * from band b join band_genre bg join genre g where
+					b.band_id=bg.band_id and g.genre_id=bg.genre_id
+					and b.band_id='$bandid'";
+		//<db>
+		$db2 = mysqli_connect('localhost', 'music', 'music', 'musicdb2');
+		//</db>
+		$genRes = mysqli_query($db2, $genQuery);
+		while ($genRow = mysqli_fetch_assoc($genRes)){
+			$tempGen.=$genRow['genre'].", ";		
+		}
+		return $tempGen;
+	
+	}
+	//</Get Genre(s) function>
 	
 	function header_cell($title, $attribute, $num_col)
 	{
@@ -52,8 +70,8 @@
 
 	echo "<table style='width:640px;' id=\"hor-minimalist-b\" >\n<tr>";
 	echo header_cell("Artist", "bandName", $num_col);
-	echo header_cell("Genre", "bandGenre", $num_col);
-	echo header_cell("City", "bandCity", $num_col);
+	echo header_cell("Genre", "", $num_col);
+	//echo header_cell("City", "bandCity", $num_col);
 	echo header_cell("State", "bandState", $num_col);
 	if ($logged_in) echo header_cell("", "", $num_col);
 	echo "</tr>\n";
@@ -91,15 +109,25 @@
 	while ($row = mysqli_fetch_assoc($results))
 	{
 		$name = $row['bandName'];
-		$genre = $row['bandGenre'];
-		$city = $row['bandCity'];
+		//$genre = $row['bandGenre'];
+		//*********************************
+		//<Find Band's ID>
+		$bQ="select band_id from band where bandName='$name'";
+		$bR=mysqli_query($db,$bQ);
+		while ($bRow=mysqli_fetch_assoc( $bR )){
+			$tempBandID=$bRow['band_id'];
+		}
+		//</Find Band's ID>
+		//*********************************
+		//$city = $row['bandCity'];
 		$state = $row['bandState'];
 		
 		echo "<tr>";
 		echo "<td><a style='color:darkblue;' href='bandprofile.php?name=$name'>";
 		echo highlight_matches($search, $name, true)."</a></td>";
-		echo "<td>".highlight_matches($search, $genre, false)."</td>";
-		echo "<td>".highlight_matches($search, $city, false)."</td>";
+		$genre=Genres($tempBandID);
+		echo "<td>".highlight_matches("",$genre, false)."</td>";
+		//echo "<td>".highlight_matches($search, $city, false)."</td>";
 		echo "<td>".highlight_matches($search, $state, false)."</td>";
 		
 		if ($logged_in)
