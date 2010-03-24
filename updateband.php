@@ -67,7 +67,7 @@ if ($genre1 != null and $genre1 !=""){
 			//test
 			mysqli_query($db, $query="INSERT INTO genre (genre) VALUES ('$genre1')");
     // if genre does exist test to see of the band is already connected to it
-    else
+    }else {
     	
     	$GenreBandQuery="select * from band_genre where genre_id ='$genreID' && band_id='$id'";
 		$GenreBandResults=mysqli_query($db,$GenreBandQuery);
@@ -78,6 +78,7 @@ if ($genre1 != null and $genre1 !=""){
     	if ($counter==0) {
     		mysqli_query(&db, "INSERT INTO band_genre VALUES ('$id','$genre_ID')");
     	}	
+    }	
 	
 	//</Test to see if Genre is already in the table>
 	//***********************************************
@@ -118,7 +119,7 @@ if ($genre2 != null and $genre2 !=""){
 			//test
 			mysqli_query($db, $query="INSERT INTO genre (genre) VALUES ('$genre2')");
     // if genre does exist test to see of the band is already connected to it
-    else
+    }else{
     	
     	$GenreBandQuery="select * from band_genre where genre_id ='$genreID' && band_id='$id'";
 		$GenreBandResults=mysqli_query($db,$GenreBandQuery);
@@ -129,7 +130,7 @@ if ($genre2 != null and $genre2 !=""){
     	if ($counter==0) {
     		mysqli_query(&db, "INSERT INTO band_genre VALUES ('$id','$genre_ID')");
     	}	
-	
+	}
 	//</Test to see if Genre is already in the table>
 	//***********************************************
 	//<Find Genre's ID>
@@ -169,7 +170,7 @@ if ($genre3 != null and $genre3 !=""){
 			//test
 			mysqli_query($db, $query="INSERT INTO genre (genre) VALUES ('$genre3')");
     // if genre does exist test to see of the band is already connected to it
-    else
+    }else{
     	
     	$GenreBandQuery="select * from band_genre where genre_id ='$genreID' && band_id='$id'";
 		$GenreBandResults=mysqli_query($db,$GenreBandQuery);
@@ -180,7 +181,7 @@ if ($genre3 != null and $genre3 !=""){
     	if ($counter==0) {
     		mysqli_query(&db, "INSERT INTO band_genre VALUES ('$id','$genre_ID')");
     	}	
-	
+	}
 	//</Test to see if Genre is already in the table>
 	//***********************************************
 	//<Find Genre's ID>
@@ -220,7 +221,7 @@ if ($genre1 != null and $genre4 !=""){
 			//test
 			mysqli_query($db, $query="INSERT INTO genre (genre) VALUES ('$genre4')");
     // if genre does exist test to see of the band is already connected to it
-    else
+    }else{
     	
     	$GenreBandQuery="select * from band_genre where genre_id ='$genreID' && band_id='$id'";
 		$GenreBandResults=mysqli_query($db,$GenreBandQuery);
@@ -231,7 +232,7 @@ if ($genre1 != null and $genre4 !=""){
     	if ($counter==0) {
     		mysqli_query(&db, "INSERT INTO band_genre VALUES ('$id','$genre_ID')");
     	}	
-	
+	}
 	//</Test to see if Genre is already in the table>
 	//***********************************************
 	//<Find Genre's ID>
@@ -252,7 +253,7 @@ if ($genre1 != null and $genre4 !=""){
 
 
 
-// $saved_name = $name;
+$saved_id = $id;
 $band = "WHERE band_id='$id'";
 
 mysqli_query($db, "UPDATE band SET bandName='$name' $band");
