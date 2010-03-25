@@ -20,7 +20,7 @@ if(isset($_POST['submit']))
 	}
 	fclose($file);
 
-	header("Location: main_page.php");
+	header("Location: home.php");
 	ob_flush();
 
 }
@@ -41,11 +41,11 @@ else
 
 <body>
 <form method="post" action="setup.php">
-<h2 style="text-align: center;"><u>Database Setup</u></h2>
+<h1 style="text-align: center;"><u>Database Setup</u></h1>
 <center>
-<b text="white">Username:</b> <input type="text" name="root">
+<h4>Username</h4> <input type="text" name="root">
 <br>
-<b text="white">Password:</b> <input type="password" name="password">
+<h4>Password</h4> <input type="password" name="password">
 <br>
 <br>
 <input type="submit" name="submit" value="Submit">
@@ -56,3 +56,5 @@ else
 <?php
 }
 ?>
+
+<?php include("footer.html");?>
