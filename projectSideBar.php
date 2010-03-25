@@ -36,6 +36,7 @@ function recent_comments($num_comments)
 		$count = 0;
 		$band = $row['band_id'];
 		$venue = $row['venue_id'];
+		$exists = false;
 		
 		if (!empty($band))
 		{
@@ -44,6 +45,7 @@ function recent_comments($num_comments)
 			while ($row2 = mysqli_fetch_assoc($result2))
 			{
 				$name = $row2['bandName'];
+				$exists = true;
 			}
 		}
 		
@@ -54,15 +56,19 @@ function recent_comments($num_comments)
 			while ($row2 = mysqli_fetch_assoc($result2))
 			{
 				$name = $row2['venueName'];
+				$exists = true;
 			}
 		}
 		
-		$recent_comments .= "<p style='font-size:xx-small;'><a href='comments.php?";
-		if (!empty($band)) $recent_comments .= "band=$band";
-		else if (!empty($venue)) $recent_comments .=  "venue=$venue";
-		$recent_comments .=  "#".$row['id']."'>".$row['name']."</a> commented on $name";		
-		$recent_comments .=  "...<p style='width:219px; margin-left:10px; color:yellow; font-size:xx-small;'>\n";
-		$recent_comments .= $row['comment']."\n</p>\n</p>\n";
+		if ($exists)
+		{
+			$recent_comments .= "<p style='font-size:xx-small;'><a href='comments.php?";
+			if (!empty($band)) $recent_comments .= "band=$band";
+			else if (!empty($venue)) $recent_comments .=  "venue=$venue";
+			$recent_comments .=  "#".$row['id']."'>".$row['name']."</a> commented on $name";		
+			$recent_comments .=  "...<p style='width:219px; margin-left:10px; color:yellow; font-size:xx-small;'>\n";
+			$recent_comments .= $row['comment']."\n</p>\n</p>\n";
+		}
 		
 		++$count;
 	}
