@@ -54,7 +54,7 @@ if (!$logged_in) include("notloggedin.php");
 	echo "<input name='zipcode' type='text' value='$zipcode' />";
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
 	echo "<textarea name='description' rows=5>$description</textarea>";
-<<<<<<< HEAD
+// <<<<<<< HEAD
 	echo "<br /><label for='picture'>Picture: ";
 	echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=venimg';\" ";
 	echo "value=' Upload ' /></label> ";
@@ -63,7 +63,7 @@ if (!$logged_in) include("notloggedin.php");
 	echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=venmap';\" ";
 	echo "value=' Upload ' /></label> ";
 	echo "<input name='map' type='text' value='$map' />";
-=======
+//=======
 	echo "<br /><label for='picture'>Picture URL:</label> <input name='picture' type='text' value='$picture' />";
 	echo "<br /><label for='picture'>Map Image:</label> <input name='map' type='text' value='$map' />";
 	//<uploads>
@@ -71,7 +71,7 @@ if (!$logged_in) include("notloggedin.php");
 	echo "<br><a href='uploadImage.php?sent=venmap' >Upload Map Image</a>";
 	echo "<br><h6 color=red>**WARNING** Uploading an image <br> will result in loss of <br> any changes made to this form</h6>";
 	//</uploads>
->>>>>>> e1f4b24812336c39a39702eee7d0b0e1f63cd0f8
+//>>>>>>> e1f4b24812336c39a39702eee7d0b0e1f63cd0f8
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' ";
 	echo "value=' Submit ' /></p></form>";
 	echo "</p>\n";
