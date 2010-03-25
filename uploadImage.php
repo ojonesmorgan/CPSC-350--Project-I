@@ -22,6 +22,14 @@ include("session.php");
 <?php
 include "db_connect.php";
 
+
+//<Refered From>
+$refer=$_GET['sent'];
+
+
+//</Refered From>
+
+
 $id = $_GET['tag'];
 //static $ids =& $id;
 //echo "$id <--ID";
@@ -75,23 +83,33 @@ $filePath = addslashes($filePath);
   
 //$result = mysqli_query($db, $query)
    //or die("Error Querying Database");
-   
+if($refer=="bandimg"){  
 echo "<h2>You have uploaded a new picture to BandLink successfully</h2>";
 echo "<h3><a href=\"addBand.php?picPath=$filePath\"> Return to Add Band </a></h3>";
+}
+if($refer=="venimg"){
+echo "<h2>You have uploaded a new picture to BandLink successfully</h2>";
+echo "<h3><a href=\"addvenue.php?picPath=$filePath\"> Return to Add Venue </a></h3>";
+}
+if($refer=="venmap"){
+echo "<h2>You have uploaded a new picture to BandLink successfully</h2>";
+echo "<h3><a href=\"addvenue.php?mapPath=$filePath\"> Return to Add Venue </a></h3>";
+}
+
 
 }
 
 
 mysqli_close($db);
 ?> 
-	
-	<form name="Image" enctype="multipart/form-data" <?php echo "action='uploadImage.php?tag= $id '" ?> method="POST">
+	<h2>Please Choose a File to Upload.</h2>
+	<form name="Image" enctype="multipart/form-data" <?php echo "action='uploadImage.php?tag= $id&sent=$refer '" ?> method="POST">
 
-	<input type="file" name="Photo" size="30" accept="image/gif, image/jpeg, image/x-ms-bmp, image/x-png"><br/>
+	<input type="file" style="background-color:darkblue; color:red;" name="Photo" size="30" accept="image/gif, image/jpeg, image/x-ms-bmp, image/x-png"><br/>
 
 	<INPUT type="submit" class="button" name="Submit" value=" Submit ">
 
-	&nbsp;&nbsp;<INPUT type="reset" class="button" value="Cancel">
+	&nbsp;&nbsp;<INPUT type="reset" style="background-color:lightblue; color:darkred;"class="button" value="Cancel">
 	
 
 </div>

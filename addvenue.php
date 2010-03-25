@@ -56,6 +56,10 @@ if (!$logged_in) include("notloggedin.php");
 	echo "<textarea name='description' rows=5>$description</textarea>";
 	echo "<br /><label for='picture'>Picture URL:</label> <input name='picture' type='text' value='$picture' />";
 	echo "<br /><label for='picture'>Map Image:</label> <input name='map' type='text' value='$map' />";
+	//<uploads>
+	echo "<br><a href='uploadImage.php?sent=venimg' >Upload Venue Image</a>";
+	echo "<br><a href='uploadImage.php?sent=venmap' >Upload Map Image</a>";
+	//</uploads>
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' ";
 	echo "value=' Submit ' /></p></form>";
 	echo "</p>\n";
