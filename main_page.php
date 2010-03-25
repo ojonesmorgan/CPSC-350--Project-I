@@ -28,7 +28,7 @@
 	//if($results1!=false){
 	//$bandCount=1;
 	while ($row1 = mysqli_fetch_array($results1)){
-		$bandCount+=$bandCount;
+		$bandCount++;
 		$bandID=$row1['band_id'];
 		$bandName=$row1['bandName'];
 		$bandState=$row1['bandState'];
@@ -85,9 +85,9 @@
 
 	//finish
 	echo "<br/>\n";
-	}else{//no bands in DB
+	} else{//no bands in DB
 	echo "<h4>There are no bands currently in Bandlink's database.</h4>";
-	if($logged_in) echo "<br><h4>Click <a href='addband.php'>here</a> to add a band</h4>"; 
+	if($logged_in) echo "<h4>Click <a href='addband.php'>here</a> to add a band</h4>"; 
 	echo "<br />\n";
 	}
 	
@@ -156,7 +156,7 @@
 	</table><br>";
 	}else{//no venues in DB
 	echo "<h4>There are no venues currently in Bandlink's database.</h4>";
-	if($logged_in) echo "<br><h4>Click <a href='addvenue.php'>here</a> to add a venue</h4>"; 
+	if($logged_in) echo "<h4>Click <a href='addvenue.php'>here</a> to add a venue</h4>"; 
 	echo "<br />\n";
 	}
 	//finish
