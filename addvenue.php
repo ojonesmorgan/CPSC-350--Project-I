@@ -59,6 +59,7 @@ if (!$logged_in) include("notloggedin.php");
 	//<uploads>
 	echo "<br><a href='uploadImage.php?sent=venimg' >Upload Venue Image</a>";
 	echo "<br><a href='uploadImage.php?sent=venmap' >Upload Map Image</a>";
+	echo "<br><h6 color=red>**WARNING** Uploading an image <br> will result in loss of <br> any changes made to this form</h6>";
 	//</uploads>
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' ";
 	echo "value=' Submit ' /></p></form>";
