@@ -53,12 +53,6 @@ $map = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($_POST[
  }
 else header("location:addvenue.php?err=noname&name=$name&street=$street&city=$city&state=$state&description=$description&picture=$picture&map=$map"); 
 **/
-$result = mysqli_query($db, "SELECT venue_id FROM venue");
-	
-while ($row = mysqli_fetch_assoc($result))
-{
-	$venue_id = $row['venue_id'];
-}
 		
 if (!empty($name)){
 	mysqli_query($db, "INSERT INTO venue (venueName, venueDescription, venuePicture, venueMap, venueZipCode,venueAddress_id) 
@@ -75,6 +69,13 @@ if (!empty($name)){
 else header("location:addvenue.php?err=noname&name=$name&street=$street&city=$city&state=$state&description=$description&picture=$picture&map=$map"); 
 //	</Insert New Band Into Database> 
 //***********************************
+
+$result = mysqli_query($db, "SELECT venue_id FROM venue");
+	
+while ($row = mysqli_fetch_assoc($result))
+{
+	$venue_id = $row['venue_id'];
+}
 ?>
  
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
