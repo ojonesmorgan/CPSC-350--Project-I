@@ -13,7 +13,7 @@ echo "</span><br />\n";
 </div>
 <div id="nav"><center><p><i>Your link to the latest band and venue information.</i></p></center></div>
 	<div id="Navigation">
-	<a href=".">Home</a>
+	<a href="home.php">Home</a>
 	|
 	<a href="addband.php">Add Band</a>
 	|

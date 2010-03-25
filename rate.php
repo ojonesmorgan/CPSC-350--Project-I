@@ -9,21 +9,12 @@ $venue = $_GET['venue'];
 $email = $_SESSION['email'];
 $has_rated = false;
 
-if (!empty($band))
-{
-	$name = $band;
-	$condition = "WHERE bandName = '$name'";
-}
-	
-else if (!empty($venue))
-{
-	$name = $venue;
-	$condition = "WHERE venueName = '$name'";
-}
+if (!empty($band)) $subject = array("name" => "band", "field" => "band_id", "value" => "$band");
+if (!empty($venue)) $subject = array("name" => "venue", "field" => "venue_id", "value" => "$venue");
 
 include("db_connect.php");
 
-$result = mysqli_query($db, "SELECT * FROM ratings $condition");
+$result = mysqli_query($db, "SELECT * FROM ratings WHERE ".$subject['field']." = '".$subject['value']."'");
 
 while ($row = mysqli_fetch_assoc($result))
 {
@@ -36,13 +27,11 @@ if (in_array($rating, $valid_ratings))
 {
 	if (!$has_rated) $query = "INSERT INTO ratings (rating, ";
 	else $query = "UPDATE ratings SET rating = '$rating' WHERE ";
-	if (!empty($band)) $query .= "bandName";
-	else if (!empty($venue)) $query .= "venueName";
-	if (!$has_rated) $query .= ", email) VALUES ('$rating', '$name', '$email')";
-	else $query .= " = '$name' AND email = '$email'";
+	$query .= $subject['field'];
+	if (!$has_rated) $query .= ", email) VALUES ('$rating', '".$subject['value']."', '$email')";
+	else $query .= " = '".$subject['value']."' AND email = '$email'";
 	mysqli_query($db, $query);
 }
 
-if (!empty($band)) header("location:bandprofile.php?name=$name&rated=1#rating");
-else if (!empty($venue)) header("location:venueprofile.php?name=$name&rated=1#rating");
+header("location:".$subject['name']."profile.php?id=".$subject['value']."&rated=1#rating");
 ?>

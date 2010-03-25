@@ -2,14 +2,14 @@
 include("db_connect.php");
 
 $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
-if ($page == "bandprofile.php") $condition = "WHERE bandName = '$name'";
-else if ($page == "venueprofile.php") $condition = "WHERE venueName = '$name'";
+if ($page == "bandprofile.php") $subject = array("name" => "band", "field" => "band_id", "value" => $_GET['id']);
+if ($page == "venueprofile.php") $subject = array("name" => "venue", "field" => "venue_id", "value" => $_GET['id']);
 
 $rating = 0;
 $count = 0;
 $email = $_SESSION['email'];
 
-$result = mysqli_query($db, "SELECT * FROM ratings $condition");
+$result = mysqli_query($db, "SELECT * FROM ratings WHERE ".$subject['field']." = '".$subject['value']."'");
 
 while ($row = mysqli_fetch_assoc($result))
 {	
@@ -25,11 +25,11 @@ function display_star($num, $rating)
 	$full_star = "./Pictures/fullstar.gif";
 	$half_star = "./Pictures/halfstar.gif";
 	$empty_star = "./Pictures/emptystar.gif";
-	$name = $_GET['name'];
+	$id = $_GET['id'];
 	
 	$page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
-	if ($page == "bandprofile.php") $for = "band=$name";
-	else if ($page == "venueprofile.php") $for = "venue=$name";
+	if ($page == "bandprofile.php") $for = "band=$id";
+	else if ($page == "venueprofile.php") $for = "venue=$id";
 	
 	if ($logged_in) echo "<a href='rate.php?rating=$num&$for'>";
 	echo "<img name='star$num' ";
@@ -59,7 +59,7 @@ function display_star($num, $rating)
 	if ($rating >= $num) echo "class='full-star' src='$full_star'";
 	else if ($rating >= ($num - .5)) echo "class='half-star' src='$half_star'";
 	else echo "class='empty-star' src='$empty_star'";
-	echo " border=0 />";
+	echo " title='$num/5' border=0 />";
 	if ($logged_in) echo "</a>";
 }
 

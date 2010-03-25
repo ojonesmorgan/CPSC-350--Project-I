@@ -59,6 +59,7 @@ if (!$logged_in) include("notloggedin.php");
 	echo "<BR><label for='photo'> Photo:</label>";
 	echo "<input name='photo' type ='text' value='$photo'>";
 	echo "<br><a href='uploadImage.php?sent=bandimg '>Upload Image</a>";
+	echo "<br><h6 color=red>**WARNING** Uploading an image <br> will result in loss of <br> any changes made to this form</h6>";
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' ";
 	echo "value=' Submit ' /></p></form>";
 	echo "</p>\n";

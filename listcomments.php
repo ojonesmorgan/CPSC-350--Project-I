@@ -1,39 +1,40 @@
 <?php
-define("BAND", "band");
-define("VENUE", "venue");
-
 include("db_connect.php");
 
 $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
 $band = $_GET['band'];
 $venue = $_GET['venue'];
+
 if ($page == "bandprofile.php" || !empty($band))
-{
-	$subject = BAND;
-	if (empty($name)) $name = $band;
+{	
+	if (empty($band)) $band = $_GET['id'];
+	
+	$subject = array("name" => "band", "field" => "band_id", "value" => "$band");
 }
 
 else if ($page == "venueprofile.php" || !empty($venue))
 {
-	$subject = VENUE;
-	if (empty($name)) $name = $venue;
+	if (empty($venue)) $venue = $_GET['id'];
+	
+	$subject = array("name" => "venue", "field" => "venue_id", "value" => "$venue");
+}
+
+$query = "SELECT * FROM ".$subject['name']." WHERE ".$subject['field']." = '".$subject['value']."'";
+$result = mysqli_query($db, $query);
+
+while ($row = mysqli_fetch_assoc($result))
+{
+	$name_field = $subject['name']."Name";
+	$name = $row[$name_field];
 }
 
 if ($page == "comments.php")
 {
 	echo "<br />\n<br />\n";
 	echo "<input type='submit' style='display:block; margin-left:auto; margin-right:auto; width:400px; height:75px;' ";
-	
-	if ($subject == BAND)
-	{
-		echo "onClick=\"parent.location = 'bandprofile.php?name=$band'\" value=\"  Go to $band's Profile  \" />";
-	}
-	
-	if ($subject == VENUE)
-	{
-		echo "onClick=\"parent.location = 'venueprofile.php?name=$venue'\" value=\"  Go to $venue Profile  \" />";
-	}
-	
+	echo "onClick=\"parent.location = '".$subject['name']."profile.php?id=".$subject['value']."'\" value=";
+	if ($subject['name'] == "band") echo "\"  Go to $name's Profile  \" />";
+	if ($subject['name'] == "venue") echo "\"  Go to $name Profile  \" />";
 	echo "<br />\n";
 }
 
@@ -97,7 +98,7 @@ function get_rank($id)
 
 if ($logged_in)
 {
-	echo "<form method='post' action='postcomment.php?$subject=$name'>\n";
+	echo "<form method='post' action='postcomment.php?".$subject['name']."=".$subject['value']."'>\n";
 	echo "<input type='hidden' name='reply' value='0' />";
 	echo "<p style='text-align:center;'>";
 	echo "<textarea class='comment' name='comment' rows=4></textarea>";
@@ -115,9 +116,7 @@ else
 $query = "SELECT a.name AS poster, b.*, b.email AS posteremail, DATE_FORMAT(b.date, '%M %e, %Y') AS fdate,";
 $query .= " TIME_FORMAT(b.time, '%l:%i %p') AS ftime";
 $query .= " FROM users AS a NATURAL JOIN comments AS b";
-$query .= " WHERE";
-if ($subject == BAND) $query .= " bandName = '$name'";
-else if ($subject == VENUE) $query .= " venueName = '$name'";
+$query .= " WHERE ".$subject['field']." = '".$subject['value']."'";
 $reply_query = $query;
 $query .= " AND reply = '0'";
 $query .= " ORDER BY b.id DESC";
@@ -161,7 +160,8 @@ while ($row = mysqli_fetch_assoc($result))
 		if ($logged_in)
 		{
 			echo "<a name='replyto$id'></a>";
-			echo "<form style='display:none;' name='reply$id' method='post' action='postcomment.php?$subject=$name'>\n";
+			echo "<form style='display:none;' name='reply$id' method='post' action='postcomment.php?";
+			echo $subject['name']."=".$subject['value']."'>\n";
 			echo "<input type='hidden' name='reply' value='$id' />";
 			echo "<p style='text-align:center;'>";
 			echo "<textarea class='comment' name='comment' rows=4></textarea>";
@@ -203,9 +203,7 @@ while ($row = mysqli_fetch_assoc($result))
 
 if (($page != "comments.php") && ($comment_count > 10))
 {
-	echo "<p style='text-align:center;'><a href='comments.php?";
-	if ($subject == BAND) echo "band=$name";
-	else if ($subject == VENUE) echo "venue=$name";
+	echo "<p style='text-align:center;'><a href='comments.php?".$subject['name']."=".$subject['value'];
 	echo "'>See all $comment_count comments...</a></p><br />\n";
 }
 
