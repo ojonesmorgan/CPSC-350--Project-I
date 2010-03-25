@@ -65,8 +65,8 @@ while($testRow=mysqli_fetch_array($testRes)){
 }
 //<new address row>
 mysqli_query($db, "UPDATE venue SET venueAddress_id='$addressID' $venue");
-mysqli_query($db, "UPDATE venue SET venueCity='$city' $venue");
-mysqli_query($db, "UPDATE venue SET venueState='$state' $venue");
+mysqli_query($db, "UPDATE venue_zip_code SET city='$city' where zip_code='$zipcode'");
+mysqli_query($db, "UPDATE venue_zip_code SET state='$state' where zip_code='$zipcode' ");
 mysqli_query($db, "UPDATE venue SET venuePicture='$picture' $venue");
 mysqli_query($db, "UPDATE venue SET venueMap='$map' $venue");
 mysqli_query($db, "UPDATE venue SET venueDescription='$description' $venue");

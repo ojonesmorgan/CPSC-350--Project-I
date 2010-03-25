@@ -108,9 +108,9 @@ while ($row=mysqli_fetch_array($results)){
 	echo "<br /><label for='state'>State:</label> ";
 	if ($logged_in) echo "<input name='state' type='text' value='$state' />";
 	else echo "<a style='text-decoration:none;' name='state'>$state</a><br />";
-	//echo "<br /><label for='city'>Zip Code:</label> ";
-	//if ($logged_in) echo "<input name='zip_code' type='text' value='$zipcode' />";
-	//else echo "<a style='text-decoration:none;' name='zip_code'>$zipcode</a><br />";
+	echo "<br /><label for='city'>Zip Code:</label> ";
+	if ($logged_in) echo "<input name='zip_code' type='text' value='$zipcode' />";
+	else echo "<a style='text-decoration:none;' name='zip_code'>$zipcode</a><br />";
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
 	if ($logged_in) echo "<textarea name='description' rows=5>$description</textarea>";
 	else echo "<br /><a style='text-decoration:none;' name='description'>".nl2br($description)."</a><br />";
