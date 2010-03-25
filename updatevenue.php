@@ -13,9 +13,10 @@ $picture = $_POST['picture'];
 $map = $_POST['map'];
 
 include("db_connect.php");
-	
+
+$id = mysql_escape_string(stripslashes(htmlspecialchars(trim($id))));	
 $name = mysql_escape_string(stripslashes(htmlspecialchars(trim($name))));
-$genre = mysql_escape_string(stripslashes(htmlspecialchars(trim($genre))));
+$zipCode = mysql_escape_string(stripslashes(htmlspecialchars(trim($zipCode))));
 $city = mysql_escape_string(stripslashes(htmlspecialchars(trim($city))));
 $state = mysql_escape_string(stripslashes(htmlspecialchars(trim($state))));
 $description = mysql_escape_string(stripslashes(htmlspecialchars(trim($description))));
