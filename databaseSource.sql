@@ -13,6 +13,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Database: 'musicdb2'
 --
 
+DROP DATABASE IF EXISTS musicdb2;
 CREATE DATABASE IF NOT EXISTS musicdb2;
 GRANT ALL PRIVILEGES ON musicdb2.* to 'team3'@'localhost' identified by 'team3';
 use musicdb2;
