@@ -26,6 +26,7 @@ use musicdb2;
 CREATE TABLE IF NOT EXISTS `band` (
   `band_id` int(11) NOT NULL AUTO_INCREMENT,
   `bandName` varchar(30) NOT NULL,
+  `bandCity` varchar(40) NOT NULL,
   `bandState` varchar(25) NOT NULL,
   `bandDescription` blob NOT NULL,
   `bandPhoto` varchar(100) NOT NULL,
