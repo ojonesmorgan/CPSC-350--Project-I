@@ -110,6 +110,7 @@ if ($count < 1)
 		if (!empty($_GET['picPath'])) $photo = $_GET['picPath'];
 		if ($photo != $default_photo) echo $photo;
 		echo "' />";
+	echo "<h6 color=red>**WARNING** Uploading an image will result in loss of any changes made to this form</h6>";
 	}
 	
 	echo "\n<p style='text-align:center;'><img style='border:1px solid red;";
