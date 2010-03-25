@@ -27,10 +27,11 @@ if (!empty($name))
 	
 	if (!empty($genres))
 	{
-		$genre_array = explode(", ", $genres);
+		$genre_array = explode(",", $genres);
 		
 		foreach ($genre_array as $genre)
 		{
+			$genre = trim($genre);
 			$result = mysqli_query($db, "SELECT * FROM genre");
 			$genre_id = 0;
 			

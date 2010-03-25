@@ -11,6 +11,8 @@ $state = $_POST['state'];
 $description = $_POST['description'];
 $picture = $_POST['picture'];
 $map = $_POST['map'];
+$street=$_POST['street'];
+$streetnum=$_POST['streetnum'];
 
 include("db_connect.php");
 
@@ -22,18 +24,20 @@ $state = mysql_escape_string(stripslashes(htmlspecialchars(trim($state))));
 $description = mysql_escape_string(stripslashes(htmlspecialchars(trim($description))));
 $picture = mysql_escape_string(stripslashes(htmlspecialchars(trim($picture))));
 $map = mysql_escape_string(stripslashes(htmlspecialchars(trim($map))));
-
+$street = mysql_escape_string(stripslashes(htmlspecialchars(trim($street))));
+$streetnum  = mysql_escape_string(stripslashes(htmlspecialchars(trim($streetnum))));
 // Test if zip code already exists
 if(!empty($zipCode)) {
 	$zipQuery="select * from venue_zip_code where zip_code ='$zipCode'";
 	$zipResults=mysqli_query($db,$zipQuery);
 	$counter=0;
-	}while ($row1 = mysqli_fetch_array($zipResults)){
+	while ($row1 = mysqli_fetch_array($zipResults)){
 	$counter=$counter + 1;
+	}
 	}
 	if($counter==0){//zip code was not already in the table and needs to be added
 			//test
-			echo "Making it in here";
+			//echo "Making it in here";
 			//test
 			mysqli_query($db, $query="INSERT INTO venue_zip_code (zip_code, city, state) VALUES ('$zipCode', '$city', '$state')");
 			mysqli_query($db, $query="UPDATE venue SET venueZipCode='$zipCode' WHERE venue_id = '$id'");
@@ -53,10 +57,16 @@ if(!empty($zipCode)) {
 	}
 $saved_id = $id;
 $venue = "WHERE venue_id='$id'";
-
-mysqli_query($db, "UPDATE venue SET venueStreet='$street' $venue");
-mysqli_query($db, "UPDATE venue SET venueCity='$city' $venue");
-mysqli_query($db, "UPDATE venue SET venueState='$state' $venue");
+//<new address row>
+mysqli_query($db, "INSERT INTO venue_address (number,street) VALUES ('$streetnum','$street')");
+$testRes=mysqli_query($db, "SELECT * FROM venue_address order by address_id desc limit 1");
+while($testRow=mysqli_fetch_array($testRes)){
+	$addressID=$testRow['address_id'];
+}
+//<new address row>
+mysqli_query($db, "UPDATE venue SET venueAddress_id='$addressID' $venue");
+mysqli_query($db, "UPDATE venue_zip_code SET city='$city' where zip_code='$zipcode'");
+mysqli_query($db, "UPDATE venue_zip_code SET state='$state' where zip_code='$zipcode' ");
 mysqli_query($db, "UPDATE venue SET venuePicture='$picture' $venue");
 mysqli_query($db, "UPDATE venue SET venueMap='$map' $venue");
 mysqli_query($db, "UPDATE venue SET venueDescription='$description' $venue");
