@@ -52,7 +52,7 @@
 
 	echo "<table style='width:640px;' id=\"hor-minimalist-b\" >\n<tr>";
 	echo header_cell("Artist", "bandName", $num_col);
-	echo header_cell("Genre", "bandGenre", $num_col);
+	echo header_cell("Genre(s)", "bandGenre", $num_col);
 	echo header_cell("City", "bandCity", $num_col);
 	echo header_cell("State", "bandState", $num_col);
 	if ($logged_in) echo header_cell("", "", $num_col);
