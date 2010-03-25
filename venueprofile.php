@@ -126,6 +126,7 @@ while ($row=mysqli_fetch_array($results)){
 		echo "' />";
 		echo "<br /><label for='picture'>Map Image: ";
 		echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=editmap&venue=$venueID';\" ";
+	echo "<h6 color=red>**WARNING** Uploading an image will result in loss of any changes made to this form</h6>";
 		echo "value=' Upload ' /></label> ";
 		echo "<input name='map' type='text' value='";
 		if (!empty($_GET['mapPath'])) $map = $_GET['mapPath'];
