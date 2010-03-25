@@ -14,22 +14,23 @@
 	<div id="delete">
 <!-- *** -->	
 <?php
+	$deletedName=$_GET['deleteName'];
 	$deleted=$_GET['deletebox'];
 	echo "<H3>";
 	echo "Are you sure you want to delete ";
-	echo $deleted;
+	echo $deletedName;
 	echo "?";
 	echo "</H3>";
 	echo "<hr width = 415>";
 	//yes
-	echo "<a href='deleteBand.php?deletebox=$deleted'>Yes, permanently delete ";
-	echo "<B>" .$deleted. "</B>";
+	echo "<a href='deleteBand.php?deletebox=$deleted&deleteName=$deletedName'>Yes, permanently delete ";
+	echo "<B>" .$deletedName. "</B>";
 	echo " from BandLink.";
 	echo "<BR>";
 	//no
 	echo "<a href='musicsearch.php'>No, do NOT delete ";
-	echo $deleted;
-	echo ".";
+	echo $deletedName;
+	echo ".</a>";
 
 
 ?>

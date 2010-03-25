@@ -6,9 +6,12 @@ include("session.php");
 	include("db_connect.php");
  //$delete = $_POST['deletebox'];
    $delete = $_GET['deletebox'];
-   $query = "DELETE FROM band WHERE bandName = '$delete'";
+   $deleteName=$_GET['deleteName'];
+   $query = "DELETE FROM band WHERE band_id = '$delete'";
+   $query2= "DELETE FROM band_genre where band_id= '$delete'";
    $results = mysqli_query($db, $query);
-   header("location:musicsearch.php?delname=$delete&deleted=1");
+   $results2 = mysqli_query($db, $query2);
+   header("location:musicsearch.php?delname=$deleteName&deleted=1");
 
 ?>
 
