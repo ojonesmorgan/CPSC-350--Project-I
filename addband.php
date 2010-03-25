@@ -47,10 +47,17 @@ if (!$logged_in) include("notloggedin.php");
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
 	echo "<textarea name='description' rows=5>$description</textarea>";
 	//echo "<br /><label for='photo'>Photo URL:</label> <input name='photo' type='text' value='$photo' />";
+<<<<<<< HEAD
 	echo "<br /><label for='photo'> Photo: ";
 	echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=bandimg';\" ";
 	echo "value=' Upload ' /></label> ";
 	echo "<input style='background-color:lightblue;' name='photo' type ='text' value='$photo'>";
+=======
+	echo "<BR><label for='photo'> Photo:</label>";
+	echo "<input name='photo' type ='text' value='$photo'>";
+	echo "<br><a href='uploadImage.php?sent=bandimg '>Upload Image</a>";
+	echo "<br><h6 color=red>**WARNING** Uploading an image <br> will result in loss of <br> any changes made to this form</h6>";
+>>>>>>> e1f4b24812336c39a39702eee7d0b0e1f63cd0f8
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' ";
 	echo "value=' Submit ' /></p></form>";
 	echo "</p>\n";
