@@ -34,20 +34,35 @@ function recent_comments($num_comments)
 	{
 		$num_words = 50;
 		$count = 0;
-		$band = $row['bandName'];
-		$venue = $row['venueName'];
-		$words = str_word_count($row['comment'], 2);
+		$band = $row['band_id'];
+		$venue = $row['venue_id'];
+		
+		if (!empty($band))
+		{
+			$result2 = mysqli_query($db, "SELECT * FROM band WHERE band_id = '$band'");
+			
+			while ($row2 = mysqli_fetch_assoc($result2))
+			{
+				$name = $row2['bandName'];
+			}
+		}
+		
+		if (!empty($venue))
+		{
+			$result2 = mysqli_query($db, "SELECT * FROM venue WHERE venue_id = '$venue'");
+			
+			while ($row2 = mysqli_fetch_assoc($result2))
+			{
+				$name = $row2['venueName'];
+			}
+		}
 		
 		$recent_comments .= "<p style='font-size:xx-small;'><a href='comments.php?";
 		if (!empty($band)) $recent_comments .= "band=$band";
 		else if (!empty($venue)) $recent_comments .=  "venue=$venue";
-		$recent_comments .=  "#".$row['id']."'>".$row['name']."</a> commented on ";
-		if (!empty($band)) $recent_comments .=  $band;
-		if (!empty($venue)) $recent_comments .=  $venue;
-		
+		$recent_comments .=  "#".$row['id']."'>".$row['name']."</a> commented on $name";		
 		$recent_comments .=  "...<p style='width:219px; margin-left:10px; color:yellow; font-size:xx-small;'>\n";
-		$recent_comments .= $row['comment'];
-		$recent_comments .=  "\n</p>\n</p>\n";
+		$recent_comments .= $row['comment']."\n</p>\n</p>\n";
 		
 		++$count;
 	}

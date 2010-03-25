@@ -48,8 +48,11 @@ if ($logged_in) header("location:.");
 		echo "</p></fieldset><br />";
 	}
 	
-	if (empty($email)) $email = $_COOKIE['blemail'];
-	$password = $_COOKIE['blpw'];
+	if (empty($email))
+	{
+		$email = $_COOKIE['blemail'];
+		$password = $_COOKIE['blpw'];
+	}
 	
 	echo "<input name='ref' type='hidden' value='".$_GET['ref']."' />";
 	echo "<label for=\"email\">Email Address:</label><input name='email' type='text' value='$email' /><br/>";
@@ -58,10 +61,10 @@ if ($logged_in) header("location:.");
 	echo "<input onClick='if (!this.checked) {loginform.rememberpass.checked=0; loginform.rememberpass.disabled=1;}";
 	echo " else loginform.rememberpass.disabled=false;' ";
 	echo "name='rememberme' type='checkbox' ";
-	if (!empty($_COOKIE['blemail'])) echo "checked ";
+	if (!empty($_COOKIE['blemail']) && empty($_GET['email'])) echo "checked ";
 	echo "value='1' /> Remember me.<br />";
 	echo "<input name='rememberpass' type='checkbox' ";
-	if (!empty($_COOKIE['blpw']) && !empty($_COOKIE['blemail'])) echo "checked ";
+	if (!empty($_COOKIE['blpw']) && !empty($_COOKIE['blemail']) && empty($_GET['email'])) echo "checked ";
 	echo "value='1' /> Remember my password.</p>";
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' value='  Login  ' /></p>";
 	echo "</form>\n";
