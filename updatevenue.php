@@ -24,11 +24,11 @@ $picture = mysql_escape_string(stripslashes(htmlspecialchars(trim($picture))));
 $map = mysql_escape_string(stripslashes(htmlspecialchars(trim($map))));
 
 // Test if zip code already exists
-if(!empty($zipCode)) 
+if(!empty($zipCode)) {
 	$zipQuery="select * from venue_zip_code where zip_code ='$zipCode'";
 	$zipResults=mysqli_query($db,$zipQuery);
 	$counter=0;
-	while ($row1 = mysqli_fetch_array($zipResults)){
+	}while ($row1 = mysqli_fetch_array($zipResults)){
 	$counter=$counter + 1;
 	}
 	if($counter==0){//zip code was not already in the table and needs to be added
@@ -38,7 +38,7 @@ if(!empty($zipCode))
 			mysqli_query($db, $query="INSERT INTO venue_zip_code (zip_code, city, state) VALUES ('$zipCode', '$city', '$state')");
 			mysqli_query($db, $query="UPDATE venue SET venueZipCode='$zipCode' WHERE venue_id = '$id'");
     // if zip code does exist test to see of the band is already connected to it
-    else
+    }else{
     	
     	$zipVenueQuery="select * from venue where venueZipCode ='$zipCode' && venue_id='$id'";
 		$zipVenueResults=mysqli_query($db,$zipVenueQuery);
@@ -50,7 +50,7 @@ if(!empty($zipCode))
     		mysqli_query($db, "UPDATE venue SET venueZipCode='$zipCode' WHERE venue_id='id'");
     	}	
 
-
+	}
 $saved_id = $id;
 $venue = "WHERE venue_id='$id'";
 
