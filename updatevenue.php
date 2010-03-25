@@ -16,7 +16,14 @@ $streetnum=$_POST['streetnum'];
 
 include("db_connect.php");
 
-$id = mysql_escape_string(stripslashes(htmlspecialchars(trim($id))));	
+$id = mysql_escape_string(stripslashes(htmlspecialchars(trim($id))));
+//<get address id>
+$addQuery="select venueAddress_id from venue where venue_id='$id' ";
+$addRes=mysqli_query($db,$addQuery);
+while ($addRow = mysqli_fetch_array($addRes)){
+		$addressID=$addRow['venueAddress_id'];	
+}
+//</get address id>	
 $name = mysql_escape_string(stripslashes(htmlspecialchars(trim($name))));
 $zipCode = mysql_escape_string(stripslashes(htmlspecialchars(trim($zipCode))));
 $city = mysql_escape_string(stripslashes(htmlspecialchars(trim($city))));
@@ -58,13 +65,15 @@ if(!empty($zipCode)) {
 $saved_id = $id;
 $venue = "WHERE venue_id='$id'";
 //<new address row>
-mysqli_query($db, "INSERT INTO venue_address (number,street) VALUES ('$streetnum','$street')");
-$testRes=mysqli_query($db, "SELECT * FROM venue_address order by address_id desc limit 1");
-while($testRow=mysqli_fetch_array($testRes)){
-	$addressID=$testRow['address_id'];
-}
-//<new address row>
-mysqli_query($db, "UPDATE venue SET venueAddress_id='$addressID' $venue");
+//mysqli_query($db, "INSERT INTO venue_address (number,street) VALUES ('$streetnum','$street')");
+mysqli_query($db, "UPDATE venue_address set number='$streetnum' where address_id='$addressID'");
+mysqli_query($db,"UPDATE venue_address set street='$street' where address_id='$addressID'"); 
+//$testRes=mysqli_query($db, "SELECT * FROM venue_address order by address_id desc limit 1");
+//while($testRow=mysqli_fetch_array($testRes)){
+//	$addressID=$testRow['address_id'];
+//}
+//</new address row>
+//mysqli_query($db, "UPDATE venue SET venueAddress_id='$addressID' $venue");
 mysqli_query($db, "UPDATE venue_zip_code SET city='$city' where zip_code='$zipcode'");
 mysqli_query($db, "UPDATE venue_zip_code SET state='$state' where zip_code='$zipcode' ");
 mysqli_query($db, "UPDATE venue SET venuePicture='$picture' $venue");

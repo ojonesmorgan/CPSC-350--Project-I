@@ -106,7 +106,7 @@
 		if ($logged_in)
 		{
 			echo "<td>";
-			echo "<input type='submit' onClick=\"parent.location = 'deleteVenueConfirm.php?deletebox=$name'\" ";
+			echo "<input type='submit' onClick=\"parent.location = 'deleteVenueConfirm.php?deletebox=$id&deleteName=$name'\" ";
 			echo "value='Delete' /></td>";
 		}
 		
