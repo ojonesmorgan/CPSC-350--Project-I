@@ -96,28 +96,39 @@ while ($row=mysqli_fetch_array($results)){
 	echo "<br><label for='name'>Venue Name:</label> ";
 	if ($logged_in) echo "<input name='name' type='text' value='$name' />";
 	else echo "<a style='text-decoration:none;' name='name'>$name</a><br /><br />";
+	echo"<br><label for='streetnum'>Street Number:</label> ";
+	if ($logged_in) echo "<input name='streetnum' type ='text' value='$streetnum' />";
+	else echo "<a style='text-decoration:none;' name='streetnum'>$streetnum</a><br />";
 	echo "<br><label for='street'>Street:</label> ";
 	if ($logged_in) echo "<input name='street' type='text' value='$street' />";
 	else echo "<a style='text-decoration:none;' name='street'>$street</a><br />";
-	echo"<br><label for='streetnum'>Street Number:</label>";
-	if ($logged_in) echo "<input name='streetnum' type ='text' value='$streetnum' />";
-	else echo "<a style='text-decoration:none;' name='streetnum'>$streetnum</a><br />";
 	echo "<br /><label for='city'>City:</label> ";
 	if ($logged_in) echo "<input name='city' type='text' value='$city' />";
 	else echo "<a style='text-decoration:none;' name='city'>$city</a><br />";
 	echo "<br /><label for='state'>State:</label> ";
 	if ($logged_in) echo "<input name='state' type='text' value='$state' />";
 	else echo "<a style='text-decoration:none;' name='state'>$state</a><br />";
+	//echo "<br /><label for='city'>Zip Code:</label> ";
+	//if ($logged_in) echo "<input name='zip_code' type='text' value='$zipcode' />";
+	//else echo "<a style='text-decoration:none;' name='zip_code'>$zipcode</a><br />";
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
 	if ($logged_in) echo "<textarea name='description' rows=5>$description</textarea>";
 	else echo "<br /><a style='text-decoration:none;' name='description'>".nl2br($description)."</a><br />";
 	
 	if ($logged_in)
 	{
-		echo "<br /><label for='picture'>Picture URL:</label> <input name='picture' type='text' value='";
-		if ($picture != $default_picture) echo $picture;
+		echo "<br /><label for='photo'> Photo: ";
+		echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=editvenue&venue=$venueID';\" ";
+		echo "value=' Upload ' /></label> ";
+		echo "<input name='photo' type ='text' value='";
+		if (!empty($_GET['picPath'])) $photo = $_GET['picPath'];
+		if ($photo != $default_photo) echo $photo;
 		echo "' />";
-		echo "<br /><label for='picture'>Map Image:</label> <input name='map' type='text' value='";
+		echo "<br /><label for='picture'>Map Image: ";
+		echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=editmap&venue=$venueID';\" ";
+		echo "value=' Upload ' /></label> ";
+		echo "<input name='map' type='text' value='";
+		if (!empty($_GET['mapPath'])) $map = $_GET['mapPath'];
 		if ($map != $default_picture) echo $map;
 		echo "' />";
 	}

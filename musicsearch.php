@@ -20,12 +20,12 @@
 	$deleted=$_GET['deleted']==1;
 	//--Deleted Variables
 
-	$search = trim($_GET['searched']);
+	$search = trim($_GET['q']);
 	$sort = $_GET['sort'];
 	if (empty($sort)) $sort = "bandName";
 	$desc = $_GET['desc'];
 	$find = "LIKE '%$search%'";
-	$query = "SELECT * FROM band WHERE bandName $find OR bandState $find ORDER BY $sort";
+	$query = "SELECT * FROM band ORDER BY $sort;";
 	if ($desc == 1) $query .= " DESC";
 	
 	echo "<br />";
@@ -42,24 +42,6 @@
 	}
 
 	//</band was deleted>
-	//*********************************
-	//<Get Genre(s) function>
-	function Genres($bandid){
-		$tempGen="";
-		$genQuery="select  * from band b join band_genre bg join genre g where
-					b.band_id=bg.band_id and g.genre_id=bg.genre_id
-					and b.band_id='$bandid'";
-		//<db>
-		$db2 = mysqli_connect('localhost', 'music', 'music', 'musicdb2');
-		//</db>
-		$genRes = mysqli_query($db2, $genQuery);
-		while ($genRow = mysqli_fetch_assoc($genRes)){
-			$tempGen.=$genRow['genre'].", ";		
-		}
-		return $tempGen;
-	
-	}
-	//</Get Genre(s) function>
 	
 	function header_cell($title, $attribute, $num_col)
 	{
@@ -70,8 +52,8 @@
 
 	echo "<table style='width:640px;' id=\"hor-minimalist-b\" >\n<tr>";
 	echo header_cell("Artist", "bandName", $num_col);
-	echo header_cell("Genre", "", $num_col);
-	//echo header_cell("City", "bandCity", $num_col);
+	echo header_cell("Genre", "bandGenre", $num_col);
+	echo header_cell("City", "bandCity", $num_col);
 	echo header_cell("State", "bandState", $num_col);
 	if ($logged_in) echo header_cell("", "", $num_col);
 	echo "</tr>\n";
@@ -104,42 +86,58 @@
 	}
 	
 	$count = 0;
-	$results = mysqli_query($db, $query) or die("Error Querying Database");
+	$result = mysqli_query($db, $query) or die("Error Querying Database");
 
-	while ($row = mysqli_fetch_assoc($results))
+	while ($row = mysqli_fetch_assoc($result))
 	{
+		$match = false;
+		$id = $row['band_id'];
 		$name = $row['bandName'];
-		//$genre = $row['bandGenre'];
-		//*********************************
-		//<Find Band's ID>
-		$bQ="select band_id from band where bandName='$name'";
-		$bR=mysqli_query($db,$bQ);
-		while ($bRow=mysqli_fetch_assoc( $bR )){
-			$tempBandID=$bRow['band_id'];
-		}
-		//</Find Band's ID>
-		//*********************************
-		//$city = $row['bandCity'];
+		$genre = "";
+		$city = $row['bandCity'];
 		$state = $row['bandState'];
 		
-		echo "<tr>";
-		echo "<td><a style='color:darkblue;' href='bandprofile.php?name=$name'>";
-		echo highlight_matches($search, $name, true)."</a></td>";
-		$genre=Genres($tempBandID);
-		echo "<td>".highlight_matches("",$genre, false)."</td>";
-		//echo "<td>".highlight_matches($search, $city, false)."</td>";
-		echo "<td>".highlight_matches($search, $state, false)."</td>";
+		$query = "SELECT * FROM band_genre WHERE band_id = '$id'";
+		$result2 = mysqli_query($db, $query);
+		$first = true;
 		
-		if ($logged_in)
-		{
-			echo "<td>";
-			echo "<input type='submit' onClick=\"parent.location = 'deleteBandConfirm.php?deletebox=$name'\" ";
-			echo "value='Delete' /></td>";
+		while ($row2 = mysqli_fetch_assoc($result2))
+		{	
+			$result3 = mysqli_query($db, "SELECT * FROM genre WHERE genre_id = '".$row2['genre_id']."'");
+			
+			while ($row3 = mysqli_fetch_assoc($result3))
+			{
+				if (!$first) $genre .= ", ";
+				$genre .= $row3['genre'];
+				$first = false;
+			}
 		}
 		
-		echo "</tr>\n";
+		if (stripos($name, $search) !== false) $match = true;
+		if (stripos($genre, $search) !== false) $match = true;
+		if (stripos($city, $search) !== false) $match = true;
+		if (stripos($state, $search) !== false) $match = true;
 		
-		++$count;
+		if ($match || (empty($search)))
+		{
+			echo "<tr>";
+			echo "<td><a style='color:darkblue;' href='bandprofile.php?id=$id'>";
+			echo highlight_matches($search, $name, true)."</a></td>";
+			echo "<td>".highlight_matches($search, $genre, false)."</td>";
+			echo "<td>".highlight_matches($search, $city, false)."</td>";
+			echo "<td>".highlight_matches($search, $state, false)."</td>";
+			
+			if ($logged_in)
+			{
+				echo "<td style='text-align:right;'>";
+				echo "<input type='submit' onClick=\"parent.location = 'deleteBandConfirm.php?deletebox=$name'\" ";
+				echo "value='Delete' /></td>";
+			}
+			
+			echo "</tr>\n";
+			
+			++$count;
+		}
 	}
 	
 	if ($count < 1)

@@ -6,252 +6,68 @@ include("db_connect.php");
 
 $id = $_GET['id'];
 $name = $_POST['name'];
-$genre1 = $_POST['genre1'];
-$genre2 = $_POST['genre2'];
-$genre3 = $_POST['genre3'];
-$genre4 = $_POST['genre4'];
+$genres = $_POST['genres'];
+$city = $_POST['city'];
 $state = $_POST['state'];
 $description = $_POST['description'];
 $photo = $_POST['photo'];
 
-$id = mysql_escape_string(stripslashes(htmlspecialchars(trim($id))));	
-$name = mysql_escape_string(stripslashes(htmlspecialchars(trim($name))));
-$genre1 = mysql_escape_string(stripslashes(htmlspecialchars(trim($genre1))));
-$genre2 = mysql_escape_string(stripslashes(htmlspecialchars(trim($genre2))));
-$genre3 = mysql_escape_string(stripslashes(htmlspecialchars(trim($genre3))));
-$genre4 = mysql_escape_string(stripslashes(htmlspecialchars(trim($genre4))));
-$state = mysql_escape_string(stripslashes(htmlspecialchars(trim($state))));
-$description = mysql_escape_string(stripslashes(htmlspecialchars(trim($description))));
-$photo = mysql_escape_string(stripslashes(htmlspecialchars(trim($photo))));
+$id = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($id)))));
+$name = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($name)))));
+$genres = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($genres)))));
+$city = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($city)))));
+$state = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($state)))));
+$description = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($description)))));
+$photo = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($photo)))));
 
-//<Test for duplicated genres for a single band>
-if ($genre1==$genre2){
-	$genre2="";
-}
-if ($genre1 ==$genre3){
-	$genre3="";
-}
-if ($genre1 == $genre4){
-	$genre4="";
-}
-if ($genre2 == $genre3){
-	$genre3="";
-}
-if ($genre2 == $genre4){
-	$genre4="";
-}
-if ($genre3 == $genre4){
-	$genre4="";
-}
-
-if ($genre1 != null and $genre1 !=""){
-	//***********************************************
-	//<Find Genre's ID>
-	$GenreQuery="select * from genre where genre='$genre1'";
-	$GenreResults=mysqli_query($db,$GenreQuery);
-	while ($row1 = mysqli_fetch_array($GenreResults)){
-	$genreID=$row1['genre_id'];
-	}
-	//</Find Genre's ID>
-	//***********************************************
-	//<Test to see if Genre is already in the table>
-	$GenreQuery="select * from genre where genre ='$genre1'";
-	$GenreResults=mysqli_query($db,$GenreQuery);
-	$counter=0;
-	while ($row1 = mysqli_fetch_array($GenreResults)){
-	$counter=$counter + 1;
-	}
-	if($counter==0){//genre was not already in the table and needs to be added
-			//test
-			echo "Making it in here";
-			//test
-			mysqli_query($db, $query="INSERT INTO genre (genre) VALUES ('$genre1')");
-    // if genre does exist test to see of the band is already connected to it
-    }else {
-    	
-    	$GenreBandQuery="select * from band_genre where genre_id ='$genreID' && band_id='$id'";
-		$GenreBandResults=mysqli_query($db,$GenreBandQuery);
-		$counter=0;
-		while ($row1 = mysqli_fetch_array($GenreBandResults)){
-    		$counter = $counter + 1;
-    	}
-    	if ($counter==0) {
-    		mysqli_query($db, "INSERT INTO band_genre VALUES ('$id','$genre_ID')");
-    	}	
-    }	
+if (!empty($genres))
+{	
+	$genre_array = explode(", ", $genres);
 	
-	//</Test to see if Genre is already in the table>
-	//***********************************************
-	//<Find Genre's ID>
-	$GenreQuery="select * from genre where genre='$genre1'";
-	$GenreResults=mysqli_query($db,$GenreQuery);
-	while ($row1 = mysqli_fetch_array($GenreResults)){
-	$genreID=$row1['genre_id'];
+	foreach ($genre_array as $genre)
+	{
+		$result = mysqli_query($db, "SELECT * FROM genre");
+		$genre_id = 0;
+		
+		while ($row = mysqli_fetch_assoc($result))
+		{
+			if ($genre == $row['genre']) $genre_id = $row['genre_id'];
+		}
+		
+		if ($genre_id == 0)
+		{
+			mysqli_query($db, "INSERT INTO genre (genre) VALUES ('$genre')");
+			
+			$result = mysqli_query($db, "SELECT genre_id FROM genre");
+	
+			while ($row = mysqli_fetch_assoc($result))
+			{
+				$genre_id = $row['genre_id'];
+			}
+		}
+		
+		mysqli_query($db, "INSERT INTO band_genre (band_id, genre_id) VALUES ('$id', '$genre_id')");
 	}
-	//</Find Genre's ID>
-	//***********************************************
-	//<Add Genre and Band to band_genre table>
-	mysqli_query($db, $query="INSERT INTO band_genre (band_id, genre_id) VALUES('$id','$genreID')");
-	//</Add Genre and Band to band_genre table>
-	//***********************************************
+	
+	$result = mysqli_query($db, "SELECT * FROM band_genre WHERE band_id = '$id'");
+	
+	while ($row = mysqli_fetch_assoc($result))
+	{
+		$genre_id = $row['genre_id'];
+		
+		$result2 = mysqli_query($db, "SELECT * FROM genre WHERE genre_id = '$genre_id'");
+		
+		while ($row2 = mysqli_fetch_assoc($result2))
+		{
+			$genre_name = $row2['genre'];
+		}
+		
+		if (!in_array($genre_name, $genre_array))
+		{
+			mysqli_query($db, "DELETE FROM band_genre WHERE genre_id = '$genre_id'");
+		}
+	}
 }
-//Testing genre2
-if ($genre2 != null and $genre2 !=""){
-	//***********************************************
-	//<Find Genre's ID>
-	$GenreQuery="select * from genre where genre='$genre1'";
-	$GenreResults=mysqli_query($db,$GenreQuery);
-	while ($row1 = mysqli_fetch_array($GenreResults)){
-	$genreID=$row1['genre_id'];
-	}
-	//</Find Genre's ID>
-	//***********************************************
-	//<Test to see if Genre is already in the table>
-	$GenreQuery="select * from genre where genre ='$genre2'";
-	$GenreResults=mysqli_query($db,$GenreQuery);
-	$counter=0;
-	while ($row1 = mysqli_fetch_array($GenreResults)){
-	$counter=$counter + 1;
-	}
-	if($counter==0){//genre was not already in the table and needs to be added
-			//test
-			echo "Making it in here";
-			//test
-			mysqli_query($db, $query="INSERT INTO genre (genre) VALUES ('$genre2')");
-    // if genre does exist test to see of the band is already connected to it
-    }else{
-    	
-    	$GenreBandQuery="select * from band_genre where genre_id ='$genreID' && band_id='$id'";
-		$GenreBandResults=mysqli_query($db,$GenreBandQuery);
-		$counter=0;
-		while ($row1 = mysqli_fetch_array($GenreBandResults)){
-    		$counter = $counter + 1;
-    	}
-    	if ($counter==0) {
-    		mysqli_query($db, "INSERT INTO band_genre VALUES ('$id','$genre_ID')");
-    	}	
-	}
-	//</Test to see if Genre is already in the table>
-	//***********************************************
-	//<Find Genre's ID>
-	$GenreQuery="select * from genre where genre='$genre2'";
-	$GenreResults=mysqli_query($db,$GenreQuery);
-	while ($row1 = mysqli_fetch_array($GenreResults)){
-	$genreID=$row1['genre_id'];
-	}
-	//</Find Genre's ID>
-	//***********************************************
-	//<Add Genre and Band to band_genre table>
-	mysqli_query($db, $query="INSERT INTO band_genre (band_id, genre_id) VALUES('$id','$genreID')");
-	//</Add Genre and Band to band_genre table>
-	//***********************************************
-}
-//Testing genre 3
-if ($genre3 != null and $genre3 !=""){
-	//***********************************************
-	//<Find Genre's ID>
-	$GenreQuery="select * from genre where genre='$genre3'";
-	$GenreResults=mysqli_query($db,$GenreQuery);
-	while ($row1 = mysqli_fetch_array($GenreResults)){
-	$genreID=$row1['genre_id'];
-	}
-	//</Find Genre's ID>
-	//***********************************************
-	//<Test to see if Genre is already in the table>
-	$GenreQuery="select * from genre where genre ='$genre3'";
-	$GenreResults=mysqli_query($db,$GenreQuery);
-	$counter=0;
-	while ($row1 = mysqli_fetch_array($GenreResults)){
-	$counter=$counter + 1;
-	}
-	if($counter==0){//genre was not already in the table and needs to be added
-			//test
-			echo "Making it in here";
-			//test
-			mysqli_query($db, $query="INSERT INTO genre (genre) VALUES ('$genre3')");
-    // if genre does exist test to see of the band is already connected to it
-    }else{
-    	
-    	$GenreBandQuery="select * from band_genre where genre_id ='$genreID' && band_id='$id'";
-		$GenreBandResults=mysqli_query($db,$GenreBandQuery);
-		$counter=0;
-		while ($row1 = mysqli_fetch_array($GenreBandResults)){
-    		$counter = $counter + 1;
-    	}
-    	if ($counter==0) {
-    		mysqli_query($db, "INSERT INTO band_genre VALUES ('$id','$genre_ID')");
-    	}	
-	}
-	//</Test to see if Genre is already in the table>
-	//***********************************************
-	//<Find Genre's ID>
-	$GenreQuery="select * from genre where genre='$genre3'";
-	$GenreResults=mysqli_query($db,$GenreQuery);
-	while ($row1 = mysqli_fetch_array($GenreResults)){
-	$genreID=$row1['genre_id'];
-	}
-	//</Find Genre's ID>
-	//***********************************************
-	//<Add Genre and Band to band_genre table>
-	mysqli_query($db, $query="INSERT INTO band_genre (band_id, genre_id) VALUES('$id','$genreID')");
-	//</Add Genre and Band to band_genre table>
-	//***********************************************
-}
-//Testing genre 4
-if ($genre1 != null and $genre4 !=""){
-	//***********************************************
-	//<Find Genre's ID>
-	$GenreQuery="select * from genre where genre='$genre4'";
-	$GenreResults=mysqli_query($db,$GenreQuery);
-	while ($row1 = mysqli_fetch_array($GenreResults)){
-	$genreID=$row1['genre_id'];
-	}
-	//</Find Genre's ID>
-	//***********************************************
-	//<Test to see if Genre is already in the table>
-	$GenreQuery="select * from genre where genre ='$genre4'";
-	$GenreResults=mysqli_query($db,$GenreQuery);
-	$counter=0;
-	while ($row1 = mysqli_fetch_array($GenreResults)){
-	$counter=$counter + 1;
-	}
-	if($counter==0){//genre was not already in the table and needs to be added
-			//test
-			echo "Making it in here";
-			//test
-			mysqli_query($db, $query="INSERT INTO genre (genre) VALUES ('$genre4')");
-    // if genre does exist test to see of the band is already connected to it
-    }else{
-    	
-    	$GenreBandQuery="select * from band_genre where genre_id ='$genreID' && band_id='$id'";
-		$GenreBandResults=mysqli_query($db,$GenreBandQuery);
-		$counter=0;
-		while ($row1 = mysqli_fetch_array($GenreBandResults)){
-    		$counter = $counter + 1;
-    	}
-    	if ($counter==0) {
-    		mysqli_query($db, "INSERT INTO band_genre VALUES ('$id','$genre_ID')");
-    	}	
-	}
-	//</Test to see if Genre is already in the table>
-	//***********************************************
-	//<Find Genre's ID>
-	$GenreQuery="select * from genre where genre='$genre4'";
-	$GenreResults=mysqli_query($db,$GenreQuery);
-	while ($row1 = mysqli_fetch_array($GenreResults)){
-	$genreID=$row1['genre_id'];
-	}
-	//</Find Genre's ID>
-	//***********************************************
-	//<Add Genre and Band to band_genre table>
-	mysqli_query($db, $query="INSERT INTO band_genre (band_id, genre_id) VALUES('$id','$genreID')");
-	//</Add Genre and Band to band_genre table>
-	//***********************************************
-}
-
-
-
-
 
 $saved_id = $id;
 $band = "WHERE band_id='$id'";

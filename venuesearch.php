@@ -25,7 +25,7 @@
 	if (empty($sort)) $sort = "venueName";
 	$desc = $_GET['desc'];
 	$find = "LIKE '%$search%'";
-	$query = "SELECT * FROM venue WHERE venueName $find OR venueState $find OR venueCity $find ORDER BY $sort";
+	$query = "SELECT * FROM venue WHERE venueName $find OR venueZipCode $find ORDER BY $sort";
 	if ($desc == 1) $query .= " DESC";
 	
 	echo "<br />";
@@ -52,9 +52,10 @@
 
 	echo "<table style='width:640px;' id=\"hor-minimalist-b\" >\n<tr>";
 	echo header_cell("Name", "venueName", $num_col);
-	echo header_cell("Street", "venueStreet", $num_col);
-	echo header_cell("City", "venueCity", $num_col);
-	echo header_cell("State", "venueState", $num_col);
+	//echo header_cell("Street", "venueStreet", $num_col);
+	//echo header_cell("City", "venueCity", $num_col);
+	//echo header_cell("State", "venueState", $num_col);
+	echo header_cell("Zip Code", "venueZipCode", $num_col);
 	if ($logged_in) echo header_cell("", "", $num_col);
 	echo "</tr>\n";
 	
@@ -90,17 +91,17 @@
 
 	while ($row = mysqli_fetch_assoc($results))
 	{
+		$id = $row['venue_id'];
 		$name = $row['venueName'];
-		$street = $row['venueStreet'];
-		$city = $row['venueCity'];
-		$state = $row['venueState'];
+		$zip = $row['venueZipCode'];
 		
 		echo "<tr>";
-		echo "<td><a style='color:darkblue;' href='venueprofile.php?name=$name'>";
+		echo "<td><a style='color:darkblue;' href='venueprofile.php?id=$id'>";
 		echo highlight_matches($search, $name, true)."</a></td>";
-		echo "<td>".highlight_matches($search, $street, false)."</td>";
-		echo "<td>".highlight_matches($search, $city, false)."</td>";
-		echo "<td>".highlight_matches($search, $state, false)."</td>";
+		//echo "<td>".highlight_matches($search, $street, false)."</td>";
+		//echo "<td>".highlight_matches($search, $city, false)."</td>";
+		//echo "<td>".highlight_matches($search, $state, false)."</td>";
+		echo "<td>".highlight_matches($search, $zip, false)."</a></td>";
 		
 		if ($logged_in)
 		{

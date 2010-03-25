@@ -25,6 +25,8 @@ include "db_connect.php";
 
 //<Refered From>
 $refer=$_GET['sent'];
+$band = $_GET['band'];
+$venue = $_GET['venue'];
 
 
 //</Refered From>
@@ -84,16 +86,28 @@ $filePath = addslashes($filePath);
 //$result = mysqli_query($db, $query)
    //or die("Error Querying Database");
 if($refer=="bandimg"){  
-echo "<h2>You have uploaded a new picture to BandLink successfully</h2>";
+echo "<h2>Your image has been uploaded successfully.</h2>";
 echo "<h3><a href=\"addBand.php?picPath=$filePath\"> Return to Add Band </a></h3>";
 }
+if($refer=="editband"){  
+echo "<h2>Your image has been uploaded successfully.</h2>";
+echo "<h3><a href=\"bandprofile.php?id=$band&picPath=$filePath\"> Return to Band Profile </a></h3>";
+}
 if($refer=="venimg"){
-echo "<h2>You have uploaded a new picture to BandLink successfully</h2>";
+echo "<h2>Your image has been uploaded successfully.</h2>";
 echo "<h3><a href=\"addvenue.php?picPath=$filePath\"> Return to Add Venue </a></h3>";
 }
 if($refer=="venmap"){
-echo "<h2>You have uploaded a new picture to BandLink successfully</h2>";
+echo "<h2>Your image has been uploaded successfully.</h2>";
 echo "<h3><a href=\"addvenue.php?mapPath=$filePath\"> Return to Add Venue </a></h3>";
+}
+if($refer=="editvenue"){  
+echo "<h2>Your image has been uploaded successfully.</h2>";
+echo "<h3><a href=\"venueprofile.php?id=$venue&picPath=$filePath\"> Return to Venue Profile </a></h3>";
+}
+if($refer=="editmap"){  
+echo "<h2>Your image has been uploaded successfully.</h2>";
+echo "<h3><a href=\"venueprofile.php?id=$venue&mapPath=$filePath\"> Return to Venue Profile </a></h3>";
 }
 
 
@@ -103,7 +117,7 @@ echo "<h3><a href=\"addvenue.php?mapPath=$filePath\"> Return to Add Venue </a></
 mysqli_close($db);
 ?> 
 	<h2>Please Choose a File to Upload.</h2>
-	<form name="Image" enctype="multipart/form-data" <?php echo "action='uploadImage.php?tag= $id&sent=$refer '" ?> method="POST">
+	<form name="Image" enctype="multipart/form-data" <?php echo "action='uploadImage.php?tag=$id&sent=$refer&band=$band&venue=$venue'" ?> method="POST">
 
 	<input type="file" style="background-color:darkblue; color:red;" name="Photo" size="30" accept="image/gif, image/jpeg, image/x-ms-bmp, image/x-png"><br/>
 

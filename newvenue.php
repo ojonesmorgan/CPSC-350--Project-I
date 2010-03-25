@@ -4,15 +4,15 @@ if (!$logged_in) include("notloggedin.php");
 
 include("db_connect.php");
   
-$name = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['name']))));
-$street = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['street']))));
-$streetnum = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['streetnum']))));
-$city = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['city'])))); 
-$state = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['state']))));
-$zipcode = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['zipcode']))));
-$picture = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['picture']))));
-$description = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['description']))));
-$map = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['map']))));
+$name = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($_POST['name'])))));
+$street = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($_POST['street'])))));
+$streetnum = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($_POST['streetnum'])))));
+$city = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($_POST['city'])))));
+$state = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($_POST['state'])))));
+$zipcode = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($_POST['zipcode'])))));
+$picture = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($_POST['picture'])))));
+$description = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($_POST['description'])))));
+$map = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($_POST['map'])))));
  
  //***********************************
  //	<Check to see if zipcode already exists in DB>
@@ -53,6 +53,13 @@ $map = mysql_escape_string(stripslashes(htmlspecialchars(trim($_POST['map']))));
  }
 else header("location:addvenue.php?err=noname&name=$name&street=$street&city=$city&state=$state&description=$description&picture=$picture&map=$map"); 
 **/
+$result = mysqli_query($db, "SELECT venue_id FROM venue");
+	
+while ($row = mysqli_fetch_assoc($result))
+{
+	$venue_id = $row['venue_id'];
+}
+		
 if (!empty($name)){
 	mysqli_query($db, "INSERT INTO venue (venueName, venueDescription, venuePicture, venueMap, venueZipCode,venueAddress_id) 
 		VALUES ('$name','$description', '$picture', '$map', '$zipcode','$addressID')");
@@ -86,7 +93,7 @@ else header("location:addvenue.php?err=noname&name=$name&street=$street&city=$ci
 	
 <?php
 echo "<br /><h1>Thanks for adding the venue $name.</h1>";
-echo "<p><a href='venueprofile.php?id=$venueID'>Click here to go to the venue profile for $name.</a></p><br />\n";
+echo "<p><a href='venueprofile.php?id=$venue_id'>Click here to go to the venue profile for $name.</a></p><br />\n";
 ?>
 	
 </div></center></div>

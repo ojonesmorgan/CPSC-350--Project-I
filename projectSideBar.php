@@ -4,7 +4,7 @@ function search_panel($title, $id, $action, $msg)
 	$style = "style=\"width:225px; display:block; margin-left:auto; margin-right:auto; color:gray; font-size:0.65em;\"";
 	$on_focus = "onFocus=\"if (this.value == '$msg') { this.value = ''; } this.style.color = 'black';\"";
 	$on_blur = "onBlur=\"if (this.value == '') { this.value = '$msg'; this.style.color = 'gray'; }\"";
-	$searchbox = "<input $style $on_focus $on_blur id=\"$id\" name=\"searched\" type=\"text\" value=\"$msg\" />";
+	$searchbox = "<input $style $on_focus $on_blur id=\"$id\" name=\"q\" type=\"text\" value=\"$msg\" />";
 	
 	$style = "style=\"width:225px; display:block; margin:10px auto 2px auto;\"";
 	$button = "<input $style type=\"submit\" value=\" Search \" />";
@@ -75,7 +75,7 @@ function recent_comments($num_comments)
 }
 
 echo "<div id=\"sidebar\">\n";
-echo search_panel("Search Music", "searchBand", "musicsearch.php", "Enter a band, or state...");
+echo search_panel("Search Music", "searchBand", "musicsearch.php", "Enter an artist, genre, or location...");
 echo search_panel("Search Venues", "searchVenue", "venuesearch.php", "Enter a venue name or zip code...");
 echo recent_comments(5);
 echo "<br /></div>\n";

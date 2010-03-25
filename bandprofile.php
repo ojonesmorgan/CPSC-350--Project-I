@@ -13,46 +13,36 @@ if (empty($bandID))
 
 include("db_connect.php");
 
-//**********************************
-$query="Select Genre from band b join genre g join band_genre bg where b.band_id=bg.band_id
-		and g.genre_id=bg.genre_id and b.band_id=" .$bandID;
-	//$query = "Select * from band b join genre g join band_genre bg where b.band_id=bg.band_id
-	//and g.genre_id=bg.genre_id ORDER BY RAND() LIMIT 1";
-	
-	$counter=0;
-	$results = mysqli_query($db, $query);	 
-	while($row = mysqli_fetch_array($results)) {
-	$counter=$counter+1;
-	
-		if ($counter==1){//1st genre
-			$genre1=$row['Genre'];	
-		}
-		if ($counter==2){//2nd genre
-			$genre2=$row['Genre'];
-		}
-		if ($counter==3){//3rd genre
-			$genre3=$row['Genre'];
-		}
-		if ($counter==4){//4th genre
-			$genre4=$row['Genre'];
-		}
-	}
-//**********************************
 $result = mysqli_query($db, "SELECT * FROM band WHERE band_id = '$bandID'");
-//echo "band name: " .$name;
 $count = 0;
+
 while ($row = mysqli_fetch_assoc($result))
 {
-	//$genre = $row['bandGenre'];
-	//$city = $row['bandCity'];
-	$name=$row['bandName'];
+	$name = $row['bandName'];
+	$city = $row['bandCity'];
 	$state = $row['bandState'];
 	$description = $row['bandDescription'];
 	$photo = $row['bandPhoto'];
 
 	++$count;
 }
-echo "band name: " .$name;
+
+$genre = "";
+$query = "SELECT * FROM band_genre WHERE band_id = '$bandID'";
+$result2 = mysqli_query($db, $query);
+$first = true;
+		
+while ($row2 = mysqli_fetch_assoc($result2))
+{	
+	$result3 = mysqli_query($db, "SELECT * FROM genre WHERE genre_id = '".$row2['genre_id']."'");
+	
+	while ($row3 = mysqli_fetch_assoc($result3))
+	{
+		if (!$first) $genre .= ", ";
+		$genre .= $row3['genre'];
+		$first = false;
+	}
+}
 
 if ($count < 1)
 {
@@ -98,34 +88,12 @@ if ($count < 1)
 	echo "<br><label for='name'>Band Name:</label> ";
 	if ($logged_in) echo "<input name='name' type='text' value='$name' />";
 	else echo "<a style='text-decoration:none;' name='name'>$name</a><br /><br />";
-	//*********************************************
-	//<Genre(s)>
-	echo "<br><label for='geners'>Genre(s)</label>";
-	//<1>
-	echo "<br><label for='genre1'>Genre 1:</label> ";
-	if ($logged_in) echo "<input name='genre1' type='text' value='$genre1' />";
-	else echo "<a style='text-decoration:none;' name='genre1'>$genre1</a><br />";
-	//</1>
-	//<2>
-	echo "<br><label for='genre2'>Genre 2:</label> ";
-	if ($logged_in) echo "<input name='genre2' type='text' value='$genre2' />";
-	else echo "<a style='text-decoration:none;' name='genre2'>$genre2</a><br />";
-	//</2>
-	//<3>
-	echo "<br><label for='genre3'>Genre 3:</label> ";
-	if ($logged_in) echo "<input name='genre3' type='text' value='$genre3' />";
-	else echo "<a style='text-decoration:none;' name='genre3'>$genre3</a><br />";
-	//</3>
-	//<4>
-	echo "<br><label for='genre4'>Genre 4:</label> ";
-	if ($logged_in) echo "<input name='genre4' type='text' value='$genre4' />";
-	else echo "<a style='text-decoration:none;' name='genre4'>$genre4</a><br />";
-	//</4>
-	//</Genre(s)>
-	//*********************************************
-	//echo "<br /><label for='city'>City:</label> ";
-	//if ($logged_in) echo "<input name='city' type='text' value='$city' />";
-	//else echo "<a style='text-decoration:none;' name='city'>$city</a><br />";
+	echo "<br /><label for='genres'>Genre(s)</label> ";
+	if ($logged_in) echo "<input name='genres' type='text' value='$genre' />";
+	else echo "<a style='text-decoration:none;' name='genres'>$genre</a><br />";
+	echo "<br /><label for='city'>City:</label> ";
+	if ($logged_in) echo "<input name='city' type='text' value='$city' />";
+	else echo "<a style='text-decoration:none;' name='city'>$city</a><br />";
 	echo "<br /><label for='state'>State:</label> ";
 	if ($logged_in) echo "<input name='state' type='text' value='$state' />";
 	else echo "<a style='text-decoration:none;' name='state'>$state</a><br />";
@@ -135,7 +103,11 @@ if ($count < 1)
 	
 	if ($logged_in)
 	{
-		echo "<br /><label for='photo'>Photo URL:</label> <input name='photo' type='text' value='";
+		echo "<br /><label for='photo'> Photo: ";
+		echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=editband&band=$bandID';\" ";
+		echo "value=' Upload ' /></label> ";
+		echo "<input name='photo' type ='text' value='";
+		if (!empty($_GET['picPath'])) $photo = $_GET['picPath'];
 		if ($photo != $default_photo) echo $photo;
 		echo "' />";
 	}
