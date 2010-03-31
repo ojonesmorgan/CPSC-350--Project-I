@@ -34,6 +34,10 @@ $map = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($_POST[
 	if(!empty($street) or !empty($streetnum)){
 		mysqli_query($db,"INSERT INTO venue_address(number,street)
 							VALUES ('$streetnum','$street')");	
+	}else{//enter in blanks for this venue's streetnum and street
+		mysqli_query($db,"INSERT INTO venue_address(number,street)
+							VALUES (' ',' ')");
+	
 	}
  
  //	</Insert Address Into DB>

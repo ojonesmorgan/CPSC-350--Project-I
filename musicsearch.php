@@ -130,7 +130,7 @@
 			if ($logged_in)
 			{
 				echo "<td style='text-align:right;'>";
-				echo "<input type='submit' onClick=\"parent.location = 'deleteBandConfirm.php?deletebox=$name'\" ";
+				echo "<input type='submit' onClick=\"parent.location = 'deleteBandConfirm.php?deletebox=$id&deleteName=$name'\" ";
 				echo "value='Delete' /></td>";
 			}
 			

@@ -15,21 +15,22 @@
 <!-- *** -->	
 <?php
 	$deleted=$_GET['deletebox'];
+	$deleteName=$_GET['deleteName'];
 	echo "<H3>";
 	echo "Are you sure you want to delete ";
-	echo $deleted;
+	echo $deleteName;
 	echo "?";
 	echo "</H3>";
 	echo "<hr width = 415>";
 	//yes
-	echo "<a href='deleteVenue.php?deletebox=$deleted'>Yes, permanently delete ";
-	echo "<B>" .$deleted. "</B>";
+	echo "<a href='deleteVenue.php?deletebox=$deleted&deleteName=$deleteName'>Yes, permanently delete ";
+	echo "<B>" .$deleteName. "</B>";
 	echo " from BandLink.";
 	echo "<BR>";
 	//no
 	echo "<a href='musicsearch.php'>No, do NOT delete ";
-	echo $deleted;
-	echo ".";
+	echo $deleteName;
+	echo ".</a>";
 
 
 ?>
