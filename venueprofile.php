@@ -72,9 +72,22 @@ while ($row=mysqli_fetch_array($results)){
 	<div id="main">
 	<!--<center><div>-->
 
-	<h1><u><?php echo $name; ?></u><?php include("ratings.php"); ?></h1>
+	<h1>
+	<?php
+	echo "<span style='text-decoration:underline;'>$name</span>\n";
+	
+	if ($_GET['edit'] != 1)
+	{
+		echo " <input type='submit' onClick=\"parent.location = parent.location + '&edit=1'\" ";
+		echo "value=' Edit ' />\n";
+	}
+	
+	include("ratings.php");
+	?>
+	</h1>
 	
 	<?php
+	$edit_view = $logged_in && ($_GET['edit'] == 1);
 	$default_picture = "Pictures/default.jpg";
 	//$default_map = "Map/default.jpg";
 	
@@ -83,7 +96,7 @@ while ($row=mysqli_fetch_array($results)){
 	if (empty($picture)) $picture = $default_picture; //set $picture to default image
 	if (empty($map)) $map = $default_picture; // set $map to default map
 	
-	if ($saved)
+	if ($saved && $edit_view)
 	{
 		echo "<fieldset style='border:2px solid white; background-color:black;'>";
 		echo "<p style='color:white; font-weight:bold; text-align:center;'>";
@@ -91,31 +104,31 @@ while ($row=mysqli_fetch_array($results)){
 		echo "</p></fieldset>";
 	}
 	
-	if ($logged_in) echo "<form method='post' action='updatevenue.php?id=$venueID'>";
+	if ($edit_view) echo "<form method='post' action='updatevenue.php?id=$venueID'>";
 	echo "<p>";
 	echo "<br><label for='name'>Venue Name:</label> ";
-	if ($logged_in) echo "<input name='name' type='text' value='$name' />";
+	if ($edit_view) echo "<input name='name' type='text' value='$name' />";
 	else echo "<a style='text-decoration:none;' name='name'>$name</a><br /><br />";
 	echo"<br><label for='streetnum'>Street Number:</label> ";
-	if ($logged_in) echo "<input name='streetnum' type ='text' value='$streetnum' />";
+	if ($edit_view) echo "<input name='streetnum' type ='text' value='$streetnum' />";
 	else echo "<a style='text-decoration:none;' name='streetnum'>$streetnum</a><br />";
 	echo "<br><label for='street'>Street:</label> ";
-	if ($logged_in) echo "<input name='street' type='text' value='$street' />";
+	if ($edit_view) echo "<input name='street' type='text' value='$street' />";
 	else echo "<a style='text-decoration:none;' name='street'>$street</a><br />";
 	echo "<br /><label for='city'>City:</label> ";
-	if ($logged_in) echo "<input name='city' type='text' value='$city' />";
+	if ($edit_view) echo "<input name='city' type='text' value='$city' />";
 	else echo "<a style='text-decoration:none;' name='city'>$city</a><br />";
 	echo "<br /><label for='state'>State:</label> ";
-	if ($logged_in) echo "<input name='state' type='text' value='$state' />";
+	if ($edit_view) echo "<input name='state' type='text' value='$state' />";
 	else echo "<a style='text-decoration:none;' name='state'>$state</a><br />";
 	echo "<br /><label for='city'>Zip Code:</label> ";
-	if ($logged_in) echo "<input name='zip_code' type='text' value='$zipcode' />";
+	if ($edit_view) echo "<input name='zip_code' type='text' value='$zipcode' />";
 	else echo "<a style='text-decoration:none;' name='zip_code'>$zipcode</a><br />";
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
-	if ($logged_in) echo "<textarea name='description' rows=5>$description</textarea>";
+	if ($edit_view) echo "<textarea name='description' rows=5>$description</textarea>";
 	else echo "<br /><a style='text-decoration:none;' name='description'>".nl2br($description)."</a><br />";
 	
-	if ($logged_in)
+	if ($edit_view)
 	{
 		echo "<br /><label for='photo'> Photo: ";
 		echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=editvenue&venue=$venueID';\" ";
@@ -141,7 +154,7 @@ while ($row=mysqli_fetch_array($results)){
 	if ($map == $default_picture) echo " height:100px; width:150px;";
 	echo "' src='$map' alt='$name map' /></p>";
 	
-	if ($logged_in)
+	if ($edit_view)
 	{
 		echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' ";
 		echo "value=' Save Changes ' /></p></form>";
