@@ -94,7 +94,7 @@ for ($i = 0; $i < $count; $i++)
 	
 	if ($_GET['edit'] != 1)
 	{
-		echo " <input type='submit' onClick=\"parent.location = parent.location + '&edit=1'\" ";
+		echo " <input type='submit' onClick=\"parent.location = 'track.php?id=$track_id&edit=1'\" ";
 		echo "value=' Edit ' />\n";
 	}
 	
