@@ -96,7 +96,7 @@ while ($row=mysqli_fetch_array($results)){
 	if (empty($picture)) $picture = $default_picture; //set $picture to default image
 	if (empty($map)) $map = $default_picture; // set $map to default map
 	
-	if ($saved && $edit_view)
+	if ($saved && !$edit_view)
 	{
 		echo "<fieldset style='border:2px solid white; background-color:black;'>";
 		echo "<p style='color:white; font-weight:bold; text-align:center;'>";
