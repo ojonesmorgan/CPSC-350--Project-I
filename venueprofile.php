@@ -106,7 +106,7 @@ while ($row=mysqli_fetch_array($results)){
 	
 	if ($edit_view) echo "<form method='post' action='updatevenue.php?id=$venueID'>";
 	echo "<p>";
-	echo "<br><label for='name'>Venue Name:</label> ";
+	echo "<label for='name'>Venue Name:</label> ";
 	if ($edit_view) echo "<input name='name' type='text' value='$name' />";
 	else echo "<a style='text-decoration:none;' name='name'>$name</a><br /><br />";
 	echo"<br><label for='streetnum'>Street Number:</label> ";
@@ -126,7 +126,7 @@ while ($row=mysqli_fetch_array($results)){
 	else echo "<a style='text-decoration:none;' name='zip_code'>$zipcode</a><br />";
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
 	if ($edit_view) echo "<textarea name='description' rows=5>$description</textarea>";
-	else echo "<br /><a style='text-decoration:none;' name='description'>".nl2br($description)."</a><br />";
+	else echo "<p><a style='text-decoration:none;' name='description'>".nl2br($description)."</a></p>";
 	
 	if ($edit_view)
 	{

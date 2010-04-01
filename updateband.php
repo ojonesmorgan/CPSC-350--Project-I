@@ -69,16 +69,12 @@ if (!empty($genres))
 	}
 }
 
-$saved_id = $id;
 $band = "WHERE band_id='$id'";
-
 mysqli_query($db, "UPDATE band SET bandName='$name' $band");
 mysqli_query($db, "UPDATE band SET bandCity='$city' $band");
 mysqli_query($db, "UPDATE band SET bandState='$state' $band");
 mysqli_query($db, "UPDATE band SET bandPhoto='$photo' $band");
 mysqli_query($db, "UPDATE band SET bandDescription='$description' $band");
-if (!empty($id)) mysqli_query($db, "UPDATE band SET band_id='$id' $band"); //This must be the LAST update query.
-else $saved_id = $id;
 
-header("location:bandprofile.php?id=$saved_id&saved=1");
+header("location:bandprofile.php?id=$id&saved=1");
 ?>

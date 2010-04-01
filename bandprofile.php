@@ -88,7 +88,7 @@ if ($count < 1)
 	//from the database if the image exists... other wise it will set to default.
 	if (empty($photo)) $photo = $default_photo; //set $photo to default image
 	
-	if ($saved && $edit_view)
+	if ($saved && !$edit_view)
 	{
 		echo "<fieldset style='border:2px solid white; background-color:black;'>";
 		echo "<p style='color:white; font-weight:bold; text-align:center;'>";
@@ -98,10 +98,10 @@ if ($count < 1)
 	
 	if ($edit_view) echo "<form method='post' action='updateband.php?id=$bandID'>";
 	echo "<p>";
-	echo "<br><label for='name'>Band Name:</label> ";
+	echo "<label for='name'>Band Name:</label> ";
 	if ($edit_view) echo "<input name='name' type='text' value='$name' />";
-	else echo "<a style='text-decoration:none;' name='name'>$name</a><br /><br />";
-	echo "<br /><label for='genres'>Genre(s)</label> ";
+	else echo "<a style='text-decoration:none;' name='name'>$name</a><br />";
+	echo "<br /><label for='genres'>Genre(s):</label> ";
 	if ($edit_view) echo "<input name='genres' type='text' value='$genre' />";
 	else echo "<a style='text-decoration:none;' name='genres'>$genre</a><br />";
 	echo "<br /><label for='city'>City:</label> ";
@@ -112,7 +112,7 @@ if ($count < 1)
 	else echo "<a style='text-decoration:none;' name='state'>$state</a><br />";
 	echo "<br /><label style='vertical-align:top;' for='description'>Description:</label> ";
 	if ($edit_view) echo "<textarea name='description' rows=5>$description</textarea>";
-	else echo "<br /><a style='text-decoration:none;' name='description'>".nl2br($description)."</a><br />";
+	else echo "<p><a style='text-decoration:none;' name='description'>".nl2br($description)."</a></p>";
 	
 	if ($edit_view)
 	{
@@ -123,7 +123,7 @@ if ($count < 1)
 		if (!empty($_GET['picPath'])) $photo = $_GET['picPath'];
 		if ($photo != $default_photo) echo $photo;
 		echo "' />";
-	echo "<h6 color=red>**WARNING** Uploading an image will result in loss of any changes made to this form</h6>";
+		echo "<h6 color=red>**WARNING** Uploading an image will result in loss of any changes made to this form</h6>";
 	}
 	
 	echo "\n<p style='text-align:center;'><img style='border:1px solid red;";
@@ -137,6 +137,53 @@ if ($count < 1)
 	}
 	
 	echo "</p>\n";
+	echo "<br /><h1>Popular Tracks</h1>\n";
+	echo "<p><table style='width:485px; margin-left:auto; margin-right:auto;' id='hor-minimalist-b'>\n";
+	echo "<th style='font-weight:bold;'></th>\n";
+	echo "<th style='font-weight:bold;'>Title</th>\n";
+	echo "<th style='font-weight:bold;'>Play Count</th>\n";
+	echo "<th style='font-weight:bold;'></th>\n";
+	
+	$query = "SELECT tracks.track_id, title, play_count, mp3_name FROM tracks LEFT OUTER JOIN audio ";
+	$query .= "ON tracks.track_id = audio.track_id ";
+	$query .= "WHERE tracks.track_id IN (SELECT track_id FROM track_bands WHERE band_id = '$bandID') ";
+	$query .= "ORDER BY play_count, RAND() LIMIT 10";
+	$result = mysqli_query($db, $query);
+	$count = 0;
+	
+	while ($row = mysqli_fetch_assoc($result))
+	{
+		$track_id = $row['track_id'];
+		$title = "<a style='color:darkblue;' href='track.php?id=$track_id'>".$row['title']."</a>";
+		$play_count = $row['play_count'];
+		$playable = !empty($row['mp3_name']);
+		if (empty($play_count)) $play_count = 0;
+	
+		echo "<tr>";
+		echo "<td>".($count + 1)."</td>";
+		echo "<td>$title</td>";
+		echo "<td>$play_count</td>";
+		echo "<td>";
+		
+		if ($playable)
+		{
+			echo "<input style='float:right;' onClick=\"parent.location = 'play.php?track=$track_id'\" ";
+			echo "type='submit' value=' Play ' />";
+		}
+		
+		echo "</td>";
+		echo "</tr>\n";
+		
+		++$count;
+	}
+	
+	if ($count < 1)
+	{
+		echo "<tr><td colspan=4 style='text-align:center;'>No tracks have been added for this artist.</td></tr>\n";
+	}
+	
+	echo "</table></p>\n";
+	echo "<p style='text-align:center;'><a href='addtrack.php?band=$bandID'>Add a new track by $name.</p>\n";
 	
 	include("listcomments.php");
 	?>
