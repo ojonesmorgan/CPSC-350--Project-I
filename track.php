@@ -78,7 +78,7 @@ for ($i = 0; $i < $count; $i++)
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>BandLink | Band Profile</title>
+  <title>BandLink | Track</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
