@@ -37,4 +37,4 @@ ALTER TABLE comments ADD track_id int(11);
 
 ALTER TABLE ratings MODIFY band_id int(11);
 ALTER TABLE ratings MODIFY venue_id int(11);
-ALTER TABLE ratings ADD track_id int(11);
+ALTER TABLE ratings ADD track_id int(11) BEFORE email;
