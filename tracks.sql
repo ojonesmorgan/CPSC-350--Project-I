@@ -31,10 +31,12 @@ CREATE TABLE audio
 	FOREIGN KEY (track_id) REFERENCES tracks (track_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
-ALTER TABLE comments MODIFY band_id int(11);
-ALTER TABLE comments MODIFY venue_id int(11);
-ALTER TABLE comments ADD track_id int(11);
+ALTER TABLE comments MODIFY band_id int(11) NOT NULL;
+ALTER TABLE comments MODIFY venue_id int(11) NOT NULL;
+ALTER TABLE comments ADD track_id int(11) NOT NULL;
+ALTER TABLE comments ADD FOREIGN KEY (track_id) REFERENCES tracks (track_id);
 
-ALTER TABLE ratings MODIFY band_id int(11);
-ALTER TABLE ratings MODIFY venue_id int(11);
-ALTER TABLE ratings ADD track_id int(11) BEFORE email;
+ALTER TABLE ratings MODIFY band_id int(11) NOT NULL;
+ALTER TABLE ratings MODIFY venue_id int(11) NOT NULL;
+ALTER TABLE ratings ADD track_id int(11) NOT NULL AFTER venue_id;
+ALTER TABLE ratings ADD FOREIGN KEY (track_id) REFERENCES tracks (track_id);
