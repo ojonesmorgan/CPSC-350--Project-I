@@ -4,19 +4,43 @@ include("db_connect.php");
 $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
 $band = $_GET['band'];
 $venue = $_GET['venue'];
+$event = $_GET['event'];
+$track = $_GET['track'];
+$album = $_GET['album'];
 
 if ($page == "bandprofile.php" || !empty($band))
 {	
 	if (empty($band)) $band = $_GET['id'];
 	
-	$subject = array("name" => "band", "field" => "band_id", "value" => "$band");
+	$subject = array("name" => "band", "page" => "bandprofile.php", "field" => "band_id", "value" => "$band");
 }
 
 else if ($page == "venueprofile.php" || !empty($venue))
 {
 	if (empty($venue)) $venue = $_GET['id'];
 	
-	$subject = array("name" => "venue", "field" => "venue_id", "value" => "$venue");
+	$subject = $subject = array("name" => "venue", "page" => "venueprofile.php", "field" => "venue_id", "value" => "$venue");
+}
+
+else if ($page == "eventprofile.php" || !empty($event))
+{
+	if (empty($event)) $event = $_GET['id'];
+	
+	$subject = array("name" => "event", "page" => "eventprofile.php", "field" => "event_id", "value" => "$event");
+}
+
+else if ($page == "track.php" || !empty($track))
+{
+	if (empty($track)) $track = $_GET['id'];
+	
+	$subject = array("name" => "tracks", "page" => "track.php", "field" => "track_id", "value" => "$track");
+}
+
+else if ($page == "album.php" || !empty($album))
+{
+	if (empty($album)) $album = $_GET['id'];
+	
+	$subject = array("name" => "albums", "page" => "album.php", "field" => "album_id", "value" => "$album");
 }
 
 $query = "SELECT * FROM ".$subject['name']." WHERE ".$subject['field']." = '".$subject['value']."'";
@@ -32,7 +56,7 @@ if ($page == "comments.php")
 {
 	echo "<br />\n<br />\n";
 	echo "<input type='submit' style='display:block; margin-left:auto; margin-right:auto; width:400px; height:75px;' ";
-	echo "onClick=\"parent.location = '".$subject['name']."profile.php?id=".$subject['value']."'\" value=";
+	echo "onClick=\"parent.location = '".$subject['page']."?id=".$subject['value']."'\" value=";
 	if ($subject['name'] == "band") echo "\"  Go to $name's Profile  \" />";
 	if ($subject['name'] == "venue") echo "\"  Go to $name Profile  \" />";
 	echo "<br />\n";

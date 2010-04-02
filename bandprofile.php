@@ -144,12 +144,14 @@ if ($count < 1)
 	echo "<th style='font-weight:bold;'></th>\n";
 	echo "<th style='font-weight:bold;'>Title</th>\n";
 	echo "<th style='font-weight:bold;'>Play Count</th>\n";
-	echo "<th style='font-weight:bold;'></th>\n";
+	echo "<th style='font-weight:bold;'>Rating</th>\n";
+	if ($logged_in) echo "<th style='font-weight:bold;'></th>\n";
 	
-	$query = "SELECT tracks.track_id, title, play_count, mp3_name FROM tracks LEFT OUTER JOIN audio ";
-	$query .= "ON tracks.track_id = audio.track_id ";
+	$query = "SELECT tracks.track_id, title, play_count, mp3_name, ";
+	$query .= "(SELECT AVG(rating) FROM ratings WHERE tracks.track_id = ratings.track_id) AS rating ";
+	$query .= "FROM tracks LEFT OUTER JOIN audio ON tracks.track_id = audio.track_id ";
 	$query .= "WHERE tracks.track_id IN (SELECT track_id FROM track_bands WHERE band_id = '$bandID') ";
-	$query .= "ORDER BY play_count DESC";
+	$query .= "ORDER BY play_count DESC, rating, RAND()";
 	$result = mysqli_query($db, $query);
 	$count = 0;
 	
@@ -158,7 +160,10 @@ if ($count < 1)
 		$track_id = $row['track_id'];
 		$title = "<a style='color:darkblue;' href='track.php?id=$track_id'>".stripslashes($row['title'])."</a>";
 		$play_count = $row['play_count'];
+		$rating = $row['rating'];
 		$playable = !empty($row['mp3_name']);
+		$num_col = 4;
+		if ($logged_in) ++$num_col;
 		if (empty($play_count)) $play_count = 0;
 	
 		echo "<tr id='row$count'";
@@ -169,13 +174,30 @@ if ($count < 1)
 		echo "<td>$play_count</td>";
 		echo "<td>";
 		
-		if ($playable)
+		for ($i = 1; $i <= 5; $i++)
 		{
-			echo "<input style='float:right;' onClick=\"parent.location = 'play.php?track=$track_id'\" ";
-			echo "type='submit' value=' Play ' />";
+			echo "<img border=0 src='";
+			if ($rating >= $i) echo "Pictures/fullstar.gif";
+			else if ($rating >= ($i - .5)) echo "Pictures/halfstar.gif";
+			else echo "Pictures/emptystar.gif";
+			echo "' />";
 		}
 		
 		echo "</td>";
+		
+		if ($logged_in)
+		{
+			echo "<td>";
+			
+			if ($playable)
+			{
+				echo "<input style='float:right;' onClick=\"parent.location = 'play.php?track=$track_id'\" ";
+				echo "type='submit' value=' Play ' />";
+			}
+			
+			echo "</td>";
+		}
+		
 		echo "</tr>\n";
 		
 		++$count;
@@ -183,7 +205,7 @@ if ($count < 1)
 	
 	if ($count > 10)
 	{
-		echo "<tr style='text-align:center;' id='moreButton'><td colspan=4>";
+		echo "<tr style='text-align:center;' id='moreButton'><td colspan=$num_col>";
 		echo "<input style='width:460px;' onClick=\"document.getElementById('moreButton').style.display = 'none'; ";
 		
 		for ($i = 10; $i <= $count; $i++)
@@ -197,7 +219,7 @@ if ($count < 1)
 	
 	else if ($count < 1)
 	{
-		echo "<tr><td colspan=4 style='text-align:center;'>No tracks have been added for this artist.</td></tr>\n";
+		echo "<tr><td colspan=$num_col style='text-align:center;'>No tracks have been added for this artist.</td></tr>\n";
 	}
 	
 	echo "</table></p>\n";

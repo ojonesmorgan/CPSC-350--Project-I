@@ -2,8 +2,11 @@
 include("db_connect.php");
 
 $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
-if ($page == "bandprofile.php") $subject = array("name" => "band", "field" => "band_id", "value" => $_GET['id']);
-if ($page == "venueprofile.php") $subject = array("name" => "venue", "field" => "venue_id", "value" => $_GET['id']);
+if ($page == "bandprofile.php") $subject = array("name" => "band", "page" => "bandprofile.php", "field" => "band_id", "value" => $_GET['id']);
+if ($page == "venueprofile.php") $subject = array("name" => "venue", "page" => "venueprofile.php", "field" => "venue_id", "value" => $_GET['id']);
+if ($page == "eventprofile.php") $subject = array("name" => "event", "page" => "eventprofile.php", "field" => "event_id", "value" => $_GET['id']);
+if ($page == "track.php") $subject = array("name" => "tracks", "page" => "track.php", "field" => "track_id", "value" => $_GET['id']);
+if ($page == "album.php") $subject = array("name" => "albums", "page" => "album.php", "field" => "album_id", "value" => $_GET['id']);
 
 $rating = 0;
 $count = 0;
@@ -30,6 +33,9 @@ function display_star($num, $rating)
 	$page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
 	if ($page == "bandprofile.php") $for = "band=$id";
 	else if ($page == "venueprofile.php") $for = "venue=$id";
+	else if ($page == "eventprofile.php") $for = "event=$id";
+	else if ($page == "track.php") $for = "track=$id";
+	else if ($page == "album.php") $for = "album=$id";
 	
 	if ($logged_in) echo "<a href='rate.php?rating=$num&$for'>";
 	echo "<img name='star$num' ";

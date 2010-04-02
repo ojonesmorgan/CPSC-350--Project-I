@@ -8,7 +8,7 @@ if (!empty($page))
 	exit;
 }
 
-if (empty($_GET['band']) && empty($_GET['venue']))
+if (empty($_GET['band']) && empty($_GET['venue']) && empty($_GET['event']) && empty($_GET['tracks']) && empty($_GET['albums']))
 {
 	header("location:.");
 	exit;

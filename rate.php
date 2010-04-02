@@ -6,11 +6,17 @@ if (!$logged_in) include("notloggedin.php");
 $rating = $_GET['rating'];
 $band = $_GET['band'];
 $venue = $_GET['venue'];
+$event = $_GET['event'];
+$track = $_GET['track'];
+$album = $_GET['album'];
 $email = $_SESSION['email'];
 $has_rated = false;
 
-if (!empty($band)) $subject = array("name" => "band", "field" => "band_id", "value" => "$band");
-if (!empty($venue)) $subject = array("name" => "venue", "field" => "venue_id", "value" => "$venue");
+if (!empty($band)) $subject = array("name" => "band", "page" => "bandprofile.php", "field" => "band_id", "value" => "$band");
+if (!empty($venue)) $subject = array("name" => "venue", "page" => "venueprofile.php", "field" => "venue_id", "value" => "$venue");
+if (!empty($track)) $subject = array("name" => "event", "page" => "eventprofile.php", "field" => "event_id", "value" => "$event");
+if (!empty($track)) $subject = array("name" => "tracks", "page" => "track.php", "field" => "track_id", "value" => "$track");
+if (!empty($album)) $subject = array("name" => "albums", "page" => "album.php", "field" => "album_id", "value" => "$album");
 
 include("db_connect.php");
 
@@ -33,5 +39,5 @@ if (in_array($rating, $valid_ratings))
 	mysqli_query($db, $query);
 }
 
-header("location:".$subject['name']."profile.php?id=".$subject['value']."&rated=1#rating");
+header("location:".$subject['page']."?id=".$subject['value']."&rated=1#rating");
 ?>

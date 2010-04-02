@@ -86,17 +86,18 @@ for ($i = 0; $i < $count; $i++)
 	<?php
 	echo "<span style='text-decoration:underline;'>$artist - \"$title\"</span>\n";
 	
+	$name = $title;
+	include("ratings.php");
+	
 	if ($_GET['edit'] != 1)
 	{
-		echo " <input type='submit' onClick=\"parent.location = 'track.php?id=$track_id&edit=1'\" ";
-		echo "value=' Edit ' />\n";
+		echo "<p style='float:right;'><input type='submit' onClick=\"parent.location = 'track.php?id=$track_id&edit=1'\" ";
+		echo "value=' Edit ' /> \n";
 	}
 	
-	echo " <input type='submit' onClick=\"if (confirm('Permanently delete this track?')) ";
+	echo "<input type='submit' onClick=\"if (confirm('Permanently delete this track?')) ";
 	echo "parent.location = 'deletetrack.php?id=$track_id&band=".$id_list[0]."';\" ";
-	echo "value=' Delete ' />\n";
-	
-	//include("ratings.php");
+	echo "value=' Delete ' /></p>\n";
 	?>
 	</h1>
 	
@@ -115,7 +116,7 @@ for ($i = 0; $i < $count; $i++)
 	echo "<p>";
 	echo "<label for='title'>Title:</label> ";
 	if ($edit_view) echo "<input name='title' type='text' value='$title' />";
-	else echo "<a style='text-decoration:none;' name='title'>\"$title\"</a><br />";
+	else echo "<a style='text-decoration:none;' name='title'>$title</a><br />";
 	echo "<br /><label for='artist'>Artist(s):";
 	
 	if ($edit_view)
@@ -198,7 +199,7 @@ for ($i = 0; $i < $count; $i++)
 	
 	echo "</p>\n";
 	
-	//include("listcomments.php");
+	include("listcomments.php");
 	?>
 	
 	<!--</div></center>-->
