@@ -87,9 +87,12 @@ for ($i = 0; $i < $count; $i++)
 	echo "<span style='text-decoration:underline;'>$artist - \"$title\"</span> \n";
 	
 	$name = $title;
+	include("ratings.php");
 	
 	if ($logged_in)
-	{		
+	{
+		echo "<p>";
+		
 		if ($_GET['edit'] != 1)
 		{
 			echo "<input type='submit' onClick=\"parent.location = 'track.php?id=$track_id&edit=1'\" ";
@@ -99,9 +102,8 @@ for ($i = 0; $i < $count; $i++)
 		echo "<input type='submit' onClick=\"if (confirm('Permanently delete this track?')) ";
 		echo "parent.location = 'deletetrack.php?id=$track_id&band=".$id_list[0]."';\" ";
 		echo "value='Delete' />\n";
+		echo "</p>";
 	}
-	
-	include("ratings.php");
 	?>
 	</h1>
 	
