@@ -84,20 +84,24 @@ for ($i = 0; $i < $count; $i++)
 
 	<h1>
 	<?php
-	echo "<span style='text-decoration:underline;'>$artist - \"$title\"</span>\n";
+	echo "<span style='text-decoration:underline;'>$artist - \"$title\"</span> \n";
 	
 	$name = $title;
-	include("ratings.php");
 	
-	if ($_GET['edit'] != 1)
-	{
-		echo "<p style='float:right;'><input type='submit' onClick=\"parent.location = 'track.php?id=$track_id&edit=1'\" ";
-		echo "value=' Edit ' /> \n";
+	if ($logged_in)
+	{		
+		if ($_GET['edit'] != 1)
+		{
+			echo "<input type='submit' onClick=\"parent.location = 'track.php?id=$track_id&edit=1'\" ";
+			echo "value='Edit' />\n";
+		}
+		
+		echo "<input type='submit' onClick=\"if (confirm('Permanently delete this track?')) ";
+		echo "parent.location = 'deletetrack.php?id=$track_id&band=".$id_list[0]."';\" ";
+		echo "value='Delete' />\n";
 	}
 	
-	echo "<input type='submit' onClick=\"if (confirm('Permanently delete this track?')) ";
-	echo "parent.location = 'deletetrack.php?id=$track_id&band=".$id_list[0]."';\" ";
-	echo "value=' Delete ' /></p>\n";
+	include("ratings.php");
 	?>
 	</h1>
 	

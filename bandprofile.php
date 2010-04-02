@@ -70,10 +70,13 @@ if ($count < 1)
 	<?php
 	echo "<span style='text-decoration:underline;'>$name</span>\n";
 	
-	if ($_GET['edit'] != 1)
+	if ($logged_in)
 	{
-		echo " <input type='submit' onClick=\"parent.location = parent.location + '&edit=1'\" ";
-		echo "value=' Edit ' />\n";
+		if ($_GET['edit'] != 1)
+		{
+			echo " <input type='submit' onClick=\"parent.location = parent.location + '&edit=1'\" ";
+			echo "value=' Edit ' />\n";
+		}
 	}
 	
 	include("ratings.php");

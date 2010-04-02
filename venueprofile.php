@@ -76,10 +76,13 @@ while ($row=mysqli_fetch_array($results)){
 	<?php
 	echo "<span style='text-decoration:underline;'>$name</span>\n";
 	
-	if ($_GET['edit'] != 1)
+	if ($logged_in)
 	{
-		echo " <input type='submit' onClick=\"parent.location = parent.location + '&edit=1'\" ";
-		echo "value=' Edit ' />\n";
+		if ($_GET['edit'] != 1)
+		{
+			echo " <input type='submit' onClick=\"parent.location = parent.location + '&edit=1'\" ";
+			echo "value=' Edit ' />\n";
+		}
 	}
 	
 	include("ratings.php");
@@ -108,11 +111,11 @@ while ($row=mysqli_fetch_array($results)){
 	echo "<p>";
 	echo "<label for='name'>Venue Name:</label> ";
 	if ($edit_view) echo "<input name='name' type='text' value='$name' />";
-	else echo "<a style='text-decoration:none;' name='name'>$name</a><br /><br />";
-	echo"<br><label for='streetnum'>Street Number:</label> ";
+	else echo "<a style='text-decoration:none;' name='name'>$name</a><br />";
+	echo"<br /><label for='streetnum'>Street Number:</label> ";
 	if ($edit_view) echo "<input name='streetnum' type ='text' value='$streetnum' />";
 	else echo "<a style='text-decoration:none;' name='streetnum'>$streetnum</a><br />";
-	echo "<br><label for='street'>Street:</label> ";
+	echo "<br /><label for='street'>Street:</label> ";
 	if ($edit_view) echo "<input name='street' type='text' value='$street' />";
 	else echo "<a style='text-decoration:none;' name='street'>$street</a><br />";
 	echo "<br /><label for='city'>City:</label> ";

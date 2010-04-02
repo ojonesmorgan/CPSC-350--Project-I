@@ -1,4 +1,11 @@
 <?php
+include("session.php");
+
+if (!$logged_in)
+{
+	include("notloggedin.php");
+}
+
 $track_id = $_GET['id'];
 $band_id = $_GET['band'];
 include("db_connect.php");
