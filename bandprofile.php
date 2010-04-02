@@ -137,7 +137,8 @@ if ($count < 1)
 	}
 	
 	echo "</p>\n";
-	echo "<br /><h1>Popular Tracks</h1>\n";
+	echo "<br /><a name='tracks'></a>\n";
+	echo "<h1>Popular Tracks</h1>\n";
 	echo "<p><table style='width:485px; margin-left:auto; margin-right:auto;' id='hor-minimalist-b' ";
 	echo "name='populartracks'>\n";
 	echo "<th style='font-weight:bold;'></th>\n";

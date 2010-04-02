@@ -92,6 +92,10 @@ for ($i = 0; $i < $count; $i++)
 		echo "value=' Edit ' />\n";
 	}
 	
+	echo " <input type='submit' onClick=\"if (confirm('Permanently delete this track?')) ";
+	echo "parent.location = 'deletetrack.php?id=$track_id&band=".$id_list[0]."';\" ";
+	echo "value=' Delete ' />\n";
+	
 	//include("ratings.php");
 	?>
 	</h1>
