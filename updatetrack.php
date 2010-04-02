@@ -15,6 +15,7 @@ $artists = $_POST['bandids'];
 
 $id = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($id)))));
 $title = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($title)))));
+$track_number = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($track_number)))));
 $genre = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($genre)))));
 $year = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($year)))));
 $composer = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($composer)))));

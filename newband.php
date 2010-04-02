@@ -44,11 +44,11 @@ if (!empty($name))
 			{
 				mysqli_query($db, "INSERT INTO genre (genre) VALUES ('$genre')");
 				
-				$result = mysqli_query($db, "SELECT genre_id FROM genre");
+				$result = mysqli_query($db, "SELECT MAX(genre_id) AS max_genre_id FROM genre");
 		
 				while ($row = mysqli_fetch_assoc($result))
 				{
-					$genre_id = $row['genre_id'];
+					$genre_id = $row['max_genre_id'];
 				}
 			}
 			

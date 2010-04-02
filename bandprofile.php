@@ -138,7 +138,8 @@ if ($count < 1)
 	
 	echo "</p>\n";
 	echo "<br /><h1>Popular Tracks</h1>\n";
-	echo "<p><table style='width:485px; margin-left:auto; margin-right:auto;' id='hor-minimalist-b'>\n";
+	echo "<p><table style='width:485px; margin-left:auto; margin-right:auto;' id='hor-minimalist-b' ";
+	echo "name='populartracks'>\n";
 	echo "<th style='font-weight:bold;'></th>\n";
 	echo "<th style='font-weight:bold;'>Title</th>\n";
 	echo "<th style='font-weight:bold;'>Play Count</th>\n";
@@ -147,19 +148,21 @@ if ($count < 1)
 	$query = "SELECT tracks.track_id, title, play_count, mp3_name FROM tracks LEFT OUTER JOIN audio ";
 	$query .= "ON tracks.track_id = audio.track_id ";
 	$query .= "WHERE tracks.track_id IN (SELECT track_id FROM track_bands WHERE band_id = '$bandID') ";
-	$query .= "ORDER BY play_count, RAND() LIMIT 10";
+	$query .= "ORDER BY play_count DESC";
 	$result = mysqli_query($db, $query);
 	$count = 0;
 	
 	while ($row = mysqli_fetch_assoc($result))
-	{
+	{		
 		$track_id = $row['track_id'];
-		$title = "<a style='color:darkblue;' href='track.php?id=$track_id'>".$row['title']."</a>";
+		$title = "<a style='color:darkblue;' href='track.php?id=$track_id'>".stripslashes($row['title'])."</a>";
 		$play_count = $row['play_count'];
 		$playable = !empty($row['mp3_name']);
 		if (empty($play_count)) $play_count = 0;
 	
-		echo "<tr>";
+		echo "<tr id='row$count'";
+		if ($count >= 10) echo " style='display:none;'";
+		echo ">";
 		echo "<td>".($count + 1)."</td>";
 		echo "<td>$title</td>";
 		echo "<td>$play_count</td>";
@@ -177,13 +180,33 @@ if ($count < 1)
 		++$count;
 	}
 	
-	if ($count < 1)
+	if ($count > 10)
+	{
+		echo "<tr style='text-align:center;' id='moreButton'><td colspan=4>";
+		echo "<input style='width:460px;' onClick=\"document.getElementById('moreButton').style.display = 'none'; ";
+		
+		for ($i = 10; $i <= $count; $i++)
+		{
+			echo "document.getElementById('row$i').style.display = 'table-row'; ";
+		}
+		
+		echo "\" type='submit' ";
+		echo "value=' More ' /></td></tr>";
+	}
+	
+	else if ($count < 1)
 	{
 		echo "<tr><td colspan=4 style='text-align:center;'>No tracks have been added for this artist.</td></tr>\n";
 	}
 	
 	echo "</table></p>\n";
-	echo "<p style='text-align:center;'><a href='addtrack.php?band=$bandID'>Add a new track by $name.</p>\n";
+	
+	if ($logged_in) 
+	{
+		echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' ";
+		echo "onClick=\"parent.location = 'addtrack.php?band=$bandID'\" type='submit' ";
+		echo "value='  Add a New Track by $name  ' /></p>\n";
+	}
 	
 	include("listcomments.php");
 	?>

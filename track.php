@@ -21,7 +21,7 @@ $count = 0;
 while ($row = mysqli_fetch_assoc($result))
 {
 	$track_number = $row['track_number'];
-	$title = $row['title'];
+	$title = stripslashes($row['title']);
 	$genre = $row['genre'];
 	$year = $row['year'];
 	$composer = $row['composer'];
@@ -51,12 +51,6 @@ while ($row = mysqli_fetch_assoc($result))
 	++$count;
 }
 
-if ($count < 1)
-{
-	header("location:musicsearch.php");
-    exit;
-}
-
 $artist = "";
 $artist_list = "";
 
@@ -78,7 +72,7 @@ for ($i = 0; $i < $count; $i++)
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>BandLink | Band Profile</title>
+  <title>BandLink | Track</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
