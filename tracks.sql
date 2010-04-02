@@ -30,3 +30,11 @@ CREATE TABLE audio
 	PRIMARY KEY (mp3_name),
 	FOREIGN KEY (track_id) REFERENCES tracks (track_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
+ALTER TABLE comments MODIFY band_id int(11);
+ALTER TABLE comments MODIFY venue_id int(11);
+ALTER TABLE comments ADD track_id int(11);
+
+ALTER TABLE ratings MODIFY band_id int(11);
+ALTER TABLE ratings MODIFY venue_id int(11);
+ALTER TABLE ratings ADD track_id int(11);
