@@ -91,7 +91,7 @@ echo "<h3><a href=\"addBand.php?picPath=$filePath\"> Return to Add Band </a></h3
 }
 if($refer=="editband"){  
 echo "<h2>Your image has been uploaded successfully.</h2>";
-echo "<h3><a href=\"bandprofile.php?id=$band&picPath=$filePath\"> Return to Band Profile </a></h3>";
+echo "<h3><a href=\"bandprofile.php?id=$band&edit=1&picPath=$filePath\"> Return to Band Profile </a></h3>";
 }
 if($refer=="venimg"){
 echo "<h2>Your image has been uploaded successfully.</h2>";
@@ -103,11 +103,11 @@ echo "<h3><a href=\"addvenue.php?mapPath=$filePath\"> Return to Add Venue </a></
 }
 if($refer=="editvenue"){  
 echo "<h2>Your image has been uploaded successfully.</h2>";
-echo "<h3><a href=\"venueprofile.php?id=$venue&picPath=$filePath\"> Return to Venue Profile </a></h3>";
+echo "<h3><a href=\"venueprofile.php?id=$venue&edit=1&picPath=$filePath\"> Return to Venue Profile </a></h3>";
 }
 if($refer=="editmap"){  
 echo "<h2>Your image has been uploaded successfully.</h2>";
-echo "<h3><a href=\"venueprofile.php?id=$venue&mapPath=$filePath\"> Return to Venue Profile </a></h3>";
+echo "<h3><a href=\"venueprofile.php?id=$venue&edit=1&mapPath=$filePath\"> Return to Venue Profile </a></h3>";
 }
 
 

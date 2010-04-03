@@ -157,6 +157,8 @@ if ($count < 1)
 	$query .= "ORDER BY play_count DESC, rating, RAND()";
 	$result = mysqli_query($db, $query);
 	$count = 0;
+	$num_col = 4;
+	if ($logged_in) ++$num_col;
 	
 	while ($row = mysqli_fetch_assoc($result))
 	{		
@@ -165,8 +167,6 @@ if ($count < 1)
 		$play_count = $row['play_count'];
 		$rating = $row['rating'];
 		$playable = !empty($row['mp3_name']);
-		$num_col = 4;
-		if ($logged_in) ++$num_col;
 		if (empty($play_count)) $play_count = 0;
 	
 		echo "<tr id='row$count'";

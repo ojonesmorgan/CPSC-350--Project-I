@@ -24,50 +24,36 @@ if (!empty($genres))
 {	
 	$genre_array = explode(",", $genres);
 	
+	mysqli_query($db, "START TRANSACTION");
+	mysqli_query($db, "DELETE FROM band_genre WHERE band_id = '$id'");
+	
 	foreach ($genre_array as $genre)
 	{
 		$genre = trim($genre);
-		$result = mysqli_query($db, "SELECT * FROM genre");
+		$result = mysqli_query($db, "SELECT * FROM genre WHERE genre = '$genre'");
 		$genre_id = 0;
 		
 		while ($row = mysqli_fetch_assoc($result))
 		{
-			if ($genre == $row['genre']) $genre_id = $row['genre_id'];
+			$genre_id = $row['genre_id'];
 		}
 		
 		if ($genre_id == 0)
 		{
 			mysqli_query($db, "INSERT INTO genre (genre) VALUES ('$genre')");
 			
-			$result = mysqli_query($db, "SELECT genre_id FROM genre");
+			$result = mysqli_query($db, "SELECT MAX(genre_id) AS max_genre_id FROM genre");
 	
 			while ($row = mysqli_fetch_assoc($result))
 			{
-				$genre_id = $row['genre_id'];
+				$genre_id = $row['max_genre_id'];
 			}
 		}
 		
 		mysqli_query($db, "INSERT INTO band_genre (band_id, genre_id) VALUES ('$id', '$genre_id')");
 	}
 	
-	$result = mysqli_query($db, "SELECT * FROM band_genre WHERE band_id = '$id'");
-	
-	while ($row = mysqli_fetch_assoc($result))
-	{
-		$genre_id = $row['genre_id'];
-		
-		$result2 = mysqli_query($db, "SELECT * FROM genre WHERE genre_id = '$genre_id'");
-		
-		while ($row2 = mysqli_fetch_assoc($result2))
-		{
-			$genre_name = $row2['genre'];
-		}
-		
-		if (!in_array($genre_name, $genre_array))
-		{
-			mysqli_query($db, "DELETE FROM band_genre WHERE genre_id = '$genre_id'");
-		}
-	}
+	mysqli_query($db, "COMMIT");
 }
 
 $band = "WHERE band_id='$id'";
