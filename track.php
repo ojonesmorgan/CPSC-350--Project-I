@@ -36,7 +36,7 @@ if ($count < 1)
     exit;
 }
 
-$query = "SELECT * FROM track_bands NATURAL JOIN band WHERE track_id = '$track_id'";
+$query = "SELECT * FROM track_bands NATURAL JOIN band WHERE track_id = '$track_id' ORDER BY track_band_id";
 $result = mysqli_query($db, $query);
 $count = 0;
 $band_array = array();

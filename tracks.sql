@@ -16,9 +16,11 @@ CREATE TABLE tracks
 
 CREATE TABLE track_bands
 (
+	track_band_id int(11) NOT NULL AUTO_INCREMENT,
 	track_id int(11) NOT NULL,
 	band_id int(11) NOT NULL,
-	FOREIGN KEY (band_id) REFERENCES band (band_id)	
+	PRIMARY KEY (track_band_id),
+	FOREIGN KEY (band_id) REFERENCES band (band_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 CREATE TABLE audio
