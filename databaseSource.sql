@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `band` (
   `bandDescription` blob NOT NULL,
   `bandPhoto` varchar(100) NOT NULL,
   PRIMARY KEY (`band_id`)
+  
  
  
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
@@ -227,4 +228,5 @@ CREATE TABLE `ratings`
 --
 -- Dumping data for table `ratings`
 --
-
+CREATE INDEX band_index ON band(bandName);
+CREATE INDEX venue_index ON venue(venueName);
