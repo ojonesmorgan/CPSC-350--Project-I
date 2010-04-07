@@ -181,19 +181,58 @@ for ($i = 0; $i < $count; $i++)
 			$mp3 = "audio/".$row['mp3_name'].".mp3";
 		}
 		
-		if ($autostart && !empty($mp3) && !$edit_view)
+		if (!$edit_view && !$autostart)
 		{
-			echo "<a name='play'></a>\n";
-			echo "<p style='text-align:center;'>";
-			echo "<embed style='width:400px; height:50px; margin-left:auto; margin-right:auto;' ";
-			echo "src='$mp3' autostart=true /></p>\n";
+			echo "<fieldset style='border:1px solid red; text-align:center;'>\n";
+			echo "<legend style='color:red;'>Audio</legend>\n";
 		}
 		
-		else if (!empty($mp3) && !$edit_view)
+		if (!empty($mp3) && !$edit_view)
 		{
-			echo "<br /><input style='display:block; margin-left:auto; margin-right:auto;' ";
-			echo "onClick=\"parent.location = 'play.php?track=$track_id';\" ";
-			echo "type='submit' value='  Play  ' /><br />\n";
+			if ($autostart)
+			{				
+				echo "<a name='play'></a>\n";
+				echo "<p style='text-align:center;'>";
+				echo "<embed style='width:400px; height:50px; margin-left:auto; margin-right:auto;' ";
+				echo "src='$mp3' autostart=true /></p>\n";
+				
+				mysqli_query($db, "UPDATE audio SET play_count = (play_count + 1) WHERE track_id = '$track_id'");
+			}
+			
+			if (!$autostart)
+			{
+				echo "<input style='width:150px; margin-right:20px;' onClick=\"parent.location = ";
+				echo "'play.php?track=$track_id';\" ";
+				echo "type='submit' value=' Play ' />";
+			}
+			
+			echo "<input style='width:150px;";
+			if ($autostart) echo " display:block; margin-left:auto; margin-right:auto;";
+			echo "' onClick=\"if (confirm('Delete audio for the track $title?')) ";
+			echo "parent.location = 'deleteaudio.php?track=$track_id'\" ";
+			echo "type='submit' value=' Delete MP3 ' />\n";
+		}
+		
+		else if (!$edit_view)
+		{
+			if ($_GET['err'] == "uploadfail")
+			{
+				echo "<p style='text-align:center; color:red;'>";
+				echo "An error occured and your file could not be uploaded.<br />Please try again.";
+				echo "</p>\n";
+			}
+				
+			echo "<form method='post' action='uploadaudio.php' enctype='multipart/form-data'>\n";
+			echo "<input type='hidden' name='track' value='$track_id' />";
+			echo "<input type='file' id='mp3' name='mp3' accept='*.mp3' /></p>";
+			echo "<input style='display:block; margin:10px auto 0px auto;' type='submit' ";
+			echo "value=' Upload MP3 ' />";
+			echo "</form>\n";
+		}
+		
+		if (!$edit_view && !$autostart)
+		{
+			echo "</fieldset>\n";
 		}
 	}
 	

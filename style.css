@@ -212,34 +212,48 @@ form label {
 		background-color: transparent;
 		font-family: Arial, Helvetica, sans-serif;
 	}
-	input[type=text] {
+	
+	input[type=text]
+	{
 		margin-top: 5px;
 		margin-bottom: 5px;
 		background-color: white;
-		color:black;
+		color: black;
 		width: 200px;
 	}
-	input[type=password]{
+	input[type=password]
+	{
 		margin-top: 5px;
 		margin-bottom: 5px;
 		background-color: white;
-		color:black;
-		width:200px;
+		color: black;
+		width: 200px;
+	}
+	input[type=file]
+	{
+		margin-top: 5px;
+		margin-bottom: 5px;
+		background-color: white;
+		color: black;
 	}
 	
-	textarea{
+	textarea
+	{
 		margin-top: 5px;
 		margin-bottom: 5px;
 		width: 200px;
 		background-color: white;
 	}
-	input[type=submit]{
+	
+	input[type=submit]
+	{
 		background-color: lightblue;
 		color: darkred;
 
 	}
 	
-	input[type=button]{
+	input[type=button]
+	{
 		background-color: lightblue;
 	}
 	
