@@ -40,7 +40,7 @@ else if ($page == "album.php" || !empty($album))
 {
 	if (empty($album)) $album = $_GET['id'];
 	
-	$subject = array("name" => "albums", "page" => "album.php", "field" => "album_id", "value" => "$album");
+	$subject = array("name" => "album", "page" => "album.php", "field" => "album_id", "value" => "$album");
 }
 
 $query = "SELECT * FROM ".$subject['name']." WHERE ".$subject['field']." = '".$subject['value']."'";

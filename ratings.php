@@ -6,7 +6,7 @@ if ($page == "bandprofile.php") $subject = array("name" => "band", "page" => "ba
 if ($page == "venueprofile.php") $subject = array("name" => "venue", "page" => "venueprofile.php", "field" => "venue_id", "value" => $_GET['id']);
 if ($page == "eventprofile.php") $subject = array("name" => "event", "page" => "eventprofile.php", "field" => "event_id", "value" => $_GET['id']);
 if ($page == "track.php") $subject = array("name" => "tracks", "page" => "track.php", "field" => "track_id", "value" => $_GET['id']);
-if ($page == "album.php") $subject = array("name" => "albums", "page" => "album.php", "field" => "album_id", "value" => $_GET['id']);
+if ($page == "album.php") $subject = array("name" => "album", "page" => "album.php", "field" => "album_id", "value" => $_GET['id']);
 
 $rating = 0;
 $count = 0;

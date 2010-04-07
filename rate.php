@@ -16,7 +16,7 @@ if (!empty($band)) $subject = array("name" => "band", "page" => "bandprofile.php
 if (!empty($venue)) $subject = array("name" => "venue", "page" => "venueprofile.php", "field" => "venue_id", "value" => "$venue");
 if (!empty($track)) $subject = array("name" => "event", "page" => "eventprofile.php", "field" => "event_id", "value" => "$event");
 if (!empty($track)) $subject = array("name" => "tracks", "page" => "track.php", "field" => "track_id", "value" => "$track");
-if (!empty($album)) $subject = array("name" => "albums", "page" => "album.php", "field" => "album_id", "value" => "$album");
+if (!empty($album)) $subject = array("name" => "album", "page" => "album.php", "field" => "album_id", "value" => "$album");
 
 include("db_connect.php");
 
