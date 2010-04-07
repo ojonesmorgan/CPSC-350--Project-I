@@ -3,6 +3,7 @@ include("session.php");
 
 $saved = $_GET['saved'] == 1;
 $track_id = $_GET['id'];
+$album_id = $_GET['album'];
 $autostart = ($_GET['autostart'] == 1);
 
 if (empty($track_id))
@@ -20,7 +21,6 @@ $count = 0;
 
 while ($row = mysqli_fetch_assoc($result))
 {
-	$track_number = $row['track_number'];
 	$title = stripslashes($row['title']);
 	$genre = $row['genre'];
 	$year = $row['year'];
@@ -156,9 +156,28 @@ for ($i = 0; $i < $count; $i++)
 		echo "type='button' value=' Add ' />";
 	}
 	
-	echo "<br /><label for='tracknum'>Track #:</label> ";
-	if ($edit_view) echo "<input name='tracknum' type='text' value='$track_number' />";
-	else echo "<a style='text-decoration:none;' name='tracknum'>$track_number</a><br />";
+	if (!empty($album_id))
+	{
+		$query = "SELECT album.name, album_track.* FROM album LEFT OUTER JOIN album_track ";
+		$query .= "ON album.album_id = album_track.album_id ";
+		$query .= "WHERE album_track.track_id = '$track_id' AND album_track.album_id = '$album_id'";
+		$result = mysqli_query($db, $query);
+		
+		while ($row = mysqli_fetch_assoc($result))
+		{
+			$album_name = stripslashes($row['name']);
+			$track_number = $row['track_number'];
+		}
+	
+		echo "<br /><label for='album'>Album:</label> ";
+		echo "<a style='text-decoration:underline; color:red;' name='album' href='album.php?id=$album_id'>";
+		echo "$album_name</a><br />";
+		
+		echo "<br /><label for='tracknum'>Track #:</label> ";
+		if ($edit_view) echo "<input name='tracknum' type='text' value='$track_number' />";
+		else echo "<a style='text-decoration:none;' name='tracknum'>$track_number</a><br />";
+	}
+	
 	echo "<br /><label for='genres'>Genre:</label> ";
 	if ($edit_view) echo "<input name='genre' type='text' value='$genre' />";
 	else echo "<a style='text-decoration:none;' name='genre'>$genre</a><br />";
@@ -243,6 +262,81 @@ for ($i = 0; $i < $count; $i++)
 	}
 	
 	echo "</p>\n";
+	
+	if ($edit_view)
+	{
+		$query = "SELECT album.*, album_track.track_id FROM album LEFT OUTER JOIN album_track ";
+		$query .= "ON album.album_id = album_track.album_id";
+		$result = mysqli_query($db, $query);
+		$add_menu = "<select name='addalbum'>\n";
+		$remove_menu = "<select name='removealbum'>\n";
+		$count = 0;
+		$add_count = 0;
+		$remove_count = 0;
+			
+		while ($row = mysqli_fetch_assoc($result))
+		{
+			$option = "<option value='".$row['album_id']."'";
+			if (!empty($album_id) && ($row['album_id'] == $album_id)) $option .= " selected";
+			$option .= ">".$row['name']."</option>\n";
+			
+			if ($row['track_id'] != $track_id)
+			{
+				$add_menu .= $option;
+				++$add_count;
+			}
+			
+			else
+			{
+				$remove_menu .= $option;
+				++$remove_count;
+			}
+			
+			++$count;
+		}
+		
+		$add_menu .= "</select>\n";
+		$remove_menu .= "</select>\n";
+		
+		if ($count > 0)
+		{
+			echo "<fieldset style='border:1px solid red; text-align:center;'>\n";
+			echo "<legend style='color:red;'>Albums</legend>\n";
+		}
+		
+		if ($add_count > 0)
+		{
+			echo "<form method='post' action='addalbumtrack.php?id=$track_id'>\n";
+			echo "<p style='text-align:center; font-size:xx-small;'>\n";
+			echo "<input type='submit' value='Add' />";
+			echo " this to the album $add_menu as track # ";
+			echo "<select name='addtracknum'>\n";
+			
+			for ($i = 1; $i <= 99; $i++)
+			{
+				echo "<option value='$i'>$i</option>\n";
+			}
+			
+			echo "</select>\n";
+			echo "</p>\n";
+			echo "</form>\n";
+		}
+		
+		if ($remove_count > 0)
+		{
+			echo "<form method='post' action='removealbumtrack.php?id=$track_id'>\n";
+			echo "<p style='text-align:center; font-size:xx-small;'>\n";
+			echo "<input type='submit' value='Remove' />";
+			echo " this track from the album $remove_menu";
+			echo "</p>\n";
+			echo "</form>\n";
+		}
+		
+		if ($count > 0)
+		{
+			echo "</fieldset>\n";
+		}
+	}
 	
 	include("listcomments.php");
 	?>
