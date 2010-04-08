@@ -64,7 +64,6 @@ if (!$logged_in) include("notloggedin.php");
 	//echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=venmap';\" ";
 	//echo "value=' Upload ' /></label> ";
 	echo "<input name='map' type='text' value='$map' />";
-	echo "<h6 color=red>**WARNING** Uploading an image will result in loss of any changes made to this form</h6>";
 	echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' type='submit' ";
 	echo "value=' Submit ' /></p></form>";
 	echo "</p>\n";

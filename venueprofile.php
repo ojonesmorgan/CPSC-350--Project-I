@@ -149,7 +149,6 @@ while ($row=mysqli_fetch_array($results)){
 		if (!empty($_GET['mapPath'])) $map = $_GET['mapPath'];
 		if ($map != $default_picture) echo $map;
 		echo "' />";
-		echo "<h6 color=red>**WARNING** Uploading an image will result in loss of any changes made to this form</h6>";
 	}
 	
 	echo "\n<p style='text-align:center;'><img style='border:1px solid red;";
