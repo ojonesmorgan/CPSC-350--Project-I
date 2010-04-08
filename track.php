@@ -40,6 +40,7 @@ $query = "SELECT * FROM track_bands NATURAL JOIN band WHERE track_id = '$track_i
 $result = mysqli_query($db, $query);
 $count = 0;
 $band_array = array();
+$id_array = array();
 $id_list = "";
 
 while ($row = mysqli_fetch_assoc($result))
@@ -95,7 +96,7 @@ for ($i = 0; $i < $count; $i++)
 		
 		if ($_GET['edit'] != 1)
 		{
-			echo "<input type='submit' onClick=\"parent.location = 'track.php?id=$track_id&edit=1'\" ";
+			echo "<input type='submit' onClick=\"parent.location = 'track.php?id=$track_id&album=$album_id&edit=1'\" ";
 			echo "value='Edit' />\n";
 		}
 		
@@ -118,7 +119,7 @@ for ($i = 0; $i < $count; $i++)
 		echo "</p></fieldset>";
 	}
 	
-	if ($edit_view) echo "<form name='trackform' method='post' action='updatetrack.php?id=$track_id'>";
+	if ($edit_view) echo "<form name='trackform' method='post' action='updatetrack.php?id=$track_id&album=$album_id'>";
 	echo "<p>";
 	echo "<label for='title'>Title:</label> ";
 	if ($edit_view) echo "<input name='title' type='text' value='$title' />";
