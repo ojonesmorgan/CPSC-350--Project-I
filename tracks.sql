@@ -1,12 +1,11 @@
 DROP TABLE IF EXISTS audio;
 DROP TABLE IF EXISTS tracks;
 DROP TABLE IF EXISTS track_bands;
+DROP TABLE IF EXISTS track_albums;
 
 CREATE TABLE tracks
 (
-	track_id int(11) NOT NULL AUTO_INCREMENT,
 	genre_id int(11) NOT NULL,
-	track_number int(11) NOT NULL,
 	title varchar(100) NOT NULL,
 	year varchar(4) NOT NULL,
 	composer varchar(500) NOT NULL,

@@ -5,6 +5,7 @@ if (!$logged_in) include("notloggedin.php");
 include("db_connect.php");
 
 $id = $_GET['id'];
+$album_id = $_GET['album'];
 $title = $_POST['title'];
 $track_number = $_POST['tracknum'];
 $genre = $_POST['genre'];
@@ -14,6 +15,7 @@ $description = $_POST['description'];
 $artists = $_POST['bandids'];
 
 $id = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($id)))));
+$album_id = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($album_id)))));
 $title = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($title)))));
 $track_number = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($track_number)))));
 $genre = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($genre)))));
@@ -66,11 +68,16 @@ if ($genre_id == 0)
 }
 
 mysqli_query($db, "UPDATE tracks SET title = '$title' WHERE track_id = '$id'");
-mysqli_query($db, "UPDATE tracks SET track_number = '$track_number' WHERE track_id = '$id'");
 mysqli_query($db, "UPDATE tracks SET year = '$year' WHERE track_id = '$id'");
 mysqli_query($db, "UPDATE tracks SET composer = '$composer' WHERE track_id = '$id'");
 mysqli_query($db, "UPDATE tracks SET genre_id = '$genre_id' WHERE track_id = '$id'");
 mysqli_query($db, "UPDATE tracks SET description = '$description' WHERE track_id = '$id'");
 
-header("location:track.php?id=$id&saved=1");
+if (!empty($album_id) && !empty($track_number))
+{
+	$query = "UPDATE album_track SET track_number = '$track_number' WHERE track_id = '$id' AND album_id = '$album_id'";
+	mysqli_query($db, $query);
+}
+
+header("location:track.php?id=$id&album=$album_id&saved=1");
 ?>
