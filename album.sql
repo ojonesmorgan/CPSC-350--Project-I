@@ -19,3 +19,8 @@ CREATE TABLE album_track
 	FOREIGN KEY (album_id) REFERENCES album (album_id),
 	FOREIGN KEY (track_id) REFERENCES tracks (track_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
+ALTER TABLE comments ADD COLUMN album_id int(11) NOT NULL;
+ALTER TABLE comments ADD FOREIGN KEY (album_id) REFERENCES album (album_id);
+ALTER TABLE ratings ADD COLUMN album_id int(11) NOT NULL AFTER track_id;
+ALTER TABLE ratings ADD FOREIGN KEY (album_id) REFERENCES album (album_id);
