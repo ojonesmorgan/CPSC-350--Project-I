@@ -23,7 +23,7 @@ while ($row = mysqli_fetch_assoc($result))
 	$addressID=$row['venueAddress_id'];
 	$zipcode=$row['venueZipCode'];
 	$description = $row['venueDescription'];
-	$picture = $row['venuePicture'];
+	$photo = $row['venuePicture'];
 	$map = $row['venueMap'];
 
 	++$count;
@@ -96,7 +96,7 @@ while ($row=mysqli_fetch_array($results)){
 	
 	//the code below will only try to display the image from the path pulled
 	//from the database if the image exists... other wise it will set to default.
-	if (empty($picture)) $picture = $default_picture; //set $picture to default image
+	if (empty($photo)) $photo = $default_picture; //set $picture to default image
 	if (empty($map)) $map = $default_picture; // set $map to default map
 	
 	if ($saved && !$edit_view)
@@ -134,15 +134,17 @@ while ($row=mysqli_fetch_array($results)){
 	if ($edit_view)
 	{
 		echo "<br /><label for='photo'> Photo: ";
-		echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=editvenue&venue=$venueID';\" ";
-		echo "value=' Upload ' /></label> ";
+		//echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=editvenue&venue=$venueID&other=$map';\" ";
+		//echo "value=' Upload ' /></label> ";
+		echo "<a href=\"uploadImage.php?sent=editvenue&venue=$venueID&other=$photo\" target=\"_blank\"> Upload</a></label> ";
 		echo "<input name='photo' type ='text' value='";
 		if (!empty($_GET['picPath'])) $photo = $_GET['picPath'];
-		if ($photo != $default_photo) echo $photo;
+		if ($photo != $default_picture) echo $photo;
 		echo "' />";
-		echo "<br /><label for='picture'>Map Image: ";
-		echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=editmap&venue=$venueID';\" ";
-		echo "value=' Upload ' /></label> ";
+		echo "<br /><label for='map'>Map Image: ";
+		//echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=editmap&venue=$venueID&other=$photo';\" target=\"_blank\" ";
+		//echo "value=' Upload ' /></label> ";
+		echo "<a href=\"uploadImage.php?sent=editmap&venue=$venueID&other=$photo\" target=\"_blank\"> Upload</a></label> ";
 		echo "<input name='map' type='text' value='";
 		if (!empty($_GET['mapPath'])) $map = $_GET['mapPath'];
 		if ($map != $default_picture) echo $map;
@@ -151,8 +153,8 @@ while ($row=mysqli_fetch_array($results)){
 	}
 	
 	echo "\n<p style='text-align:center;'><img style='border:1px solid red;";
-	if ($picture == $default_picture) echo " height:100px; width:150px;";
-	echo "' src='$picture' alt='$name' /></p>";
+	if ($photo == $default_picture) echo " height:100px; width:150px;";
+	echo "' src='$photo' alt='$name' /></p>";
 	echo "\n<p style='text-align:center;'><img style='border:1px solid red;";
 	if ($map == $default_picture) echo " height:100px; width:150px;";
 	echo "' src='$map' alt='$name map' /></p>";

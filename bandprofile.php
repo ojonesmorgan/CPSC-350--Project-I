@@ -120,8 +120,9 @@ if ($count < 1)
 	if ($edit_view)
 	{
 		echo "<br /><label for='photo'> Photo: ";
-		echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=editband&band=$bandID';\" ";
-		echo "value=' Upload ' /></label> ";
+		echo "<a href=\"uploadImage.php?sent=editband&venue=$venueID&other=$photo\" target=\"_blank\"> Upload</a></label> ";
+		//echo "<input type='button' onClick=\"parent.location = 'uploadImage.php?sent=editband&band=$bandID';\" ";
+		//echo "value=' Upload ' /></label> ";
 		echo "<input name='photo' type ='text' value='";
 		if (!empty($_GET['picPath'])) $photo = $_GET['picPath'];
 		if ($photo != $default_photo) echo $photo;
