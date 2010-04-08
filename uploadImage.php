@@ -17,7 +17,7 @@ include("session.php");
 	<div id="wrap">
  <BODY>
  <?php //include("header.php");?>
- <image src="Pictures/upload.png" />
+ <image style='margin:10px 5px 5px 5px;' src="Pictures/upload.png" />
  <div id="main">
 
 <?php
