@@ -47,7 +47,7 @@ while ($row = mysqli_fetch_assoc($result))
 	
 	include("ratings.php");
 	
-	if ($logged_in)
+	/*if ($logged_in)
 	{
 		echo "<p>";
 		
@@ -61,7 +61,7 @@ while ($row = mysqli_fetch_assoc($result))
 		echo "parent.location = 'deletealbum.php?id=$album_id&band=$band_id';\" ";
 		echo "value='Delete' />\n";
 		echo "</p>";
-	}
+	}*/
 	?>
 	</h1>
 	

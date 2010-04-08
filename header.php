@@ -19,6 +19,8 @@ echo "</span><br />\n";
 	|
 	<a href="addvenue.php">Add Venue</a>
 	|
+	<a href="addalbum.php">Add Album</a>
+	|
 	<a href="musicsearch.php">Search Music</a>
 	|
 	<a href="venuesearch.php">Search Venues</a>
