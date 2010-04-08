@@ -172,7 +172,7 @@ for ($i = 0; $i < $count; $i++)
 	
 		echo "<br /><label for='album'>Album:</label> ";
 		echo "<a style='text-decoration:underline; color:red;' name='album' href='album.php?id=$album_id'>";
-		echo "$album_name</a><br />";
+		echo "$album_name</a>";
 		
 		echo "<br /><label for='tracknum'>Track #:</label> ";
 		if ($edit_view) echo "<input name='tracknum' type='text' value='$track_number' />";
@@ -266,9 +266,7 @@ for ($i = 0; $i < $count; $i++)
 	
 	if ($edit_view)
 	{
-		$query = "SELECT album.*, album_track.track_id FROM album LEFT OUTER JOIN album_track ";
-		$query .= "ON album.album_id = album_track.album_id";
-		$result = mysqli_query($db, $query);
+		$result = mysqli_query($db, "SELECT * FROM album");
 		$add_menu = "<select name='addalbum'>\n";
 		$remove_menu = "<select name='removealbum'>\n";
 		$count = 0;
@@ -281,7 +279,16 @@ for ($i = 0; $i < $count; $i++)
 			if (!empty($album_id) && ($row['album_id'] == $album_id)) $option .= " selected";
 			$option .= ">".$row['name']."</option>\n";
 			
-			if ($row['track_id'] != $track_id)
+			$added = false;
+			$query = "SELECT * FROM album_track WHERE album_id = '".$row['album_id']."' AND track_id = '$track_id'";
+			$result2 = mysqli_query($db, $query);
+			
+			while ($row2 = mysqli_fetch_assoc($result2))
+			{
+				$added = true;
+			}
+			
+			if (!$added)
 			{
 				$add_menu .= $option;
 				++$add_count;
@@ -308,9 +315,11 @@ for ($i = 0; $i < $count; $i++)
 		if ($add_count > 0)
 		{
 			echo "<form method='post' action='addalbumtrack.php?id=$track_id'>\n";
-			echo "<p style='text-align:center; font-size:xx-small;'>\n";
+			echo "<p style='text-align:center;'>\n";
 			echo "<input type='submit' value='Add' />";
-			echo " this to the album $add_menu as track # ";
+			echo " this to the album $add_menu</p>";
+			echo "<p style='text-align:center;'>\n";
+			echo "as track # ";
 			echo "<select name='addtracknum'>\n";
 			
 			for ($i = 1; $i <= 99; $i++)
@@ -326,7 +335,7 @@ for ($i = 0; $i < $count; $i++)
 		if ($remove_count > 0)
 		{
 			echo "<form method='post' action='removealbumtrack.php?id=$track_id'>\n";
-			echo "<p style='text-align:center; font-size:xx-small;'>\n";
+			echo "<p style='text-align:center;'>\n";
 			echo "<input type='submit' value='Remove' />";
 			echo " this track from the album $remove_menu";
 			echo "</p>\n";

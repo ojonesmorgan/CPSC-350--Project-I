@@ -5,6 +5,7 @@ if (!$logged_in) include("notloggedin.php");
 include("db_connect.php");
 
 $title = $_POST['title'];
+$album_id = $_POST['album'];
 $track_number = $_POST['tracknum'];
 $genre = $_POST['genre'];
 $year = $_POST['year'];
@@ -13,6 +14,7 @@ $description = $_POST['description'];
 $artists = $_POST['bandids'];
 
 $title = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($title)))));
+$album_id = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($album_id)))));
 $track_number = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($track_number)))));
 $genre = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($genre)))));
 $year = mysql_escape_string(stripslashes(htmlspecialchars(strip_tags(trim($year)))));
@@ -40,15 +42,32 @@ if ($genre_id == 0)
 	}
 }
 
-$query = "INSERT INTO tracks (title, track_number, genre_id, year, composer, description) ";
-$query .= "VALUES ('$title', '$track_number', '$genre_id', '$year', '$composer', '$description')";
+$query = "INSERT INTO tracks (title, genre_id, year, composer, description) ";
+$query .= "VALUES ('$title', '$genre_id', '$year', '$composer', '$description')";
 
 if (!empty($title) && !empty($artists)) mysqli_query($db, $query);
 
 else
 {
-	header("location:addtrack.php?err=missinginfo&title=$title&tracknum=$track_number&genre=$genre&year=$year&composer=$composer&description=$description&artists=$artists");
+	header("location:addtrack.php?err=missinginfo&title=$title&album=$album_id&tracknum=$track_number&genre=$genre&year=$year&composer=$composer&description=$description&artists=$artists");
 	exit;
+}
+
+$result = mysqli_query($db, "SELECT MAX(track_id) AS max_track_id FROM tracks");
+
+while ($row = mysqli_fetch_assoc($result))
+{
+	$track_id = $row['max_track_id'];
+}
+
+if (!empty($album_id))
+{
+	$query = "INSERT INTO album_track (album_id, track_id";
+	if (!empty($track_number)) $query .= ", track_number";
+	$query .= ") VALUES ('$album_id', '$track_id'";
+	if (!empty($track_number)) $query .= ", '$track_number'";
+	$query .= ")";
+	mysqli_query($db, $query);
 }
 
 $result = mysqli_query($db, "SELECT MAX(track_id) AS max_track_id FROM tracks");
@@ -86,7 +105,13 @@ if (!empty($artists))
 <?php
 echo "<br /><h1>Thanks for adding the track \"".stripslashes($title).".\"</h1>";
 echo "<p><a href='track.php?id=$track_id'>Click here to view and edit this track's information.</a></p>\n";
-echo "<p><a href='addtrack.php?artists=$artists'>Click here to add another track by this artist.</a></p><br />\n";
+
+if (!empty($album_id))
+{
+	echo "<p><a href='album.php?id=$album_id'>Click here to go to this track's album.</a></p>\n";
+}
+
+echo "<p><a href='addtrack.php?artists=$artists&album=$album_id'>Click here to add another track by this artist.</a></p><br />\n";
 ?>
 	
 </div></center></div>

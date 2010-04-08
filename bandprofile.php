@@ -140,6 +140,47 @@ if ($count < 1)
 	}
 	
 	echo "</p>\n";
+	
+	echo "<br /><a name='albums'></a>\n";
+	echo "<h1>Albums</h1>\n";
+	echo "<p><table border=0 cellspacing=15>\n";
+	
+	$result = mysqli_query($db, "SELECT * FROM album WHERE band_id = '$bandID' ORDER BY RAND() LIMIT 5");
+	$count = 0;
+	
+	while ($row = mysqli_fetch_assoc($result))
+	{
+		$album_id = $row['album_id'];
+		$album_name = $row['name'];
+		$artwork = $row['artwork'];
+		
+		echo "<tr>";
+		echo "<td><a href='album.php?id=$album_id'><img style='width:100px; height:100px;' src='";
+		if (!empty($artwork)) echo $artwork;
+		else echo "Pictures/default.jpg";
+		echo "' border=0 alt='$album_name by $name' /></a></td>";
+		echo "<td style='vertical-align:middle;'>";
+		echo "<a style='color:red; text-decoration:none; font-weight:bold; font-style:italic;' ";
+		echo "href='album.php?id=$album_id'>$album_name</a></td>";
+		echo "</tr>";
+		
+		++$count;
+	}
+	
+	if ($count < 1)
+	{
+		echo "<tr><td style='text-align:center;'>No albums have been added for this artist.</td></tr>\n";
+	}
+	
+	echo "</table></p>\n";
+	
+	if ($logged_in)
+	{
+		echo "<p><input style='display:block; margin-left:auto; margin-right:auto;' ";
+		echo "onClick=\"parent.location = 'addalbum.php?band=$bandID'\" type='submit' ";
+		echo "value='  Add a New Album by $name  ' /></p>\n";
+	}
+	
 	echo "<br /><a name='tracks'></a>\n";
 	echo "<h1>Popular Tracks</h1>\n";
 	echo "<p><table style='width:485px; margin-left:auto; margin-right:auto;' id='hor-minimalist-b' ";
@@ -154,7 +195,7 @@ if ($count < 1)
 	$query .= "(SELECT AVG(rating) FROM ratings WHERE tracks.track_id = ratings.track_id) AS rating ";
 	$query .= "FROM tracks LEFT OUTER JOIN audio ON tracks.track_id = audio.track_id ";
 	$query .= "WHERE tracks.track_id IN (SELECT track_id FROM track_bands WHERE band_id = '$bandID') ";
-	$query .= "ORDER BY play_count DESC, rating, RAND()";
+	$query .= "ORDER BY play_count DESC, rating DESC, RAND()";
 	$result = mysqli_query($db, $query);
 	$count = 0;
 	$num_col = 4;

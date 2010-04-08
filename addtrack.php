@@ -3,6 +3,7 @@ include("session.php");
 if (!$logged_in) include("notloggedin.php");
 
 $band_id = $_GET['band'];
+$album_id = $_GET['album'];
 $title = $_GET['title'];
 $track_number = $_GET['tracknum'];
 $id_list = $_GET['artists'];
@@ -99,8 +100,22 @@ if (empty($artist_list)) $artist_list = $band_name;
 	echo "document.trackform.artist.value += ";
 	echo "document.trackform.bandlist.options[document.trackform.bandlist.selectedIndex].text;\" ";
 	echo "type='button' value=' Add ' />";
-	//echo "<br /><label for='tracknum'>Track #:</label> ";
-	//echo "<input name='tracknum' type='text' value='$track_number' />";
+	echo "<br /><label for='album'>Album</label> ";
+	echo "<select style='margin:5px 5px 5px 0px;' name='album'>\n";
+	echo "<option value=''> </option>\n";
+	
+	$result = mysqli_query($db, "SELECT * FROM album");
+	
+	while ($row = mysqli_fetch_assoc($result))
+	{
+		echo "<option value='".$row['album_id']."'";
+		if ($row['album_id'] == $album_id) echo " selected";
+		echo ">".$row['name']."</option>\n";
+	}
+	
+	echo "</select>\n";
+	echo "<br /><label for='tracknum'>Track #:</label> ";
+	echo "<input name='tracknum' type='text' value='$track_number' />";
 	echo "<br /><label for='genres'>Genre:</label> ";
 	echo "<input name='genre' type='text' value='$genre' />";
 	echo "<br /><label for='year'>Year:</label> ";

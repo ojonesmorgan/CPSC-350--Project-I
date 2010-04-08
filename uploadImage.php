@@ -123,7 +123,10 @@ echo "<h2>Your image has been uploaded successfully.</h2>";
 echo "<h3>You may copy this path:<font color = grey>  $filePath</font> and paste it into your 'Map Image' field, then close this Tab/Window.</h3>";
 //echo "<h3><a href=\"venueprofile.php?id=$venue&edit=1&picPath=$other&mapPath=$filePath\"> Return to Venue Profile </a></h3>";
 }
-
+if($refer=="album"){  
+echo "<h2>Your image has been uploaded successfully.</h2>";
+echo "<h3>You may copy this path:<font color = grey>  $filePath</font> and paste it into the 'Artwork' field, then close this Tab/Window.</h3>";
+}
 
 }
 
