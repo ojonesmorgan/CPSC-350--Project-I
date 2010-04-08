@@ -34,7 +34,7 @@ include("db_connect.php");
 	
 	if ($logged_in) echo "<form method='post' action='newalbum.php'>";
 	echo "<p>";
-	echo "<label for='band'>Band:</label> ";
+	echo "<label for='band'>Artist:</label> ";
 	echo "<select name='band'>";
 	
 	$result = mysqli_query($db, "SELECT * FROM band");
