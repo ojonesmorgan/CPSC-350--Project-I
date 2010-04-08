@@ -167,12 +167,14 @@ if ($count < 1)
 		++$count;
 	}
 	
+	echo "</table>\n";
+	
 	if ($count < 1)
 	{
-		echo "<tr><td style='text-align:center;'>No albums have been added for this artist.</td></tr>\n";
+		echo "<p style='color:red; text-align:center;'>No albums have been added for this artist.</p>\n";
 	}
 	
-	echo "</table></p>\n";
+	echo "</p>\n";
 	
 	if ($logged_in)
 	{
